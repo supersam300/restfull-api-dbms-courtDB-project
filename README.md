@@ -1,7 +1,7 @@
 # MySqlSemend
 # Court Management System Backend (Node.js + MySQL)
 
-## This is a backend API for managing a Court Management System, built using Node.js, Express, and MySQL. It provides full CRUD operations for all entities such as Courts, Judges, Lawyers, Case Details, Plaintiffs, Defendants, Case Parties, Verdicts, and a MasterTable for centralized referencing.
+This is a backend API for managing a Court Management System, built using Node.js, Express, and MySQL. It provides full CRUD operations for all entities such as Courts, Judges, Lawyers, Case Details, Plaintiffs, Defendants, Case Parties, Verdicts, and a MasterTable for centralized referencing.
 
 # Project Structure
  project/
