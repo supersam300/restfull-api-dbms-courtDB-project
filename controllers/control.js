@@ -62,5 +62,31 @@ export const deleteCourt = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 //this is just for courts i am sad:(
-
 };
+
+//CREATE
+export const createJudge = async (req, res) => {
+    const { name, experience_years, court_id } = req.body;
+    try {
+      const [result] = await pool.query(
+        'INSERT INTO Judge (name, experience_years, court_id) VALUES (?, ?, ?)',
+        [name, experience_years, court_id]
+      );
+      res.status(201).json({ judge_id, name, experience_years, court_id });
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  };
+//READ
+export const getJudge = async (req, res) => {
+    try{
+        const [result] = await pool.execute('select * from Judge');
+        res.json(rows);
+
+    }
+    catch(err)
+    {
+        res.status(500).json({error: err.message});
+    }
+};
+
