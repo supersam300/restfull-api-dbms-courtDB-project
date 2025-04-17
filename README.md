@@ -3,29 +3,6 @@
 
 This is a backend API for managing a Court Management System, built using Node.js, Express, and MySQL. It provides full CRUD operations for all entities such as Courts, Judges, Lawyers, Case Details, Plaintiffs, Defendants, Case Parties, Verdicts, and a MasterTable for centralized referencing.
 
-# Project Structure
- project/
-│
-├── config/
-│   └── db.js             # Database connection using MySQL pool
-│
-├── controllers/
-│   └── courtController.js
-│   └── judgeController.js
-│   └── ...               # Controllers for each table
-│
-├── routes/
-│   └── courtroutes.js
-│   └── judgeroutes.js
-│   └── ...               # Routes for each controller
-│
-├── public/
-│   └── test.html         # Frontend for testing API
-│
-├── app.js                # Main entry point
-├── package.json
-└── README.md
-
 # Features
 
 -Full CRUD operations for:
