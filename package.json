@@ -1,10 +1,12 @@
 {
-    "name": "my-sql-semend",
+  "comment":"this file is used for config of the node js, don worry much about it <3",
+    "name": "my-sql-semend", 
     "version": "1.0.0",
     "main": "app.js",
     "type": "module",
     "scripts": {
-        "start": "node app.js"
+        "start": "node app.js",
+         "dev": "nodemon app.js"
     },
     "dependencies": {
         "cors": "^2.8.5",
@@ -13,6 +15,6 @@
     },
     "description": "sem",
     "keywords": [],
-    "author": "",
-    "license": "ISC"
+    "author": "Samarth Atreya, shlok shetty, maganahalli",
+    "license": "lololololol"
 }
