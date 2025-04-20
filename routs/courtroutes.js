@@ -7,6 +7,7 @@ import {
   deleteCourt
 } from '../controllers/control.js'; //calling the operations from our controller
 
+
 const router = express.Router();
 
 router.post('/', createCourt);
