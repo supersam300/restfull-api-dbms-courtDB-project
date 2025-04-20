@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Court Management System API Tester</title>
+</head>
+<body>
+  <h1>Court Management System API Tester</h1>
+
+  <!-- 1. Court -->
+  <h2>Create Court</h2>
+  <input type="number" id="courtId" placeholder="Court ID" />
+  <input type="text" id="courtName" placeholder="Court Name" />
+  <input type="text" id="courtLocation" placeholder="Location" />
+  <input type="text" id="courtType" placeholder="Court Type" />
+  <button onclick="createCourt()">Create Court</button>
+  <button onclick="fetchCourts()">Fetch Courts</button>
+  <pre id="courtRes"></pre>
+
+  <!-- 2. Judge -->
+  <h2>Create Judge</h2>
+  <input type="text" id="judgeName" placeholder="Name" />
+  <input type="number" id="judgeExperience" placeholder="Experience Years" />
+  <input type="number" id="judgeCourtId" placeholder="Court ID" />
+  <button onclick="createJudge()">Create Judge</button>
+  <button onclick="fetchJudges()">Fetch Judges</button>
+  <pre id="judgeRes"></pre>
+
+  <!-- 3. Lawyer -->
+  <h2>Create Lawyer</h2>
+  <input type="text" id="lawyerName" placeholder="Name" />
+  <input type="text" id="lawyerSpecialization" placeholder="Specialization" />
+  <input type="number" id="lawyerExperience" placeholder="Experience Years" />
+  <button onclick="createLawyer()">Create Lawyer</button>
+  <button onclick="fetchLawyers()">Fetch Lawyers</button>
+  <pre id="lawyerRes"></pre>
+
+  <script>
+    const judgeURL = 'http://localhost:3000/api/judges';
+    const courtURL = 'http://localhost:3000/api/courts';
+    const lawyerURL = 'http://localhost:3000/api/lawyers';
+
+    // 1. Create Court
+    async function createCourt() {
+      const data = {
+        court_id: document.getElementById('courtId').value,
+        court_name: document.getElementById('courtName').value,
+        location: document.getElementById('courtLocation').value,
+        court_type: document.getElementById('courtType').value
+      };
+      const res = await fetch(courtURL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const result = await res.json();
+      document.getElementById('courtRes').textContent = JSON.stringify(result, null, 2);
+    }
+
+    // 2. Create Judge
+    async function createJudge() {
+      const data = {
+        name: document.getElementById('judgeName').value,
+        experience_years: document.getElementById('judgeExperience').value,
+        court_id: document.getElementById('judgeCourtId').value
+      };
+      const res = await fetch(judgeURL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const result = await res.json();
+      document.getElementById('judgeRes').textContent = JSON.stringify(result, null, 2);
+    }
+
+    // 3. Create Lawyer
+    async function createLawyer() {
+      const data = {
+        name: document.getElementById('lawyerName').value,
+        specialization: document.getElementById('lawyerSpecialization').value,
+        experience_years: document.getElementById('lawyerExperience').value
+      };
+      const res = await fetch(lawyerURL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const result = await res.json();
+      document.getElementById('lawyerRes').textContent = JSON.stringify(result, null, 2);
+    }
+
+    // 1. Fetch All Courts
+    async function fetchCourts() {
+      const res = await fetch(courtURL);
+      const data = await res.json();
+      document.getElementById('courtRes').textContent = JSON.stringify(data, null, 2);
+    }
+
+    // 2. Fetch All Judges
+    async function fetchJudges() {
+      const res = await fetch(judgeURL);
+      const data = await res.json();
+      document.getElementById('judgeRes').textContent = JSON.stringify(data, null, 2);
+    }
+
+    // 3. Fetch All Lawyers
+    async function fetchLawyers() {
+      const res = await fetch(lawyerURL);
+      const data = await res.json();
+      document.getElementById('lawyerRes').textContent = JSON.stringify(data, null, 2);
+    }
+  </script>
+</body>
+</html>
