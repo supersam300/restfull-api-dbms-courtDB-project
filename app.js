@@ -1,28 +1,38 @@
 import express from 'express';
 import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import courtRoutes from './routs/courtroutes.js';
+import judgeRoutes from './routs/judgeRoute.js';
+import { router as lawyerRoutes } from './routs/lawerRoutes.js'; 
+
+// Get the current directory path in ES module environment
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
-const PORT = 8080;
-app.use(cors({
-  origin: 'http://localhost:8080',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type'],
-  credentials: true
-}));
+const PORT = 3000; // set your desired port here
 
+app.use(cors({
+  origin: '*', // Or specify frontend URL like 'http://localhost:8080'
+}));
 
 app.use(express.json());
 
-// ✅ Routes
+// Serve static files (e.g., HTML files) from the public folder
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Routes
 app.use('/api/courts', courtRoutes);
+app.use('/api/judges', judgeRoutes);
+app.use('/api/lawyers', lawyerRoutes);
+// Add more routes here as needed
 
-
+// Health check
 app.get('/', (req, res) => {
-  res.send('Court System Backend Running');
+  res.send('Court System Backend Running on Port 3000');
 });
 
-
 app.listen(PORT, () => {
-  console.log(`🚀 Server running at http://localhost:${PORT}`);
+  console.log(` UwU Server running at http://localhost:${PORT} <3`);
 });
