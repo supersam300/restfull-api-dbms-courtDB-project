@@ -4,17 +4,20 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import courtRoutes from './routs/courtroutes.js';
 import judgeRoutes from './routs/judgeRoute.js';
-import { router as lawyerRoutes } from './routs/lawerRoutes.js'; 
+import { router as lawyerRoutes } from './routs/lawerRoutes.js';
+import plaintiffRoutes from './routs/plaintiffRoute.js';
+import defendantRoutes from './routs/defandentroute.js';
+import partyRoutes from './routs/party.js';
+import masterRoutes from './routs/masterRoute.js'; 
 
-// Get the current directory path in ES module environment
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const PORT = 3000; // set your desired port here
+const PORT = 3000; //set the port you wanna use here
 
 app.use(cors({
-  origin: '*', // Or specify frontend URL like 'http://localhost:8080'
+  origin: '*', 
 }));
 
 app.use(express.json());
@@ -26,9 +29,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/courts', courtRoutes);
 app.use('/api/judges', judgeRoutes);
 app.use('/api/lawyers', lawyerRoutes);
-// Add more routes here as needed
+app.use('/api/plaintiffs', plaintiffRoutes);
+app.use('/api/defendants', defendantRoutes);
+app.use('/api/parties', partyRoutes);
+app.use('/api/mastertable', masterRoutes); 
 
-// Health check
+
 app.get('/', (req, res) => {
   res.send('Court System Backend Running on Port 3000');
 });
