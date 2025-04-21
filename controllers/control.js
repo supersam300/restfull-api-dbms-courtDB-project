@@ -199,7 +199,7 @@ export const deleteLawyer = async (req, res) => {
 /* its like 9pm rn and i got like 4 more tables to go. every time i look at my schema i feel sad :( BUT the api is working soo yay
 although making the frontend is gonna be a pain *w* but its not my problem :p, GOOD LUCK TEAM */
 
-// 1. CREATE PLAINTIFF
+// 1. get PLAINTIFF
 export const getPlaintiffs = async (req, res) => {
   try {
     const [rows] = await pool.query('SELECT * FROM Plaintiff');
@@ -268,7 +268,7 @@ export const deletePlaintiff = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-import pool from '../db.js';
+
 
 // 1. Get all defendants
 export const getDefendants = async (req, res) => {
