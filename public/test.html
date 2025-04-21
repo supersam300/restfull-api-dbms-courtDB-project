@@ -15,6 +15,7 @@
   <input type="text" id="courtType" placeholder="Court Type" />
   <button onclick="createCourt()">Create Court</button>
   <button onclick="fetchCourts()">Fetch Courts</button>
+  <button onclick="deleteCourt()">Delete Courts</button>
   <pre id="courtRes"></pre>
 
   <!-- 2. Judge -->
@@ -56,6 +57,17 @@
       const result = await res.json();
       document.getElementById('courtRes').textContent = JSON.stringify(result, null, 2);
     }
+    // 1.1 delete Court
+    async function deleteCourt() {
+  const courtId = document.getElementById('courtId').value;
+
+  const res = await fetch(`${courtURL}/${courtId}`, {
+    method: 'DELETE',
+  });
+
+  const result = await res.json();
+  document.getElementById('courtRes').textContent = JSON.stringify(result, null, 2);
+}
 
     // 2. Create Judge
     async function createJudge() {
