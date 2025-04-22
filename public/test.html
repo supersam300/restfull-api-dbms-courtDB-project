@@ -6,9 +6,8 @@
 </head>
 <body>
   <h1>Court Management System API Tester</h1>
-
-  <!-- 1. Court -->
-  <h2>Court Operations</h2>
+ 
+  <h2> Court</h2>
   <input type="number" id="courtId" placeholder="Court ID" />
   <input type="text" id="courtName" placeholder="Court Name" />
   <input type="text" id="courtLocation" placeholder="Location" />
@@ -18,98 +17,31 @@
   <button onclick="deleteCourt()">Delete Court</button>
   <pre id="courtRes"></pre>
 
-  <!-- 2. Judge -->
-  <h2>Judge Operations</h2>
-  <input type="text" id="judgeName" placeholder="Name" />
+
+
+  <h2> Judge</h2>
+  <input type="text" id="judgeName" placeholder="Judge Name" />
   <input type="number" id="judgeExperience" placeholder="Experience Years" />
   <input type="number" id="judgeCourtId" placeholder="Court ID" />
   <button onclick="createJudge()">Create Judge</button>
   <button onclick="fetchJudges()">Fetch Judges</button>
   <pre id="judgeRes"></pre>
 
-  <!-- 3. Lawyer -->
-  <h2>Lawyer Operations</h2>
-  <input type="text" id="lawyerName" placeholder="Name" />
+
+  <h2> Lawyer</h2>
+  <input type="text" id="lawyerName" placeholder="Lawyer Name" />
   <input type="text" id="lawyerSpecialization" placeholder="Specialization" />
   <input type="number" id="lawyerExperience" placeholder="Experience Years" />
   <button onclick="createLawyer()">Create Lawyer</button>
   <button onclick="fetchLawyers()">Fetch Lawyers</button>
   <pre id="lawyerRes"></pre>
 
-  <!-- 4. Plaintiff -->
-  <h2>Plaintiff Operations</h2>
-  <input type="number" id="plaintiffId" placeholder="Plaintiff ID" />
-  <input type="text" id="plaintiffName" placeholder="Name" />
-  <input type="text" id="plaintiffAddress" placeholder="Address" />
-  <input type="text" id="plaintiffContact" placeholder="Contact Number" />
-  <button onclick="createPlaintiff()">Create Plaintiff</button>
-  <button onclick="fetchPlaintiffs()">Fetch Plaintiffs</button>
-  <pre id="plaintiffRes"></pre>
-
-  <!-- 5. Defendant -->
-  <h2>Defendant Operations</h2>
-  <input type="number" id="defendantId" placeholder="Defendant ID" />
-  <input type="text" id="defendantName" placeholder="Name" />
-  <input type="text" id="defendantAddress" placeholder="Address" />
-  <input type="text" id="defendantContact" placeholder="Contact Number" />
-  <button onclick="createDefendant()">Create Defendant</button>
-  <button onclick="fetchDefendants()">Fetch Defendants</button>
-  <pre id="defendantRes"></pre>
-
-  <!-- 6. Party -->
-  <h2>Party Operations</h2>
-  <input type="number" id="partyId" placeholder="Party ID" />
-  <input type="number" id="partyCaseId" placeholder="Case ID" />
-  <input type="text" id="partyType" placeholder="Party Type" />
-  <input type="number" id="partyPlaintiffId" placeholder="Plaintiff ID" />
-  <input type="number" id="partyDefendantId" placeholder="Defendant ID" />
-  <button onclick="createParty()">Create Party</button>
-  <button onclick="fetchParties()">Fetch Parties</button>
-  <pre id="partyRes"></pre>
-
-  <!-- 7. Case -->
-  <h2>Case Operations</h2>
-  <input type="number" id="caseId" placeholder="Case ID" />
-  <input type="text" id="caseNumber" placeholder="Case Number" />
-  <input type="text" id="caseType" placeholder="Case Type" />
-  <input type="date" id="caseFilingDate" placeholder="Filing Date" />
-  <input type="text" id="caseStatus" placeholder="Status" />
-  <input type="number" id="caseCourtId" placeholder="Court ID" />
-  <input type="number" id="caseJudgeId" placeholder="Judge ID" />
-  <button onclick="createCase()">Create Case</button>
-  <button onclick="fetchCases()">Fetch Cases</button>
-  <pre id="caseRes"></pre>
-
-  <!-- 8. Verdict -->
-  <h2>Verdict Operations</h2>
-  <input type="number" id="verdictId" placeholder="Verdict ID" />
-  <input type="number" id="verdictCaseId" placeholder="Case ID" />
-  <input type="number" id="verdictJudgeId" placeholder="Judge ID" />
-  <input type="date" id="verdictDate" placeholder="Verdict Date" />
-  <textarea id="verdictDecision" placeholder="Decision"></textarea>
-  <button onclick="createVerdict()">Create Verdict</button>
-  <button onclick="fetchVerdicts()">Fetch Verdicts</button>
-  <pre id="verdictRes"></pre>
-
-  <!-- 9. MasterTable -->
-  <h2>MasterTable Operations</h2>
-  <input type="number" id="masterCourtId" placeholder="Court ID" />
-  <input type="number" id="masterJudgeId" placeholder="Judge ID" />
-  <input type="number" id="masterLawyerId" placeholder="Lawyer ID" />
-  <input type="number" id="masterCaseId" placeholder="Case ID" />
-  <input type="number" id="masterPlaintiffId" placeholder="Plaintiff ID" />
-  <input type="number" id="masterDefendantId" placeholder="Defendant ID" />
-  <input type="number" id="masterPartyId" placeholder="Party ID" />
-  <input type="number" id="masterVerdictId" placeholder="Verdict ID" />
-  <input type="number" id="masterCaseLawyerId" placeholder="Case Lawyer ID" />
-  <button onclick="createMasterEntry()">Create Master Entry</button>
-  <button onclick="fetchMasterEntries()">Fetch Master Entries</button>
-  <pre id="masterRes"></pre>
-
   <script>
-    const baseURL = 'http://localhost:3000/api';
+    const judgeURL = 'http://localhost:3000/api/judges';
+    const courtURL = 'http://localhost:3000/api/courts';
+    const lawyerURL = 'http://localhost:3000/api/lawyers';
 
-    // Example: Court Operations
+    // 1. Create Court
     async function createCourt() {
       const data = {
         court_id: document.getElementById('courtId').value,
@@ -117,7 +49,7 @@
         location: document.getElementById('courtLocation').value,
         court_type: document.getElementById('courtType').value
       };
-      const res = await fetch(`${baseURL}/courts`, {
+      const res = await fetch(courtURL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
@@ -125,14 +57,70 @@
       const result = await res.json();
       document.getElementById('courtRes').textContent = JSON.stringify(result, null, 2);
     }
+    //
+    async function deleteCourt(params) {
+      const data = {
+        court_id: document.getElementById('courtID').value
+      };
+      const res = await fetch(courtURL,{
+        method: 'DELETE',
+        headers:{'content-type':}
+      })
+      
+    }
 
+    // 2. Create Judge
+    async function createJudge() {
+      const data = {
+        name: document.getElementById('judgeName').value,
+        experience_years: document.getElementById('judgeExperience').value,
+        court_id: document.getElementById('judgeCourtId').value
+      };
+      const res = await fetch(judgeURL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const result = await res.json();
+      document.getElementById('judgeRes').textContent = JSON.stringify(result, null, 2);
+    }
+
+    // 3. Create Lawyer
+    async function createLawyer() {
+      const data = {
+        name: document.getElementById('lawyerName').value,
+        specialization: document.getElementById('lawyerSpecialization').value,
+        experience_years: document.getElementById('lawyerExperience').value
+      };
+      const res = await fetch(lawyerURL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const result = await res.json();
+      document.getElementById('lawyerRes').textContent = JSON.stringify(result, null, 2);
+    }
+
+    // 1. Fetch All Courts
     async function fetchCourts() {
-      const res = await fetch(`${baseURL}/courts`);
+      const res = await fetch(courtURL);
       const data = await res.json();
       document.getElementById('courtRes').textContent = JSON.stringify(data, null, 2);
     }
 
-    // Add similar functions for Judges, Lawyers, Plaintiffs, Defendants, Parties, Cases, Verdicts, and MasterTable
+    // 2. Fetch All Judges
+    async function fetchJudges() {
+      const res = await fetch(judgeURL);
+      const data = await res.json();
+      document.getElementById('judgeRes').textContent = JSON.stringify(data, null, 2);
+    }
+
+    // 3. Fetch All Lawyers
+    async function fetchLawyers() {
+      const res = await fetch(lawyerURL);
+      const data = await res.json();
+      document.getElementById('lawyerRes').textContent = JSON.stringify(data, null, 2);
+    }
   </script>
 </body>
 </html>
