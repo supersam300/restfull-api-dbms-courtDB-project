@@ -2,54 +2,73 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Court Management System API Tester</title>
+  <title>Court Management System</title>
+  <style>
+    body { font-family: Arial; margin: 20px; }
+    section { border: 1px solid #ccc; padding: 10px; margin-bottom: 20px; border-radius: 5px; }
+    h2 { color: #333; }
+    input, button { margin: 5px; padding: 5px; }
+    pre { background-color: #f8f8f8; padding: 10px; }
+  </style>
 </head>
 <body>
-  <h1>Court Management System API Tester</h1>
- 
-  <h2> Court</h2>
-  <input type="number" id="courtId" placeholder="Court ID" />
-  <input type="text" id="courtName" placeholder="Court Name" />
-  <input type="text" id="courtLocation" placeholder="Location" />
-  <input type="text" id="courtType" placeholder="Court Type" />
-  <button onclick="createCourt()">Create Court</button>
-  <button onclick="fetchCourts()">Fetch Courts</button>
-  <button onclick="deleteCourt()">Delete Court</button>
-  <pre id="courtRes"></pre>
 
+  <h1>Court Management System</h1>
 
+  <!-- Court Section -->
+  <section>
+    <h2>Courts</h2>
+    <input id="courtId" type="number" placeholder="Court ID" />
+    <input id="courtName" type="text" placeholder="Court Name" />
+    <input id="courtLocation" type="text" placeholder="Location" />
+    <input id="courtType" type="text" placeholder="Type" />
+    <br>
+    <button onclick="createCourt()">Create Court</button>
+    <button onclick="fetchCourts()">Get All Courts</button>
+    <button onclick="deleteCourt()">Delete Court</button>
+    <pre id="courtRes"></pre>
+  </section>
 
-  <h2> Judge</h2>
-  <input type="text" id="judgeName" placeholder="Judge Name" />
-  <input type="number" id="judgeExperience" placeholder="Experience Years" />
-  <input type="number" id="judgeCourtId" placeholder="Court ID" />
-  <button onclick="createJudge()">Create Judge</button>
-  <button onclick="fetchJudges()">Fetch Judges</button>
-  <pre id="judgeRes"></pre>
+  <!-- Judge Section -->
+  <section>
+    <h2>Judges</h2>
+    <input id="judgeId" type="number" placeholder="Judge ID" />
+    <input id="judgeName" type="text" placeholder="Name" />
+    <input id="judgeExp" type="number" placeholder="Experience Years" />
+    <input id="judgeCourtId" type="number" placeholder="Court ID" />
+    <br>
+    <button onclick="createJudge()">Create Judge</button>
+    <button onclick="fetchJudges()">Get All Judges</button>
+    <button onclick="deleteJudge()">Delete Judge</button>
+    <pre id="judgeRes"></pre>
+  </section>
 
-
-  <h2> Lawyer</h2>
-  <input type="text" id="lawyerName" placeholder="Lawyer Name" />
-  <input type="text" id="lawyerSpecialization" placeholder="Specialization" />
-  <input type="number" id="lawyerExperience" placeholder="Experience Years" />
-  <button onclick="createLawyer()">Create Lawyer</button>
-  <button onclick="fetchLawyers()">Fetch Lawyers</button>
-  <pre id="lawyerRes"></pre>
+  <!-- Lawyer Section -->
+  <section>
+    <h2>Lawyers</h2>
+    <input id="lawyerId" type="number" placeholder="Lawyer ID" />
+    <input id="lawyerName" type="text" placeholder="Name" />
+    <input id="lawyerSpec" type="text" placeholder="Specialization" />
+    <input id="lawyerExp" type="number" placeholder="Experience Years" />
+    <br>
+    <button onclick="createLawyer()">Create Lawyer</button>
+    <button onclick="fetchLawyers()">Get All Lawyers</button>
+    <button onclick="deleteLawyer()">Delete Lawyer</button>
+    <pre id="lawyerRes"></pre>
+  </section>
 
   <script>
-    const judgeURL = 'http://localhost:3000/api/judges';
-    const courtURL = 'http://localhost:3000/api/courts';
-    const lawyerURL = 'http://localhost:3000/api/lawyers';
+    const base = 'http://localhost:3000/api';
 
-    // 1. Create Court
+    // COURT
     async function createCourt() {
       const data = {
-        court_id: document.getElementById('courtId').value,
+        court_id: parseInt(document.getElementById('courtId').value),
         court_name: document.getElementById('courtName').value,
         location: document.getElementById('courtLocation').value,
         court_type: document.getElementById('courtType').value
       };
-      const res = await fetch(courtURL, {
+      const res = await fetch(`${base}/courts`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
@@ -57,16 +76,31 @@
       const result = await res.json();
       document.getElementById('courtRes').textContent = JSON.stringify(result, null, 2);
     }
-  
 
-    // 2. Create Judge
+    async function fetchCourts() {
+      const res = await fetch(`${base}/courts`);
+      const result = await res.json();
+      document.getElementById('courtRes').textContent = JSON.stringify(result, null, 2);
+    }
+
+    async function deleteCourt() {
+      const id = document.getElementById('courtId').value;
+      const res = await fetch(`${base}/courts/${id}`, {
+        method: 'DELETE'
+      });
+      const result = await res.json();
+      document.getElementById('courtRes').textContent = JSON.stringify(result, null, 2);
+    }
+
+    // JUDGE
     async function createJudge() {
       const data = {
+        judge_id: parseInt(document.getElementById('judgeId').value),
         name: document.getElementById('judgeName').value,
-        experience_years: document.getElementById('judgeExperience').value,
-        court_id: document.getElementById('judgeCourtId').value
+        experience_years: parseInt(document.getElementById('judgeExp').value),
+        court_id: parseInt(document.getElementById('judgeCourtId').value)
       };
-      const res = await fetch(judgeURL, {
+      const res = await fetch(`${base}/judges`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
@@ -75,14 +109,30 @@
       document.getElementById('judgeRes').textContent = JSON.stringify(result, null, 2);
     }
 
-    // 3. Create Lawyer
+    async function fetchJudges() {
+      const res = await fetch(`${base}/judges`);
+      const result = await res.json();
+      document.getElementById('judgeRes').textContent = JSON.stringify(result, null, 2);
+    }
+
+    async function deleteJudge() {
+      const id = document.getElementById('judgeId').value;
+      const res = await fetch(`${base}/judges/${id}`, {
+        method: 'DELETE'
+      });
+      const result = await res.json();
+      document.getElementById('judgeRes').textContent = JSON.stringify(result, null, 2);
+    }
+
+    // LAWYER
     async function createLawyer() {
       const data = {
+        lawyer_id: parseInt(document.getElementById('lawyerId').value),
         name: document.getElementById('lawyerName').value,
-        specialization: document.getElementById('lawyerSpecialization').value,
-        experience_years: document.getElementById('lawyerExperience').value
+        specialization: document.getElementById('lawyerSpec').value,
+        experience_years: parseInt(document.getElementById('lawyerExp').value)
       };
-      const res = await fetch(lawyerURL, {
+      const res = await fetch(`${base}/lawyers`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
@@ -91,25 +141,19 @@
       document.getElementById('lawyerRes').textContent = JSON.stringify(result, null, 2);
     }
 
-    // 1. Fetch All Courts
-    async function fetchCourts() {
-      const res = await fetch(courtURL);
-      const data = await res.json();
-      document.getElementById('courtRes').textContent = JSON.stringify(data, null, 2);
-    }
-
-    // 2. Fetch All Judges
-    async function fetchJudges() {
-      const res = await fetch(judgeURL);
-      const data = await res.json();
-      document.getElementById('judgeRes').textContent = JSON.stringify(data, null, 2);
-    }
-
-    // 3. Fetch All Lawyers
     async function fetchLawyers() {
-      const res = await fetch(lawyerURL);
-      const data = await res.json();
-      document.getElementById('lawyerRes').textContent = JSON.stringify(data, null, 2);
+      const res = await fetch(`${base}/lawyers`);
+      const result = await res.json();
+      document.getElementById('lawyerRes').textContent = JSON.stringify(result, null, 2);
+    }
+
+    async function deleteLawyer() {
+      const id = document.getElementById('lawyerId').value;
+      const res = await fetch(`${base}/lawyers/${id}`, {
+        method: 'DELETE'
+      });
+      const result = await res.json();
+      document.getElementById('lawyerRes').textContent = JSON.stringify(result, null, 2);
     }
   </script>
 </body>
