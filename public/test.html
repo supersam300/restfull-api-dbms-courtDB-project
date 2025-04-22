@@ -57,17 +57,7 @@
       const result = await res.json();
       document.getElementById('courtRes').textContent = JSON.stringify(result, null, 2);
     }
-    //
-    async function deleteCourt(params) {
-      const data = {
-        court_id: document.getElementById('courtID').value
-      };
-      const res = await fetch(courtURL,{
-        method: 'DELETE',
-        headers:{'content-type':}
-      })
-      
-    }
+  
 
     // 2. Create Judge
     async function createJudge() {
