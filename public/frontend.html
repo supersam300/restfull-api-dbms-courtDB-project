@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Court Management System</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f0f4ff, #e0ecff);
+      color: #333;
+    }
+
+    nav {
+      background-color: #007bff;
+      padding: 15px 30px;
+      color: white;
+      font-size: 24px;
+      font-weight: 600;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      backdrop-filter: blur(5px);
+    }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      background: #fff;
+      padding: 10px 0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    .tab-button {
+      margin: 5px;
+      padding: 10px 20px;
+      border: none;
+      background: linear-gradient(145deg, #007bff, #3399ff);
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .tab-button:hover {
+      transform: scale(1.05);
+      background: linear-gradient(145deg, #0056b3, #007bff);
+    }
+
+    .tab-button.active {
+      background: #0056b3;
+      font-weight: bold;
+      border-bottom: 2px solid white;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 20px;
+    }
+
+    .tab-content { display: none; transition: opacity 0.3s ease; }
+    .tab-content.active { display: block; opacity: 1; }
+
+    section {
+      background: white;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      transition: box-shadow 0.3s ease;
+    }
+
+    section:hover {
+      box-shadow: 0 6px 25px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      margin-bottom: 15px;
+      color: #007bff;
+      font-size: 22px;
+    }
+
+    input, button {
+      margin: 8px 10px 12px 0;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    input:focus {
+      border-color: #007bff;
+      outline: none;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+    }
+
+    button.action {
+      background: linear-gradient(to right, #007bff, #3399ff);
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button.action:hover {
+      background: linear-gradient(to right, #0056b3, #007bff);
+      transform: translateY(-2px);
+    }
+
+    pre, table {
+      background: #f9fbff;
+      padding: 15px;
+      margin-top: 10px;
+      border-radius: 8px;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    th, td {
+      padding: 12px;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+
+    th {
+      background: #007bff;
+      color: white;
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: #f1f7ff;
+    }
+  </style>
+</head>
+<body>
+
+<nav>Court Management System</nav>
+
+<div class="tabs">
+  <button class="tab-button active" onclick="openTab('dashboard')">Dashboard</button>
+  <button class="tab-button" onclick="openTab('court')">Court</button>
+  <button class="tab-button" onclick="openTab('judge')">Judge</button>
+  <button class="tab-button" onclick="openTab('lawyer')">Lawyer</button>
+  <button class="tab-button" onclick="openTab('plaintiff')">Plaintiff</button>
+  <button class="tab-button" onclick="openTab('defendant')">Defendant</button>
+  <button class="tab-button" onclick="openTab('party')">Party</button>
+  <button class="tab-button" onclick="openTab('verdict')">Verdict</button>
+</div>
+
+<div class="container">
+  <!-- Dashboard -->
+  <div id="dashboard" class="tab-content active">
+    <section>
+      <h2>Dashboard - Master Entries</h2>
+      <button class="action" onclick="fetchMaster()">Refresh Dashboard</button>
+      <table id="masterTable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Type</th>
+            <th>Name</th>
+            <th>Related Court</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </div>
+
+  <!-- Inserted Remaining Sections -->
+  <!-- Court -->
+  <div id="court" class="tab-content">
+    <section>
+      <h2>Court</h2>
+      <input type="text" placeholder="Court ID" id="courtId">
+      <input type="text" placeholder="Court Name" id="courtName">
+      <input type="text" placeholder="Location" id="courtLocation">
+      <input type="text" placeholder="Type" id="courtType">
+     <button class="action" onclick="createCourt()">Create Court</button>
+     <pre id="courtRes"></pre>
+    </section>
+  </div>
+  
+  <!-- Judge -->
+  <div id="judge" class="tab-content">
+    <section>
+      <h2>Judge</h2>
+      <input type="text" placeholder="Judge ID">
+      <input type="text" placeholder="Name">
+      <input type="text" placeholder="Experience">
+      <input type="text" placeholder="Court ID">
+      <button class="action">Create Judge</button>
+    </section>
+  </div>
+
+  <!-- Lawyer -->
+  <div id="lawyer" class="tab-content">
+    <section>
+      <h2>Lawyer</h2>
+      <input type="text" placeholder="Lawyer ID">
+      <input type="text" placeholder="Name">
+      <input type="text" placeholder="Specialization">
+      <input type="text" placeholder="Experience">
+      <button class="action">Create Lawyer</button>
+    </section>
+  </div>
+
+  <!-- Plaintiff -->
+  <div id="plaintiff" class="tab-content">
+    <section>
+      <h2>Plaintiff</h2>
+      <input type="text" placeholder="Plaintiff ID">
+      <input type="text" placeholder="Name">
+      <input type="text" placeholder="Address">
+      <button class="action">Create Plaintiff</button>
+    </section>
+  </div>
+
+  <!-- Defendant -->
+  <div id="defendant" class="tab-content">
+    <section>
+      <h2>Defendant</h2>
+      <input type="text" placeholder="Defendant ID">
+      <input type="text" placeholder="Name">
+      <input type="text" placeholder="Address">
+      <button class="action">Create Defendant</button>
+    </section>
+  </div>
+
+  <!-- Party -->
+  <div id="party" class="tab-content">
+    <section>
+      <h2>Party</h2>
+      <input type="text" placeholder="Party ID">
+      <input type="text" placeholder="Name">
+      <input type="text" placeholder="Party Type">
+      <button class="action">Create Party</button>
+    </section>
+  </div>
+
+  <!-- Verdict -->
+  <div id="verdict" class="tab-content">
+    <section>
+      <h2>Verdict</h2>
+      <input type="text" placeholder="Verdict ID">
+      <input type="text" placeholder="Verdict Text">
+      <button class="action">Create Verdict</button>
+    </section>
+  </div>
+</div>
+<script>
+ const base = "http://localhost:3000/api";
+ // Change this to your backend base URL
+
+  async function createCourt() {
+    const data = {
+      court_id: parseInt(document.getElementById('courtId').value),
+      court_name: document.getElementById('courtName').value,
+      location: document.getElementById('courtLocation').value,
+      court_type: document.getElementById('courtType').value
+    };
+    const res = await fetch(`${base}/courts`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    const result = await res.json();
+    document.getElementById('courtRes').textContent = JSON.stringify(result, null, 2);
+  }
+
+  async function fetchCourts() {
+    const res = await fetch(`${base}/courts`);
+    const result = await res.json();
+    document.getElementById('courtRes').textContent = JSON.stringify(result, null, 2);
+  }
+
+  async function deleteCourt() {
+    const id = document.getElementById('courtId').value;
+    const res = await fetch(`${base}/courts/${id}`, { method: 'DELETE' });
+    const result = await res.json();
+    document.getElementById('courtRes').textContent = JSON.stringify(result, null, 2);
+  }
+
+  function fetchMaster() {
+    alert('Fetch master entries from /master endpoint and display in the table');
+    // You can write logic to call `${base}/master` and populate #masterTable
+  }
+
+  function openTab(tabId) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+    document.querySelector(`.tab-button[onclick="openTab('${tabId}')"]`).classList.add('active');
+  }
+</script>
+
+
+</body>
+</html>
