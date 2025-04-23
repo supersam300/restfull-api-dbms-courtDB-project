@@ -350,6 +350,175 @@
     alert('Fetch master entries from /master endpoint and display in the table');
     // You can write logic to call `${base}/master` and populate #masterTable
   }
+// Lawyer
+async function createLawyer() {
+  const inputs = document.querySelectorAll('#lawyer input');
+  const data = {
+    lawyer_id: parseInt(inputs[0].value),
+    name: inputs[1].value,
+    specialization: inputs[2].value,
+    experience_years: inputs[3].value
+  };
+  try {
+    const res = await fetch(`${base}/lawyers`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    if (!res.ok) throw new Error('Failed to create lawyer');
+    alert('✅ Lawyer created!');
+  } catch (err) {
+    alert(`❌ ${err.message}`);
+  }
+}
+
+async function deleteLawyer() {
+  const id = document.querySelector('#lawyer input').value;
+  const res = await fetch(`${base}/lawyers/${id}`, { method: 'DELETE' });
+  const result = await res.json();
+  alert(JSON.stringify(result, null, 2));
+}
+
+async function fetchLawyer() {
+  const res = await fetch(`${base}/lawyers`);
+  const result = await res.json();
+  alert(JSON.stringify(result, null, 2));
+}
+
+// Plaintiff
+async function createPlaintiff() {
+  const inputs = document.querySelectorAll('#plaintiff input');
+  const data = {
+    plaintiff_id: parseInt(inputs[0].value),
+    name: inputs[1].value,
+    address: inputs[2].value
+  };
+  try {
+    const res = await fetch(`${base}/plaintiffs`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    if (!res.ok) throw new Error('Failed to create plaintiff');
+    alert('✅ Plaintiff created!');
+  } catch (err) {
+    alert(`❌ ${err.message}`);
+  }
+}
+
+async function deletePlaintiff() {
+  const id = document.querySelector('#plaintiff input').value;
+  const res = await fetch(`${base}/plaintiffs/${id}`, { method: 'DELETE' });
+  const result = await res.json();
+  alert(JSON.stringify(result, null, 2));
+}
+
+async function fetchPlaintiff() {
+  const res = await fetch(`${base}/plaintiffs`);
+  const result = await res.json();
+  alert(JSON.stringify(result, null, 2));
+}
+
+// Defendant
+async function createDefendant() {
+  const inputs = document.querySelectorAll('#defendant input');
+  const data = {
+    defendant_id: parseInt(inputs[0].value),
+    name: inputs[1].value,
+    address: inputs[2].value
+  };
+  try {
+    const res = await fetch(`${base}/defendants`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    if (!res.ok) throw new Error('Failed to create defendant');
+    alert('✅ Defendant created!');
+  } catch (err) {
+    alert(`❌ ${err.message}`);
+  }
+}
+
+async function deleteDefendant() {
+  const id = document.querySelector('#defendant input').value;
+  const res = await fetch(`${base}/defendants/${id}`, { method: 'DELETE' });
+  const result = await res.json();
+  alert(JSON.stringify(result, null, 2));
+}
+
+async function fetchDefendant() {
+  const res = await fetch(`${base}/defendants`);
+  const result = await res.json();
+  alert(JSON.stringify(result, null, 2));
+}
+
+// Party
+async function createParty() {
+  const inputs = document.querySelectorAll('#party input');
+  const data = {
+    party_id: parseInt(inputs[0].value),
+    name: inputs[1].value,
+    party_type: inputs[2].value
+  };
+  try {
+    const res = await fetch(`${base}/parties`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    if (!res.ok) throw new Error('Failed to create party');
+    alert('✅ Party created!');
+  } catch (err) {
+    alert(`❌ ${err.message}`);
+  }
+}
+
+async function deleteParty() {
+  const id = document.querySelector('#party input').value;
+  const res = await fetch(`${base}/parties/${id}`, { method: 'DELETE' });
+  const result = await res.json();
+  alert(JSON.stringify(result, null, 2));
+}
+
+async function fetchParty() {
+  const res = await fetch(`${base}/parties`);
+  const result = await res.json();
+  alert(JSON.stringify(result, null, 2));
+}
+
+// Verdict
+async function createVerdict() {
+  const inputs = document.querySelectorAll('#verdict input');
+  const data = {
+    verdict_id: parseInt(inputs[0].value),
+    verdict_text: inputs[1].value
+  };
+  try {
+    const res = await fetch(`${base}/verdicts`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    if (!res.ok) throw new Error('Failed to create verdict');
+    alert('✅ Verdict created!');
+  } catch (err) {
+    alert(`❌ ${err.message}`);
+  }
+}
+
+async function deleteVerdict() {
+  const id = document.querySelector('#verdict input').value;
+  const res = await fetch(`${base}/verdicts/${id}`, { method: 'DELETE' });
+  const result = await res.json();
+  alert(JSON.stringify(result, null, 2));
+}
+
+async function fetchVerdict() {
+  const res = await fetch(`${base}/verdicts`);
+  const result = await res.json();
+  alert(JSON.stringify(result, null, 2));
+}
 
   function openTab(tabId) {
     document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
