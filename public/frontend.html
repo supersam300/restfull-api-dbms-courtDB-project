@@ -202,11 +202,14 @@
   <div id="lawyer" class="tab-content">
     <section>
       <h2>Lawyer</h2>
-      <input type="text" placeholder="Lawyer ID">
-      <input type="text" placeholder="Name">
-      <input type="text" placeholder="Specialization">
-      <input type="text" placeholder="Experience">
-      <button class="action">Create Lawyer</button>
+      <input type="text" placeholder="Lawyer ID" id="lawyerId">
+      <input type="text" placeholder="Name" id="lawyerName">
+      <input type="text" placeholder="Specialization" id="lawyerSpecialization">
+      <input type="text" placeholder="Experience" id="lawyerExperience">
+      <button class="action" onclick="createLawyer()">Create Lawyer</button>
+      <button class="action" onclick="deleteLawyer()">Delete Lawyer</button>
+      <button class="action" onclick="fetchLawyers()">Fetch Lawyers</button>
+      <pre id="lawyerRes"></pre>
     </section>
   </div>
 
@@ -214,10 +217,13 @@
   <div id="plaintiff" class="tab-content">
     <section>
       <h2>Plaintiff</h2>
-      <input type="text" placeholder="Plaintiff ID">
-      <input type="text" placeholder="Name">
-      <input type="text" placeholder="Address">
-      <button class="action">Create Plaintiff</button>
+      <input type="text" placeholder="Plaintiff ID" id="plaintiffId">
+      <input type="text" placeholder="Name" id="plaintiffName">
+      <input type="text" placeholder="Address" id="plaintiffAddress">
+      <button class="action" onclick="createPlaintiff()">Create Plaintiff</button>
+      <button class="action" onclick="deletePlaintiff()">Delete Plaintiff</button>
+      <button class="action" onclick="fetchPlaintiffs()">Fetch Plaintiffs</button>
+      <pre id="plaintiffRes"></pre>
     </section>
   </div>
 
@@ -225,10 +231,13 @@
   <div id="defendant" class="tab-content">
     <section>
       <h2>Defendant</h2>
-      <input type="text" placeholder="Defendant ID">
-      <input type="text" placeholder="Name">
-      <input type="text" placeholder="Address">
-      <button class="action">Create Defendant</button>
+      <input type="text" placeholder="Defendant ID" id="defendantId">
+      <input type="text" placeholder="Name" id="defendantName">
+      <input type="text" placeholder="Address" id="defendantAddress">
+      <button class="action" onclick="createDefendant()">Create Defendant</button>
+      <button class="action" onclick="deleteDefendant()">Delete Defendant</button>
+      <button class="action" onclick="fetchDefendants()">Fetch Defendants</button>
+      <pre id="defendantRes"></pre>
     </section>
   </div>
 
@@ -236,10 +245,13 @@
   <div id="party" class="tab-content">
     <section>
       <h2>Party</h2>
-      <input type="text" placeholder="Party ID">
-      <input type="text" placeholder="Name">
-      <input type="text" placeholder="Party Type">
-      <button class="action">Create Party</button>
+      <input type="text" placeholder="Party ID" id="partyId">
+      <input type="text" placeholder="Name" id="partyName">
+      <input type="text" placeholder="Party Type" id="partyType">
+      <button class="action" onclick="createParty()">Create Party</button>
+      <button class="action" onclick="deleteParty()">Delete Party</button>
+      <button class="action" onclick="fetchParties()">Fetch Parties</button>
+      <pre id="partyRes"></pre>
     </section>
   </div>
 
@@ -247,9 +259,12 @@
   <div id="verdict" class="tab-content">
     <section>
       <h2>Verdict</h2>
-      <input type="text" placeholder="Verdict ID">
-      <input type="text" placeholder="Verdict Text">
-      <button class="action">Create Verdict</button>
+      <input type="text" placeholder="Verdict ID" id="verdictId">
+      <input type="text" placeholder="Verdict Text" id="verdictText">
+      <button class="action" onclick="createVerdict()">Create Verdict</button>
+      <button class="action" onclick="deleteVerdict()">Delete Verdict</button>
+      <button class="action" onclick="fetchVerdicts()">Fetch Verdicts</button>
+      <pre id="verdictRes"></pre>
     </section>
   </div>
 </div>
@@ -257,6 +272,7 @@
 <script>
   const base = "http://localhost:3000/api";
 
+  // Court Functions
   async function createCourt() {
     const data = {
       court_id: parseInt(document.getElementById('courtId').value),
@@ -290,6 +306,7 @@
     document.getElementById('courtRes').textContent = JSON.stringify(result, null, 2);
   }
 
+  // Judge Functions
   async function createJudge() {
     const data = {
       judge_id: parseInt(document.getElementById('judgeId').value),
@@ -323,18 +340,182 @@
     document.getElementById('judgeRes').textContent = JSON.stringify(result, null, 2);
   }
 
-  function fetchMaster() {
-    alert('Fetch master entries from /master endpoint and display in the table');
-    // Optional: Add fetch and populate logic here
+  // Lawyer Functions
+  async function createLawyer() {
+    const data = {
+      lawyer_id: parseInt(document.getElementById('lawyerId').value),
+      name: document.getElementById('lawyerName').value,
+      specialization: document.getElementById('lawyerSpecialization').value,
+      experience_years: document.getElementById('lawyerExperience').value
+    };
+    try {
+      const res = await fetch(`${base}/lawyers`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      if (!res.ok) throw new Error('Failed to create lawyer');
+      document.getElementById('lawyerRes').textContent = '✅ Lawyer created successfully!';
+    } catch (err) {
+      document.getElementById('lawyerRes').textContent = `❌ Error: ${err.message}`;
+    }
   }
 
-  function openTab(tabId) {
-    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-    document.getElementById(tabId).classList.add('active');
-    document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
-    document.querySelector(`.tab-button[onclick="openTab('${tabId}')"]`).classList.add('active');
+  async function fetchLawyers() {
+    const res = await fetch(`${base}/lawyers`);
+    const result = await res.json();
+    document.getElementById('lawyerRes').textContent = JSON.stringify(result, null, 2);
+  }
+
+  async function deleteLawyer() {
+    const id = document.getElementById('lawyerId').value;
+    const res = await fetch(`${base}/lawyers/${id}`, { method: 'DELETE' });
+    const result = await res.json();
+    document.getElementById('lawyerRes').textContent = JSON.stringify(result, null, 2);
+  }
+
+  // Plaintiff Functions
+  async function createPlaintiff() {
+    const data = {
+      plaintiff_id: parseInt(document.getElementById('plaintiffId').value),
+      name: document.getElementById('plaintiffName').value,
+      address: document.getElementById('plaintiffAddress').value
+    };
+    try {
+      const res = await fetch(`${base}/plaintiffs`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      if (!res.ok) throw new Error('Failed to create plaintiff');
+      document.getElementById('plaintiffRes').textContent = '✅ Plaintiff created successfully!';
+    } catch (err) {
+      document.getElementById('plaintiffRes').textContent = `❌ Error: ${err.message}`;
+    }
+  }
+
+  async function fetchPlaintiffs() {
+    const res = await fetch(`${base}/plaintiffs`);
+    const result = await res.json();
+    document.getElementById('plaintiffRes').textContent = JSON.stringify(result, null, 2);
+  }
+
+  async function deletePlaintiff() {
+    const id = document.getElementById('plaintiffId').value;
+    const res = await fetch(`${base}/plaintiffs/${id}`, { method: 'DELETE' });
+    const result = await res.json();
+    document.getElementById('plaintiffRes').textContent = JSON.stringify(result, null, 2);
+  }
+
+  // Defendant Functions
+  async function createDefendant() {
+    const data = {
+      defendant_id: parseInt(document.getElementById('defendantId').value),
+      name: document.getElementById('defendantName').value,
+      address: document.getElementById('defendantAddress').value
+    };
+    try {
+      const res = await fetch(`${base}/defendants`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      if (!res.ok) throw new Error('Failed to create defendant');
+      document.getElementById('defendantRes').textContent = '✅ Defendant created successfully!';
+    } catch (err) {
+      document.getElementById('defendantRes').textContent = `❌ Error: ${err.message}`;
+    }
+  }
+
+  async function fetchDefendants() {
+    const res = await fetch(`${base}/defendants`);
+    const result = await res.json();
+    document.getElementById('defendantRes').textContent = JSON.stringify(result, null, 2);
+  }
+
+  async function deleteDefendant() {
+    const id = document.getElementById('defendantId').value;
+    const res = await fetch(`${base}/defendants/${id}`, { method: 'DELETE' });
+    const result = await res.json();
+    document.getElementById('defendantRes').textContent = JSON.stringify(result, null, 2);
+  }
+
+  // Party Functions
+  async function createParty() {
+    const data = {
+      party_id: parseInt(document.getElementById('partyId').value),
+      name: document.getElementById('partyName').value,
+      party_type: document.getElementById('partyType').value
+    };
+    try {
+      const res = await fetch(`${base}/parties`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      if (!res.ok) throw new Error('Failed to create party');
+      document.getElementById('partyRes').textContent = '✅ Party created successfully!';
+    } catch (err) {
+      document.getElementById('partyRes').textContent = `❌ Error: ${err.message}`;
+    }
+  }
+
+  async function fetchParties() {
+    const res = await fetch(`${base}/parties`);
+    const result = await res.json();
+    document.getElementById('partyRes').textContent = JSON.stringify(result, null, 2);
+  }
+
+  async function deleteParty() {
+    const id = document.getElementById('partyId').value;
+    const res = await fetch(`${base}/parties/${id}`, { method: 'DELETE' });
+    const result = await res.json();
+    document.getElementById('partyRes').textContent = JSON.stringify(result, null, 2);
+  }
+
+  // Verdict Functions
+  async function createVerdict() {
+    const data = {
+      verdict_id: parseInt(document.getElementById('verdictId').value),
+      verdict_text: document.getElementById('verdictText').value
+    };
+    try {
+      const res = await fetch(`${base}/verdicts`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      if (!res.ok) throw new Error('Failed to create verdict');
+      document.getElementById('verdictRes').textContent = '✅ Verdict created successfully!';
+    } catch (err) {
+      document.getElementById('verdictRes').textContent = `❌ Error: ${err.message}`;
+    }
+  }
+
+  async function fetchVerdicts() {
+    const res = await fetch(`${base}/verdicts`);
+    const result = await res.json();
+    document.getElementById('verdictRes').textContent = JSON.stringify(result, null, 2);
+  }
+
+  async function deleteVerdict() {
+    const id = document.getElementById('verdictId').value;
+    const res = await fetch(`${base}/verdicts/${id}`, { method: 'DELETE' });
+    const result = await res.json();
+    document.getElementById('verdictRes').textContent = JSON.stringify(result, null, 2);
+  }
+
+  // Open Tabs
+  function openTab(tabName) {
+    const tabs = document.querySelectorAll('.tab-content');
+    const buttons = document.querySelectorAll('.tab-button');
+
+    tabs.forEach(tab => tab.classList.remove('active'));
+    buttons.forEach(button => button.classList.remove('active'));
+
+    document.getElementById(tabName).classList.add('active');
+    event.target.classList.add('active');
   }
 </script>
-
 </body>
 </html>
