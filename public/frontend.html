@@ -1,117 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Court Management System</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #f0f4ff, #e0ecff);
+      background: #f5f8fc;
       color: #333;
     }
 
     nav {
-      background-color: #007bff;
+      background-color: #1d3557;
       padding: 15px 30px;
       color: white;
       font-size: 24px;
       font-weight: 600;
       text-align: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      backdrop-filter: blur(5px);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
 
     .tabs {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      background: #fff;
+      background: #ffffff;
       padding: 10px 0;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      border-bottom: 1px solid #ddd;
     }
 
     .tab-button {
       margin: 5px;
       padding: 10px 20px;
-      border: none;
-      background: linear-gradient(145deg, #007bff, #3399ff);
-      color: white;
-      border-radius: 8px;
+      background: #e9ecef;
+      color: #333;
+      border: 1px solid #ccc;
+      border-radius: 5px;
       cursor: pointer;
       font-size: 16px;
-      transition: all 0.3s ease;
-    }
-
-    .tab-button:hover {
-      transform: scale(1.05);
-      background: linear-gradient(145deg, #0056b3, #007bff);
+      transition: all 0.2s ease;
     }
 
     .tab-button.active {
-      background: #0056b3;
+      background-color: #1d3557;
+      color: white;
       font-weight: bold;
-      border-bottom: 2px solid white;
+    }
+
+    .tab-button:hover {
+      background-color: #457b9d;
+      color: white;
     }
 
     .container {
-      max-width: 1200px;
+      max-width: 1100px;
       margin: 30px auto;
       padding: 20px;
     }
 
-    .tab-content { display: none; transition: opacity 0.3s ease; }
-    .tab-content.active { display: block; opacity: 1; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
 
     section {
       background: white;
       padding: 20px;
       margin-bottom: 20px;
-      border-radius: 15px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-      transition: box-shadow 0.3s ease;
-    }
-
-    section:hover {
-      box-shadow: 0 6px 25px rgba(0,0,0,0.1);
+      border-radius: 10px;
+      border: 1px solid #ddd;
     }
 
     h2 {
-      margin-bottom: 15px;
-      color: #007bff;
+      margin-bottom: 20px;
+      color: #1d3557;
       font-size: 22px;
     }
 
     input, button {
-      margin: 8px 10px 12px 0;
+      margin: 10px 10px 15px 0;
       padding: 10px;
-      border-radius: 8px;
+      border-radius: 5px;
       border: 1px solid #ccc;
-      font-size: 16px;
+      font-size: 15px;
     }
 
     input:focus {
-      border-color: #007bff;
+      border-color: #1d3557;
       outline: none;
-      box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+      box-shadow: 0 0 5px rgba(29, 53, 87, 0.3);
     }
 
     button.action {
-      background: linear-gradient(to right, #007bff, #3399ff);
+      background-color: #1d3557;
       color: white;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: background-color 0.2s ease;
     }
 
     button.action:hover {
-      background: linear-gradient(to right, #0056b3, #007bff);
-      transform: translateY(-2px);
+      background-color: #274b75;
     }
 
     pre, table {
-      background: #f9fbff;
+      background: #f1f3f6;
       padding: 15px;
       margin-top: 10px;
       border-radius: 8px;
@@ -121,22 +114,22 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      margin-top: 10px;
     }
 
     th, td {
       padding: 12px;
-      border: 1px solid #ddd;
+      border: 1px solid #ccc;
       text-align: center;
     }
 
     th {
-      background: #007bff;
+      background: #1d3557;
       color: white;
     }
 
     tbody tr:nth-child(even) {
-      background-color: #f1f7ff;
+      background-color: #eef3fa;
     }
   </style>
 </head>
@@ -175,7 +168,6 @@
     </section>
   </div>
 
-  <!-- Inserted Remaining Sections -->
   <!-- Court -->
   <div id="court" class="tab-content">
     <section>
@@ -184,13 +176,13 @@
       <input type="text" placeholder="Court Name" id="courtName">
       <input type="text" placeholder="Location" id="courtLocation">
       <input type="text" placeholder="Type" id="courtType">
-     <button class="action" onclick="createCourt()">Create Court</button>
-     <button class="action" onclick="deleteCourt()">Delete Court</button>
-     <button class="action" onclick="fetchCourts()">Fetch Court</button>
-     <pre id="courtRes"></pre>
+      <button class="action" onclick="createCourt()">Create Court</button>
+      <button class="action" onclick="deleteCourt()">Delete Court</button>
+      <button class="action" onclick="fetchCourts()">Fetch Court</button>
+      <pre id="courtRes"></pre>
     </section>
   </div>
-  
+
   <!-- Judge -->
   <div id="judge" class="tab-content">
     <section>
@@ -202,7 +194,7 @@
       <button class="action" onclick="createJudge()">Create Judge</button>
       <button class="action" onclick="deleteJudge()">Delete Judge</button>
       <button class="action" onclick="fetchJudge()">Fetch Judge</button>
-      <pre id = "judgeRes">
+      <pre id="judgeRes"></pre>
     </section>
   </div>
 
@@ -261,35 +253,29 @@
     </section>
   </div>
 </div>
+
 <script>
- const base = "http://localhost:3000/api";
+  const base = "http://localhost:3000/api";
 
-
- async function createCourt() {
-  const data = {
-    court_id: parseInt(document.getElementById('courtId').value),
-    court_name: document.getElementById('courtName').value,
-    location: document.getElementById('courtLocation').value,
-    court_type: document.getElementById('courtType').value
-  };
-
-  try {
-    const res = await fetch(`${base}/courts`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
-
-    if (!res.ok) {
-      throw new Error('Failed to create court');
+  async function createCourt() {
+    const data = {
+      court_id: parseInt(document.getElementById('courtId').value),
+      court_name: document.getElementById('courtName').value,
+      location: document.getElementById('courtLocation').value,
+      court_type: document.getElementById('courtType').value
+    };
+    try {
+      const res = await fetch(`${base}/courts`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      if (!res.ok) throw new Error('Failed to create court');
+      document.getElementById('courtRes').textContent = '✅ Court created successfully!';
+    } catch (err) {
+      document.getElementById('courtRes').textContent = `❌ Error: ${err.message}`;
     }
-
-    document.getElementById('courtRes').textContent = '✅ Court created successfully!';
-  } catch (err) {
-    document.getElementById('courtRes').textContent = `❌ Error: ${err.message}`;
   }
-}
-
 
   async function fetchCourts() {
     const res = await fetch(`${base}/courts`);
@@ -304,32 +290,25 @@
     document.getElementById('courtRes').textContent = JSON.stringify(result, null, 2);
   }
 
-  //Judges
   async function createJudge() {
-  const data = {
-    judge_id: parseInt(document.getElementById('judgeId').value),
-    name: document.getElementById('judgeName').value,
-    experience_years : document.getElementById('judgeExp').value,
-    court_id: parseInt(document.getElementById('JcourtId').value)
-  };
-
-  try {
-    const res = await fetch(`${base}/judges`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
-
-    if (!res.ok) {
-      throw new Error('Failed to create judge');
+    const data = {
+      judge_id: parseInt(document.getElementById('judgeId').value),
+      name: document.getElementById('judgeName').value,
+      experience_years: document.getElementById('judgeExp').value,
+      court_id: parseInt(document.getElementById('JcourtId').value)
+    };
+    try {
+      const res = await fetch(`${base}/judges`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      if (!res.ok) throw new Error('Failed to create judge');
+      document.getElementById('judgeRes').textContent = '✅ Judge created successfully!';
+    } catch (err) {
+      document.getElementById('judgeRes').textContent = `❌ Error: ${err.message}`;
     }
-
-    document.getElementById('judgeRes').textContent = '✅ Court created successfully!';
-  } catch (err) {
-    document.getElementById('judgeRes').textContent = `❌ Error: ${err.message}`;
   }
-}
-
 
   async function fetchJudge() {
     const res = await fetch(`${base}/judges`);
@@ -343,182 +322,11 @@
     const result = await res.json();
     document.getElementById('judgeRes').textContent = JSON.stringify(result, null, 2);
   }
-  
-  
 
   function fetchMaster() {
     alert('Fetch master entries from /master endpoint and display in the table');
-    // You can write logic to call `${base}/master` and populate #masterTable
+    // Optional: Add fetch and populate logic here
   }
-// Lawyer
-async function createLawyer() {
-  const inputs = document.querySelectorAll('#lawyer input');
-  const data = {
-    lawyer_id: parseInt(inputs[0].value),
-    name: inputs[1].value,
-    specialization: inputs[2].value,
-    experience_years: inputs[3].value
-  };
-  try {
-    const res = await fetch(`${base}/lawyers`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
-    if (!res.ok) throw new Error('Failed to create lawyer');
-    alert('✅ Lawyer created!');
-  } catch (err) {
-    alert(`❌ ${err.message}`);
-  }
-}
-
-async function deleteLawyer() {
-  const id = document.querySelector('#lawyer input').value;
-  const res = await fetch(`${base}/lawyers/${id}`, { method: 'DELETE' });
-  const result = await res.json();
-  alert(JSON.stringify(result, null, 2));
-}
-
-async function fetchLawyer() {
-  const res = await fetch(`${base}/lawyers`);
-  const result = await res.json();
-  alert(JSON.stringify(result, null, 2));
-}
-
-// Plaintiff
-async function createPlaintiff() {
-  const inputs = document.querySelectorAll('#plaintiff input');
-  const data = {
-    plaintiff_id: parseInt(inputs[0].value),
-    name: inputs[1].value,
-    address: inputs[2].value
-  };
-  try {
-    const res = await fetch(`${base}/plaintiffs`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
-    if (!res.ok) throw new Error('Failed to create plaintiff');
-    alert('✅ Plaintiff created!');
-  } catch (err) {
-    alert(`❌ ${err.message}`);
-  }
-}
-
-async function deletePlaintiff() {
-  const id = document.querySelector('#plaintiff input').value;
-  const res = await fetch(`${base}/plaintiffs/${id}`, { method: 'DELETE' });
-  const result = await res.json();
-  alert(JSON.stringify(result, null, 2));
-}
-
-async function fetchPlaintiff() {
-  const res = await fetch(`${base}/plaintiffs`);
-  const result = await res.json();
-  alert(JSON.stringify(result, null, 2));
-}
-
-// Defendant
-async function createDefendant() {
-  const inputs = document.querySelectorAll('#defendant input');
-  const data = {
-    defendant_id: parseInt(inputs[0].value),
-    name: inputs[1].value,
-    address: inputs[2].value
-  };
-  try {
-    const res = await fetch(`${base}/defendants`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
-    if (!res.ok) throw new Error('Failed to create defendant');
-    alert('✅ Defendant created!');
-  } catch (err) {
-    alert(`❌ ${err.message}`);
-  }
-}
-
-async function deleteDefendant() {
-  const id = document.querySelector('#defendant input').value;
-  const res = await fetch(`${base}/defendants/${id}`, { method: 'DELETE' });
-  const result = await res.json();
-  alert(JSON.stringify(result, null, 2));
-}
-
-async function fetchDefendant() {
-  const res = await fetch(`${base}/defendants`);
-  const result = await res.json();
-  alert(JSON.stringify(result, null, 2));
-}
-
-// Party
-async function createParty() {
-  const inputs = document.querySelectorAll('#party input');
-  const data = {
-    party_id: parseInt(inputs[0].value),
-    name: inputs[1].value,
-    party_type: inputs[2].value
-  };
-  try {
-    const res = await fetch(`${base}/parties`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
-    if (!res.ok) throw new Error('Failed to create party');
-    alert('✅ Party created!');
-  } catch (err) {
-    alert(`❌ ${err.message}`);
-  }
-}
-
-async function deleteParty() {
-  const id = document.querySelector('#party input').value;
-  const res = await fetch(`${base}/parties/${id}`, { method: 'DELETE' });
-  const result = await res.json();
-  alert(JSON.stringify(result, null, 2));
-}
-
-async function fetchParty() {
-  const res = await fetch(`${base}/parties`);
-  const result = await res.json();
-  alert(JSON.stringify(result, null, 2));
-}
-
-// Verdict
-async function createVerdict() {
-  const inputs = document.querySelectorAll('#verdict input');
-  const data = {
-    verdict_id: parseInt(inputs[0].value),
-    verdict_text: inputs[1].value
-  };
-  try {
-    const res = await fetch(`${base}/verdicts`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
-    if (!res.ok) throw new Error('Failed to create verdict');
-    alert('✅ Verdict created!');
-  } catch (err) {
-    alert(`❌ ${err.message}`);
-  }
-}
-
-async function deleteVerdict() {
-  const id = document.querySelector('#verdict input').value;
-  const res = await fetch(`${base}/verdicts/${id}`, { method: 'DELETE' });
-  const result = await res.json();
-  alert(JSON.stringify(result, null, 2));
-}
-
-async function fetchVerdict() {
-  const res = await fetch(`${base}/verdicts`);
-  const result = await res.json();
-  alert(JSON.stringify(result, null, 2));
-}
 
   function openTab(tabId) {
     document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
@@ -527,7 +335,6 @@ async function fetchVerdict() {
     document.querySelector(`.tab-button[onclick="openTab('${tabId}')"]`).classList.add('active');
   }
 </script>
-
 
 </body>
 </html>
