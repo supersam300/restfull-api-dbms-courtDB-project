@@ -185,6 +185,8 @@
       <input type="text" placeholder="Location" id="courtLocation">
       <input type="text" placeholder="Type" id="courtType">
      <button class="action" onclick="createCourt()">Create Court</button>
+     <button class="action" onclick="deleteCourt()">Delete Court</button>
+     <button class="action" onclick="fetchCourts()">Fetch Court</button>
      <pre id="courtRes"></pre>
     </section>
   </div>
@@ -193,11 +195,14 @@
   <div id="judge" class="tab-content">
     <section>
       <h2>Judge</h2>
-      <input type="text" placeholder="Judge ID">
-      <input type="text" placeholder="Name">
-      <input type="text" placeholder="Experience">
-      <input type="text" placeholder="Court ID">
-      <button class="action">Create Judge</button>
+      <input type="text" placeholder="Judge ID" id="judgeId">
+      <input type="text" placeholder="Name" id="judgeName">
+      <input type="text" placeholder="Experience" id="judgeExp">
+      <input type="text" placeholder="Court ID" id="JcourtId">
+      <button class="action" onclick="createJudge()">Create Judge</button>
+      <button class="action" onclick="deleteJudge()">Delete Judge</button>
+      <button class="action" onclick="fetchJudge()">Fetch Judge</button>
+      <pre id = "judgeRes">
     </section>
   </div>
 
@@ -260,21 +265,31 @@
  const base = "http://localhost:3000/api";
  // Change this to your backend base URL
 
-  async function createCourt() {
-    const data = {
-      court_id: parseInt(document.getElementById('courtId').value),
-      court_name: document.getElementById('courtName').value,
-      location: document.getElementById('courtLocation').value,
-      court_type: document.getElementById('courtType').value
-    };
+ async function createCourt() {
+  const data = {
+    court_id: parseInt(document.getElementById('courtId').value),
+    court_name: document.getElementById('courtName').value,
+    location: document.getElementById('courtLocation').value,
+    court_type: document.getElementById('courtType').value
+  };
+
+  try {
     const res = await fetch(`${base}/courts`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
     });
-    const result = await res.json();
-    document.getElementById('courtRes').textContent = JSON.stringify(result, null, 2);
+
+    if (!res.ok) {
+      throw new Error('Failed to create court');
+    }
+
+    document.getElementById('courtRes').textContent = '✅ Court created successfully!';
+  } catch (err) {
+    document.getElementById('courtRes').textContent = `❌ Error: ${err.message}`;
   }
+}
+
 
   async function fetchCourts() {
     const res = await fetch(`${base}/courts`);
@@ -288,6 +303,48 @@
     const result = await res.json();
     document.getElementById('courtRes').textContent = JSON.stringify(result, null, 2);
   }
+
+  //Judges
+  async function createJudge() {
+  const data = {
+    judge_id: parseInt(document.getElementById('judgeId').value),
+    name: document.getElementById('judgeName').value,
+    experience_years : document.getElementById('judgeExp').value,
+    court_id: parseInt(document.getElementById('JcourtId').value)
+  };
+
+  try {
+    const res = await fetch(`${base}/judges`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+
+    if (!res.ok) {
+      throw new Error('Failed to create judge');
+    }
+
+    document.getElementById('judgeRes').textContent = '✅ Court created successfully!';
+  } catch (err) {
+    document.getElementById('judgeRes').textContent = `❌ Error: ${err.message}`;
+  }
+}
+
+
+  async function fetchJudge() {
+    const res = await fetch(`${base}/judges`);
+    const result = await res.json();
+    document.getElementById('judgeRes').textContent = JSON.stringify(result, null, 2);
+  }
+
+  async function deleteJudge() {
+    const id = document.getElementById('judgeId').value;
+    const res = await fetch(`${base}/judges/${id}`, { method: 'DELETE' });
+    const result = await res.json();
+    document.getElementById('judgeRes').textContent = JSON.stringify(result, null, 2);
+  }
+  
+
 
   function fetchMaster() {
     alert('Fetch master entries from /master endpoint and display in the table');
