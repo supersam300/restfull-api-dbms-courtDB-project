@@ -132,19 +132,20 @@ export const deleteJudge = async (req, res) => {
 
 // CREATE Lawyer
 export const createLawyer = async (req, res) => {
-  const { name, specialization, experience_years } = req.body;
+  const { lawyer_id, name, specialization, experience_years } = req.body;
   try {
     const [result] = await pool.query(
-      'INSERT INTO Lawyer (name, specialization, experience_years) VALUES (?, ?, ?)',
-      [name, specialization, experience_years]
+      'INSERT INTO Lawyer (lawyer_id, name, specialization, experience_years) VALUES (?, ?, ?, ?)',
+      [lawyer_id, name, specialization, experience_years]
     );
     res.status(201).json({
-      lawyer_id: result.insertId,
+      lawyer_id,
       name,
       specialization,
       experience_years
     });
   } catch (err) {
+    console.error('Error creating lawyer:', err); // helpful for logs
     res.status(500).json({ error: err.message });
   }
 };
