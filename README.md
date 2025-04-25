@@ -43,5 +43,13 @@ DB_HOST=localhost
 DB_USER=root
 DB_PASSWORD=yourpassword
 DB_NAME=CourtSystem
+or you can configure it manually
+  host:'yourhost',
+    user:'username',
+    password:'password',
+    database:'db_name',
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
 Start the server
 npm run dev
