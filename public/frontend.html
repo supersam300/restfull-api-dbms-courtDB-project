@@ -229,6 +229,8 @@
       <h2>Plaintiff</h2>
       <input type="text" placeholder="Plaintiff ID" id="plaintiffIdParty">
       <input type="text" placeholder="Plaintiff Name" id="plaintiffName">
+      <input type="text" placeholder="Address" id="plaintiffAddress">
+      <input type="text" placeholder="Contact Number" id="plaintiffContact">
       <button type="button" class="action" onclick="createPlaintiff()">Create Plaintiff</button>
       <button type="button" class="action" onclick="deletePlaintiff()">Delete Plaintiff</button>
       <button type="button" class="action" onclick="fetchPlaintiff()">Fetch Plaintiff</button>
@@ -542,7 +544,7 @@ async function fetchLawyer() {
 
 /// CREATE Plaintiff
 async function createPlaintiff() {
-  const id = document.getElementById('plaintiffId').value; // plaintiff_id
+  const id = document.getElementById('plaintiffIdParty').value; // plaintiff_id
   const name = document.getElementById('plaintiffName').value; // name
   const address = document.getElementById('plaintiffAddress').value; // address
   const contact = document.getElementById('plaintiffContact').value; // contact_number
@@ -556,7 +558,7 @@ async function createPlaintiff() {
       address: address,
       contact_number: contact
     })
-  });
+  })
 
   if (!res.ok) throw new Error('Failed to create plaintiff');
   const result = await res.json();
@@ -565,12 +567,12 @@ async function createPlaintiff() {
 
 // UPDATE Plaintiff
 async function updatePlaintiff() {
-  const id = document.getElementById('plaintiffId').value; // plaintiff_id
+  const id = document.getElementById('plaintiffIdParty').value; // plaintiff_id
   const name = document.getElementById('plaintiffName').value; // name
   const address = document.getElementById('plaintiffAddress').value; // address
   const contact = document.getElementById('plaintiffContact').value; // contact_number
 
-  const res = await fetch(`${base}/api/plaintiffs/${id}`, {
+  const res = await fetch(`${base}/api/plaintiffs/${id.trim()}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -578,7 +580,8 @@ async function updatePlaintiff() {
       address: address,
       contact_number: contact
     })
-  });
+    })
+
 
   if (!res.ok) throw new Error('Failed to update plaintiff');
   const result = await res.json();
@@ -587,9 +590,9 @@ async function updatePlaintiff() {
 
 // DELETE Plaintiff
 async function deletePlaintiff() {
-  const id = document.getElementById('plaintiffId').value; // plaintiff_id
+  const id = document.getElementById('plaintiffIdParty').value; // plaintiff_id
 
-  const res = await fetch(`${base}/api/plaintiffs/${id}`, {
+  const res = await fetch(`${base}/api/plaintiffs/${id.trim()}`, {
     method: 'DELETE'
   });
 
