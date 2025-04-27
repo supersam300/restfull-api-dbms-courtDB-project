@@ -555,6 +555,18 @@ async function deleteVerdict() {
   if (!res.ok) throw new Error('Failed to delete verdict');
   document.getElementById('verdictRes').textContent = 'Verdict deleted successfully!';
 }
+
+   // Open Tabs
+  function openTab(tabName) {
+    const tabs = document.querySelectorAll('.tab-content');
+    const buttons = document.querySelectorAll('.tab-button');
+
+    tabs.forEach(tab => tab.classList.remove('active'));
+    buttons.forEach(button => button.classList.remove('active'));
+
+    document.getElementById(tabName).classList.add('active');
+    event.target.classList.add('active');
+  }
 </script>
 </body>
 </html>
