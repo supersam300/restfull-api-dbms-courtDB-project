@@ -302,461 +302,259 @@
 
 <script>
 
-  // Court Functions
-  const base = 'http://localhost:3000'; 
-  async function createCourt() {
-  const data = {
-    court_id: parseInt(document.getElementById('courtId').value),
-    court_name: document.getElementById('courtName').value,
-    location: document.getElementById('courtLocation').value,
-    court_type: document.getElementById('courtType').value
-  };
-  try {
-    const res = await fetch(`${base}/api/courts, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    }`);
-    if (!res.ok) throw new `Error('Failed to create court')`;
-    document.getElementById('courtRes').textContent = ' Court created successfully!';
-  } catch (err) {
-    document.getElementById('courtRes').textContent =  `Error: ${err.message}`;
-  }
-}
+const base = 'http://localhost:3000';
 
-async function fetchCourts() {
-  const res = await fetch(`${base}/api/courts`);
+// Create Court
+async function createCourt() {
+  const name = document.getElementById('courtName').value;
+  const location = document.getElementById('courtLocation').value;
+
+  const res = await fetch(`${base}/api/courts`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, location })
+  });
+  if (!res.ok) throw new Error('Failed to create court');
   const result = await res.json();
-  document.getElementById('courtRes').textContent = JSON.stringify(result, null, 2);
+  document.getElementById('courtRes').textContent = `Court created successfully!\n${JSON.stringify(result, null, 2)}`;
 }
 
+// Update Court
+async function updateCourt() {
+  const id = document.getElementById('courtId').value;
+  const name = document.getElementById('courtName').value;
+  const location = document.getElementById('courtLocation').value;
+
+  const res = await fetch(`${base}/api/courts/${id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, location })
+  });
+  if (!res.ok) throw new Error('Failed to update court');
+  const result = await res.json();
+  document.getElementById('courtRes').textContent = `Court updated successfully!\n${JSON.stringify(result, null, 2)}`;
+}
+
+// Delete Court
 async function deleteCourt() {
   const id = document.getElementById('courtId').value;
-  const res = await fetch(`${base}/api/courts/${id}, { method: 'DELETE' }`);
+
+  const res = await fetch(`${base}/api/courts/${id}`, {
+    method: 'DELETE'
+  });
+  if (!res.ok) throw new Error('Failed to delete court');
+  document.getElementById('courtRes').textContent = 'Court deleted successfully!';
+}
+
+// Create Judge
+async function createJudge() {
+  const name = document.getElementById('judgeName').value;
+  const courtId = document.getElementById('courtId1').value;
+
+  const res = await fetch(`${base}/api/judges`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, court_id: courtId })
+  });
+  if (!res.ok) throw new Error('Failed to create judge');
   const result = await res.json();
-  document.getElementById('courtRes').textContent = JSON.stringify(result, null, 2);
+  document.getElementById('judgeRes').textContent = `Judge created successfully!\n${JSON.stringify(result, null, 2)}`;
 }
 
-  async function updateCourts() {
-    const data = {
-      court_id: parseInt(document.getElementById('courtId1').value),
-      court_name: document.getElementById('courtName').value,
-      location: document.getElementById('courtLocation').value,
-      court_type: document.getElementById('courtType').value
-    };
-    try {
-      const res = await fetch(`${base}/api/courts/${data.court_id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
-      if (!res.ok) throw new Error('Failed to update court');
-      document.getElementById('courtRes').textContent = 'Court updated successfully!';
-    } catch (err) {
-      document.getElementById('courtRes').textContent = `Error: ${err.message}`;
-    }
-  }
+// Update Judge
+async function updateJudge() {
+  const id = document.getElementById('judgeId').value;
+  const name = document.getElementById('judgeName').value;
+  const courtId = document.getElementById('courtId1').value;
 
-  // Judge Functions
-  async function createJudge() {
-  const data = {
-    judge_id: parseInt(document.getElementById('judgeId').value),
-    name: document.getElementById('judgeName').value,
-    experience_years: document.getElementById('judgeExp').value,
-    court_id: parseInt(document.getElementById('JcourtId').value)
-  };
-  try {
-    const res = await fetch(`${base}/api/judges, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    }`);
-    if (!res.ok) throw new Error('Failed to create judge');
-    document.getElementById('judgeRes').textContent = ' Judge created successfully!';
-  } catch (err) {
-    document.getElementById('judgeRes').textContent =  `Error: ${err.message}`;
-  }
-}
-
-async function fetchJudge() {
-  const res = await fetch(`${base}/api/judges`);
+  const res = await fetch(`${base}/api/judges/${id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, court_id: courtId })
+  });
+  if (!res.ok) throw new Error('Failed to update judge');
   const result = await res.json();
-  document.getElementById('judgeRes').textContent = JSON.stringify(result, null, 2);
+  document.getElementById('judgeRes').textContent = `Judge updated successfully!\n${JSON.stringify(result, null, 2)}`;
 }
 
+// Delete Judge
 async function deleteJudge() {
   const id = document.getElementById('judgeId').value;
-  const res = await fetch(`${base}/api/judges/${id}, { method: 'DELETE' }`);
-  const result = await res.json();
-  document.getElementById('judgeRes').textContent = JSON.stringify(result, null, 2);
-}
-async function updateJudge() {
-  const data = {
-    judge_id: parseInt(document.getElementById('judgeId1').value),
-    name: document.getElementById('judgeName').value,
-    experience_years: document.getElementById('judgeExp').value,
-    court_id: parseInt(document.getElementById('JcourtId').value)
-  };
-  try {
-    const res = await fetch(`${base}/api/judges/${data.judge_id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
-    if (!res.ok) throw new Error('Failed to update judge');
-    document.getElementById('judgeRes').textContent = 'Judge updated successfully!';
-  } catch (err) {
-    document.getElementById('judgeRes').textContent = `Error: ${err.message}`;
-  }
-}
-  // Lawyer Functions
-  async function createLawyer() {
-  const data = {
-    lawyer_id: parseInt(document.getElementById('lawyerId').value),
-    name: document.getElementById('lawyerName').value,
-    specialization: document.getElementById('lawyerSpecialization').value,
-    experience_years: document.getElementById('lawyerExperience').value
-  };
-  try {
-    const res = await fetch(`${base}/api/lawyers, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    }`);
-    if (!res.ok) throw new Error('Failed to create lawyer');
-    document.getElementById('lawyerRes').textContent = ' Lawyer created successfully!';
-  } catch (err) {
-    document.getElementById('lawyerRes').textContent =  `Error: ${err.message}`;
-  }
+
+  const res = await fetch(`${base}/api/judges/${id}`, {
+    method: 'DELETE'
+  });
+  if (!res.ok) throw new Error('Failed to delete judge');
+  document.getElementById('judgeRes').textContent = 'Judge deleted successfully!';
 }
 
-async function fetchLawyers() {
-  const res = await fetch(`${base}/api/lawyers`);
+// Create Lawyer
+async function createLawyer() {
+  const name = document.getElementById('lawyerName').value;
+  const specialization = document.getElementById('lawyerSpecialization').value;
+
+  const res = await fetch(`${base}/api/lawyers`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, specialization })
+  });
+  if (!res.ok) throw new Error('Failed to create lawyer');
   const result = await res.json();
-  document.getElementById('lawyerRes').textContent = JSON.stringify(result, null, 2);
+  document.getElementById('lawyerRes').textContent = `Lawyer created successfully!\n${JSON.stringify(result, null, 2)}`;
 }
 
+// Update Lawyer
+async function updateLawyer() {
+  const id = document.getElementById('lawyerId').value;
+  const name = document.getElementById('lawyerName').value;
+  const specialization = document.getElementById('lawyerSpecialization').value;
+
+  const res = await fetch(`${base}/api/lawyers/${id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, specialization })
+  });
+  if (!res.ok) throw new Error('Failed to update lawyer');
+  const result = await res.json();
+  document.getElementById('lawyerRes').textContent = `Lawyer updated successfully!\n${JSON.stringify(result, null, 2)}`;
+}
+
+// Delete Lawyer
 async function deleteLawyer() {
   const id = document.getElementById('lawyerId').value;
-  const res = await fetch(`${base}/api/lawyers/${id}, { method: 'DELETE' }`);
-  const result = await res.json();
-  document.getElementById('lawyerRes').textContent = JSON.stringify(result, null, 2);
-}
-async function updateLawyers() {
-  const data = {
-    lawyer_id: parseInt(document.getElementById('lawyerId').value),
-    name: document.getElementById('lawyerName').value,
-    specialization: document.getElementById('lawyerSpecialization').value,
-    experience_years: document.getElementById('lawyerExperience').value
-  };
 
-  try {
-    const res = await fetch(`${base}/api/lawyers/${data.lawyer_id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
-
-    if (!res.ok) throw new Error('Failed to update lawyer');
-    document.getElementById('lawyerRes').textContent = 'Lawyer updated successfully!';
-  } catch (err) {
-    document.getElementById('lawyerRes').textContent = `Error: ${err.message}`;
-  }
+  const res = await fetch(`${base}/api/lawyers/${id}`, {
+    method: 'DELETE'
+  });
+  if (!res.ok) throw new Error('Failed to delete lawyer');
+  document.getElementById('lawyerRes').textContent = 'Lawyer deleted successfully!';
 }
 
-
- //  PLAINTIFF 
- // Create Plaintiff
+// Create Plaintiff
 async function createPlaintiff() {
-  const data = {
-    plaintiff_id: parseInt(document.getElementById('plaintiffId').value),
-    name: document.getElementById('plaintiffName').value,
-    address: document.getElementById('plaintiffAddress').value,
-    contact_number: document.getElementById('plaintiffContact').value
-  };
+  const name = document.getElementById('plaintiffName').value;
+  const address = document.getElementById('plaintiffAddress').value;
 
-  try {
-    const res = await fetch(`${base}/api/plaintiffs, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    }`);
-
-    if (!res.ok) throw new Error('Failed to create plaintiff');
-    
-    const result = await res.json();
-    document.getElementById('plaintiffRes').textContent =  `Plaintiff created successfully! \n ${JSON.stringify(result, null, 2)}`;
-  } catch (err) {
-    document.getElementById('plaintiffRes').textContent =  `Error: ${err.message}`;
-  }
+  const res = await fetch(`${base}/api/plaintiffs`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, address })
+  });
+  if (!res.ok) throw new Error('Failed to create plaintiff');
+  const result = await res.json();
+  document.getElementById('plaintiffRes').textContent = `Plaintiff created successfully!\n${JSON.stringify(result, null, 2)}`;
 }
 
-// Fetch Plaintiff
-async function fetchPlaintiffs() {
-  const id = parseInt(document.getElementById('plaintiffId').value);
-  const res = await fetch(`${base}/api/plaintiffs`);
-  
-  if (res.ok) {
-    const data = await res.json();
-    document.getElementById('plaintiffRes').textContent = JSON.stringify(data, null, 2);
-  } else {
-    document.getElementById('plaintiffRes').textContent =  `Error: Plaintiff not found!`;
-  }
+// Update Plaintiff
+async function updatePlaintiff() {
+  const id = document.getElementById('plaintiffId').value;
+  const name = document.getElementById('plaintiffName').value;
+  const address = document.getElementById('plaintiffAddress').value;
+
+  const res = await fetch(`${base}/api/plaintiffs/${id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, address })
+  });
+  if (!res.ok) throw new Error('Failed to update plaintiff');
+  const result = await res.json();
+  document.getElementById('plaintiffRes').textContent = `Plaintiff updated successfully!\n${JSON.stringify(result, null, 2)}`;
 }
 
 // Delete Plaintiff
 async function deletePlaintiff() {
-  const id = parseInt(document.getElementById('plaintiffId').value);
-  const res = await fetch(`${base}/api/plaintiffs/${id}, { method: 'DELETE' }`);
-  const result = await res.json();
-  document.getElementById('plaintiffRes').textContent = JSON.stringify(result, null, 2);
-}
-async function updatePlaintiffs() {
-  const data = {
-    plaintiff_id: parseInt(document.getElementById('plaintiffId1').value),
-    name: document.getElementById('plaintiffName').value,
-    address: document.getElementById('plaintiffAddress').value,
-    contact_number: document.getElementById('plaintiffContact').value
-  };
+  const id = document.getElementById('plaintiffId').value;
 
-  try {
-    const res = await fetch(`${base}/api/plaintiffs/${data.plaintiff_id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
-
-    if (!res.ok) throw new Error('Failed to update plaintiff');
-    document.getElementById('plaintiffRes').textContent = 'Plaintiff updated successfully!';
-  } catch (err) {
-    document.getElementById('plaintiffRes').textContent = `Error: ${err.message}`;
-  }
+  const res = await fetch(`${base}/api/plaintiffs/${id}`, {
+    method: 'DELETE'
+  });
+  if (!res.ok) throw new Error('Failed to delete plaintiff');
+  document.getElementById('plaintiffRes').textContent = 'Plaintiff deleted successfully!';
 }
 
-
-// DEFENDANT 
 // Create Defendant
 async function createDefendant() {
-  const data = {
-    defendant_id: parseInt(document.getElementById('defendantId').value),
-    name: document.getElementById('defendantName').value,
-    address: document.getElementById('defendantAddress').value,
-    contact_number: document.getElementById('defendantContact').value
-  };
+  const name = document.getElementById('defendantName').value;
+  const address = document.getElementById('defendantAddress').value;
 
-  try {
-    const res = await fetch(`${base}/api/defendants, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    }`);
-
-    if (!res.ok) throw new Error('Failed to create defendant');
-    
-    const result = await res.json();
-    document.getElementById('defendantRes').textContent =  'Defendant created successfully! \n' `${JSON.stringify(result, null, 2)}`;
-  } catch (err) {
-    document.getElementById('defendantRes').textContent =  `Error: ${err.message}`;
-  }
+  const res = await fetch(`${base}/api/defendants`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, address })
+  });
+  if (!res.ok) throw new Error('Failed to create defendant');
+  const result = await res.json();
+  document.getElementById('defendantRes').textContent = `Defendant created successfully!\n${JSON.stringify(result, null, 2)}`;
 }
 
-// Fetch Defendant
-async function fetchDefendants() {
-  const id = parseInt(document.getElementById('defendantId').value);
-  const res = await fetch(`${base}/api/defendants`);
-  
-  if (res.ok) {
-    const data = await res.json();
-    document.getElementById('defendantRes').textContent = JSON.stringify(data, null, 2);
-  } else {
-    document.getElementById('defendantRes').textContent =  `Error: Defendant not found!`;
-  }
+// Update Defendant
+async function updateDefendant() {
+  const id = document.getElementById('defendantId').value;
+  const name = document.getElementById('defendantName').value;
+  const address = document.getElementById('defendantAddress').value;
+
+  const res = await fetch(`${base}/api/defendants/${id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, address })
+  });
+  if (!res.ok) throw new Error('Failed to update defendant');
+  const result = await res.json();
+  document.getElementById('defendantRes').textContent = `Defendant updated successfully!\n${JSON.stringify(result, null, 2)}`;
 }
 
 // Delete Defendant
 async function deleteDefendant() {
-  const id = parseInt(document.getElementById('defendantId').value);
-  const res = await fetch(`${base}/api/defendants/${id}, { method: 'DELETE' }`);
-  const result = await res.json();
-  document.getElementById('defendantRes').textContent = JSON.stringify(result, null, 2);
-}
-async function updateDefendant() {
-  const data = {
-    defendant_id: parseInt(document.getElementById('defendantId1').value),
-    name: document.getElementById('defendantName').value,
-    address: document.getElementById('defendantAddress').value,
-    contact_number: document.getElementById('defendantContact').value
-  };
+  const id = document.getElementById('defendantId').value;
 
-  try {
-    const res = await fetch(`${base}/api/defendants/${data.defendant_id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
-
-    if (!res.ok) throw new Error('Failed to update defendant');
-    document.getElementById('defendantRes').textContent = 'Defendant updated successfully!';
-  } catch (err) {
-    document.getElementById('defendantRes').textContent = `Error: ${err.message}`;
-  }
-}
-// Case Functions
-async function createCase() {
- 
-
-  const data = {
-   
-     caseId: document.getElementById('caseId').value,
-    courtId: document.getElementById('courtId').value,
-    judgeId:  document.getElementById('judgeId').value,
-    case_number: document.getElementById('caseNumber').value,
-    case_type: document.getElementById('caseType').value,
-    filing_date: document.getElementById('filingDate').value,
-    status: document.getElementById('status').value,
-  
-  };
-
-  try {
-    const res = await fetch(`${base}/api/cases`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
-    if (!res.ok) {
-      const errorData = await res.json();
-      throw new Error(errorData.message || 'Failed to create case');
-    }
-    const result = await res.json();
-    document.getElementById('caseRes').textContent = `✅ Case created successfully!\n${JSON.stringify(result, null, 2)}`;
-  } catch (err) {
-    document.getElementById('caseRes').textContent = `❌ Error: ${err.message}`;
-  }
+  const res = await fetch(`${base}/api/defendants/${id}`, {
+    method: 'DELETE'
+  });
+  if (!res.ok) throw new Error('Failed to delete defendant');
+  document.getElementById('defendantRes').textContent = 'Defendant deleted successfully!';
 }
 
-
-
-async function fetchCases() {
-  const res = await fetch(`${base}/api/cases`);
-  const result = await res.json();
-  document.getElementById('caseRes').textContent = JSON.stringify(result, null, 2);
-}
-
-async function deleteCase() {
-  const id = document.getElementById('caseId').value;
-  const res = await fetch(`${base}/api/cases/${id}, { method: 'DELETE' }`);
-  const result = await res.json();
-  document.getElementById('caseRes').textContent = JSON.stringify(result, null, 2);
-}
-
-
-  // Party Functions
-  // Create Party
-async function createParty() {
-  const data = {
-    party_id: parseInt(document.getElementById('partyId').value),
-    name: document.getElementById('partyName').value,
-    role: document.getElementById('partyRole').value,  // Plaintiff or Defendant
-    contact_number: document.getElementById('partyContact').value
-  };
-
-  try {
-    const res = await fetch(`${base}/api/parties, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    }`);
-
-    if (!res.ok) throw new Error('Failed to create party');
-    
-    const result = await res.json();
-    document.getElementById('partyRes').textContent =  'Party created successfully! \n' `${JSON.stringify(result, null, 2)}`;
-  } catch (err) {
-    document.getElementById('partyRes').textContent =  `Error: ${err.message}`;
-  }
-}
-
-// Fetch Party
-async function fetchParty() {
-  const id = parseInt(document.getElementById('partyId').value);
-  const res = await fetch(`${base}/api/parties/${id}`);
-  
-  if (res.ok) {
-    const data = await res.json();
-    document.getElementById('partyRes').textContent = JSON.stringify(data, null, 2);
-  } else {
-    document.getElementById('partyRes').textContent =  `Error: Party not found!`;
-  }
-}
-
-// Delete Party
-async function deleteParty() {
-  const id = parseInt(document.getElementById('partyId').value);
-  const res = await fetch(`${base}/api/parties/${id}, { method: 'DELETE' }`);
-  const result = await res.json();
-  document.getElementById('partyRes').textContent = JSON.stringify(result, null, 2);
-}
-
-
-  // Verdict Functions
 // Create Verdict
 async function createVerdict() {
-  const data = {
-    verdict_id: parseInt(document.getElementById('verdictId').value),
-    case_id: parseInt(document.getElementById('caseId').value),
-    verdict: document.getElementById('verdict').value,
-    judge_id: parseInt(document.getElementById('judgeId').value)
-  };
+  const caseId = document.getElementById('caseId').value;
+  const verdictText = document.getElementById('verdictText').value;
 
-  try {
-    const res = await fetch(`${base}/api/verdicts, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    }`);
-
-    if (!res.ok) throw new Error('Failed to create verdict');
-    
-    const result = await res.json();
-    document.getElementById('verdictRes').textContent =  'Verdict created successfully! \n '`${JSON.stringify(result, null, 2)}`;
-  } catch (err) {
-    document.getElementById('verdictRes').textContent =  `Error: ${err.message}`;
-  }
+  const res = await fetch(`${base}/api/verdicts`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ case_id: caseId, verdict_text: verdictText })
+  });
+  if (!res.ok) throw new Error('Failed to create verdict');
+  const result = await res.json();
+  document.getElementById('verdictRes').textContent = `Verdict created successfully!\n${JSON.stringify(result, null, 2)}`;
 }
 
-// Fetch Verdict
-async function fetchVerdict() {
-  const id = parseInt(document.getElementById('verdictId').value);
-  const res = await fetch(`${base}/api/verdicts/${id}`);
-  
-  if (res.ok) {
-    const data = await res.json();
-    document.getElementById('verdictRes').textContent = JSON.stringify(data, null, 2);
-  } else {
-    document.getElementById('verdictRes').textContent =  `Error: Verdict not found!`;
-  }
+// Update Verdict
+async function updateVerdict() {
+  const id = document.getElementById('verdictId').value;
+  const caseId = document.getElementById('caseId').value;
+  const verdictText = document.getElementById('verdictText').value;
+
+  const res = await fetch(`${base}/api/verdicts/${id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ case_id: caseId, verdict_text: verdictText })
+  });
+  if (!res.ok) throw new Error('Failed to update verdict');
+  const result = await res.json();
+  document.getElementById('verdictRes').textContent = `Verdict updated successfully!\n${JSON.stringify(result, null, 2)}`;
 }
 
 // Delete Verdict
 async function deleteVerdict() {
-  const id = parseInt(document.getElementById('verdictId').value);
-  const res = await fetch(`${base}/api/verdicts/${id}, { method: 'DELETE' });
-  const result = await res.json();
-  document.getElementById('verdictRes').textContent = JSON.stringify(result, null, 2`);
+  const id = document.getElementById('verdictId').value;
+
+  const res = await fetch(`${base}/api/verdicts/${id}`, {
+    method: 'DELETE'
+  });
+  if (!res.ok) throw new Error('Failed to delete verdict');
+  document.getElementById('verdictRes').textContent = 'Verdict deleted successfully!';
 }
-
-
-  // Open Tabs
-  function openTab(tabName) {
-    const tabs = document.querySelectorAll('.tab-content');
-    const buttons = document.querySelectorAll('.tab-button');
-
-    tabs.forEach(tab => tab.classList.remove('active'));
-    buttons.forEach(button => button.classList.remove('active'));
-
-    document.getElementById(tabName).classList.add('active');
-    event.target.classList.add('active');
-  }
 </script>
 </body>
 </html>
