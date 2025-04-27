@@ -196,6 +196,7 @@
       <h2>Judge</h2>
       <input type="text" placeholder="Judge ID" id="judgeId">
       <input type="text" placeholder="Judge Name" id="judgeName">
+      <input type="text" placeholder="Experience (Years)" id="judgeExp">
       <input type="text" placeholder="Court ID" id="judgeCourtId">
       <button type="button" class="action" onclick="createJudge()">Create Judge</button>
       <button type="button" class="action" onclick="deleteJudge()">Delete Judge</button>
@@ -212,6 +213,8 @@
       <input type="text" placeholder="Lawyer ID" id="lawyerIdLawyer">
       <input type="text" placeholder="Lawyer Name" id="lawyerName">
       <input type="text" placeholder="Lawyer Type" id="lawyerType">
+      <input type="text" placeholder="Specialization" id="lawyerSpecialization">
+      <input type="text" placeholder="Experience (Years)" id="lawyerExperience">
       <button type="button" class="action" onclick="createLawyer()">Create Lawyer</button>
       <button type="button" class="action" onclick="deleteLawyer()">Delete Lawyer</button>
       <button type="button" class="action" onclick="fetchLawyer()">Fetch Lawyer</button>
@@ -407,17 +410,18 @@ async function fetchCourt() {
 }
 // Removed duplicate declaration of base variable
 const base = 'http://localhost:3000';
-
 // CREATE Judge
 async function createJudge() {
+  const id = document.getElementById('judgeId').value; // judge_id
   const name = document.getElementById('judgeName').value; // name
   const experience = document.getElementById('judgeExp').value; // experience_years
-  const courtId = document.getElementById('courtId').value; // court_id
+  const courtId = document.getElementById('judgeCourtId').value; // court_id
 
   const res = await fetch(`${base}/api/judges`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
+      judge_id: id,
       name: name,
       experience_years: experience,
       court_id: courtId
@@ -434,7 +438,7 @@ async function updateJudge() {
   const id = document.getElementById('judgeId').value; // judge_id
   const name = document.getElementById('judgeName').value; // name
   const experience = document.getElementById('judgeExp').value; // experience_years
-  const courtId = document.getElementById('courtId').value; // court_id
+  const courtId = document.getElementById('judgeCourtId').value; // court_id
 
   const res = await fetch(`${base}/api/judges/${id}`, {
     method: 'PUT',
@@ -473,7 +477,7 @@ async function fetchJudge() {
 
 // CREATE Lawyer
 async function createLawyer() {
-  const id = document.getElementById('lawyerId').value; // lawyer_id
+  const id = document.getElementById('lawyerIdLawyer').value;  // lawyer_id
   const name = document.getElementById('lawyerName').value; // name
   const specialization = document.getElementById('lawyerSpecialization').value; // specialization
   const experience = document.getElementById('lawyerExperience').value; // experience_years
@@ -496,7 +500,7 @@ async function createLawyer() {
 
 // UPDATE Lawyer
 async function updateLawyer() {
-  const id = document.getElementById('lawyerId').value; // lawyer_id
+  const id = document.getElementById('lawyerIdLawyer').value;// lawyer_id
   const name = document.getElementById('lawyerName').value; // name
   const specialization = document.getElementById('lawyerSpecialization').value; // specialization
   const experience = document.getElementById('lawyerExperience').value; // experience_years
@@ -518,7 +522,7 @@ async function updateLawyer() {
 
 // DELETE Lawyer
 async function deleteLawyer() {
-  const id = document.getElementById('lawyerId').value; // lawyer_id
+  const id = document.getElementById('lawyerIdLawyer').value; // lawyer_id
 
   const res = await fetch(`${base}/api/lawyers/${id}`, {
     method: 'DELETE'
