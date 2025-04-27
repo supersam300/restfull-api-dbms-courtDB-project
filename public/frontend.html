@@ -245,7 +245,9 @@
       <h2>Defendant</h2>
       <input type="text" placeholder="Defendant ID" id="defendantIdParty">
       <input type="text" placeholder="Defendant Name" id="defendantName">
-      <button type="button" class="action" onclick="createDefendant()">Create Defendant</button>
+      <input type="text" placeholder="Address" id="defendantAddress">
+      <input type="text" placeholder="Contact Number" id="defendantContact">
+      <button type="buttons" class="action" onclick="createDefendant()">Create Defendant</button>
       <button type="button" class="action" onclick="deleteDefendant()">Delete Defendant</button>
       <button type="button" class="action" onclick="fetchDefendant()">Fetch Defendant</button>
       <button type="button" class="action" onclick="updateDefendant()">Update Defendant</button>
@@ -611,7 +613,7 @@ async function fetchPlaintiff() {
 
 //// CREATE Defendant
 async function createDefendant() {
-  const id = document.getElementById('defendantId').value; // defendant_id
+  const id = document.getElementById('defendantIdParty').value; // defendant_id
   const name = document.getElementById('defendantName').value; // name
   const address = document.getElementById('defendantAddress').value; // address
   const contact = document.getElementById('defendantContact').value; // contact_number
@@ -634,7 +636,7 @@ async function createDefendant() {
 
 // UPDATE Defendant
 async function updateDefendant() {
-  const id = document.getElementById('defendantId').value; // defendant_id
+  const id = document.getElementById('defendantIdParty').value; // defendant_id
   const name = document.getElementById('defendantName').value; // name
   const address = document.getElementById('defendantAddress').value; // address
   const contact = document.getElementById('defendantContact').value; // contact_number
@@ -656,7 +658,7 @@ async function updateDefendant() {
 
 // DELETE Defendant
 async function deleteDefendant() {
-  const id = document.getElementById('defendantId').value; // defendant_id
+  const id = document.getElementById('defendantIdParty').value; // defendant_id
 
   const res = await fetch(`${base}/api/defendants/${id}`, {
     method: 'DELETE'
