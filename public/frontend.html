@@ -15,13 +15,18 @@
     nav {
       background-color: #333;
       color: white;
-      padding: 10px 20px;
+      padding: 18px 20px 14px 20px;
       text-align: center;
+      font-size: 1.6rem;
+      font-weight: 600;
+      letter-spacing: 1px;
     }
     .tabs {
       display: flex;
       justify-content: center;
       margin-top: 20px;
+      flex-wrap: wrap;
+      gap: 6px;
     }
     .tab-button {
       background-color: #555;
@@ -29,17 +34,22 @@
       border: none;
       padding: 10px 20px;
       cursor: pointer;
-      margin-right: 5px;
+      border-radius: 5px 5px 0 0;
+      font-size: 1rem;
+      transition: background 0.2s;
     }
     .tab-button.active {
-      background-color: #777;
+      background-color: #007bff;
+      font-weight: bold;
     }
     .tab-content {
       display: none;
       padding: 20px;
       background-color: white;
-      border-radius: 5px;
+      border-radius: 0 0 8px 8px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+      margin-top: 0;
     }
     .tab-content.active {
       display: block;
@@ -52,6 +62,9 @@
       width: calc(100% - 22px);
       padding: 10px;
       margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      font-size: 1rem;
     }
     button.action {
       background-color: #28a745;
@@ -59,6 +72,11 @@
       border: none;
       padding: 10px 20px;
       cursor: pointer;
+      border-radius: 3px;
+      margin-right: 10px;
+      margin-bottom: 10px;
+      font-size: 1rem;
+      transition: background 0.2s;
     }
     button.action:hover {
       background-color: #218838;
@@ -67,11 +85,13 @@
       width: 100%;
       border-collapse: collapse;
       margin-top: 20px;
+      margin-bottom: 10px;
     }
     th, td {
       border: 1px solid #ddd;
       padding: 8px;
       text-align: left;
+      font-size: 1rem;
     }
     th {
       background-color: #333;
@@ -82,13 +102,25 @@
       padding: 10px;
       border-radius: 4px;
       overflow-x: auto;
+      margin-top: 8px;
+    }
+    .message-success {
+      color: #28a745;
+      font-weight: bold;
+      font-size: 1.08rem;
+      margin-bottom: 7px;
+    }
+    .message-error {
+      color: #dc3545;
+      font-weight: bold;
+      font-size: 1.08rem;
+      margin-bottom: 7px;
     }
   </style>
 </head>
 <body>
 <nav>Court Management System</nav>
 <div class="tabs">
-  <button type="button" class="tab-button active" onclick="openTab('dashboard')">Dashboard</button>
   <button type="button" class="tab-button" onclick="openTab('court')">Court</button>
   <button type="button" class="tab-button" onclick="openTab('judge')">Judge</button>
   <button type="button" class="tab-button" onclick="openTab('lawyer')">Lawyer</button>
@@ -101,30 +133,6 @@
 </div>
 
 <div class="container">
-  <!-- Dashboard -->
-  <div id="dashboard" class="tab-content active">
-    <section>
-      <h2>Dashboard - Master Entries</h2>
-      <button type="button" class="action" onclick="fetchMaster()">Refresh Dashboard</button>
-      <table id="masterTable">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Court</th>
-            <th>Judge</th>
-            <th>Lawyer</th>
-            <th>Case</th>
-            <th>Plaintiff</th>
-            <th>Defendant</th>
-            <th>Party</th>
-            <th>Verdict</th>
-            <th>Case Lawyer</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </section>
-  </div>
 
   <!-- Court -->
   <div id="court" class="tab-content">
@@ -134,7 +142,7 @@
       <input type="text" placeholder="Location" id="courtLocation">
       <input type="text" placeholder="Type" id="courtType">
       <button type="button" class="action" onclick="createCourt()">Create Court</button>
-      <pre id="courtRes"></pre>
+      <div id="courtRes"></div>
     </section>
     <section>
       <h2>Manage Court</h2>
@@ -148,7 +156,6 @@
       <div id="courtRes2"></div>
     </section>
   </div>
-
   <!-- Judge -->
   <div id="judge" class="tab-content">
     <section>
@@ -157,7 +164,7 @@
       <input type="number" placeholder="Experience (Years)" id="judgeExp">
       <input type="number" placeholder="Court ID" id="judgeCourtId">
       <button type="button" class="action" onclick="createJudge()">Create Judge</button>
-      <pre id="judgeRes"></pre>
+      <div id="judgeRes"></div>
     </section>
     <section>
       <h2>Manage Judge</h2>
@@ -171,7 +178,6 @@
       <div id="judgeRes2"></div>
     </section>
   </div>
-
   <!-- Lawyer -->
   <div id="lawyer" class="tab-content">
     <section>
@@ -180,7 +186,7 @@
       <input type="text" placeholder="Specialization" id="lawyerSpecialization">
       <input type="number" placeholder="Experience (Years)" id="lawyerExperience">
       <button type="button" class="action" onclick="createLawyer()">Create Lawyer</button>
-      <pre id="lawyerRes"></pre>
+      <div id="lawyerRes"></div>
     </section>
     <section>
       <h2>Manage Lawyer</h2>
@@ -194,7 +200,6 @@
       <div id="lawyerRes2"></div>
     </section>
   </div>
-
   <!-- Plaintiff -->
   <div id="plaintiff" class="tab-content">
     <section>
@@ -203,7 +208,7 @@
       <input type="text" placeholder="Address" id="plaintiffAddress">
       <input type="text" placeholder="Contact Number" id="plaintiffContact">
       <button type="button" class="action" onclick="createPlaintiff()">Create Plaintiff</button>
-      <pre id="plaintiffRes"></pre>
+      <div id="plaintiffRes"></div>
     </section>
     <section>
       <h2>Manage Plaintiff</h2>
@@ -217,7 +222,6 @@
       <div id="plaintiffRes2"></div>
     </section>
   </div>
-
   <!-- Defendant -->
   <div id="defendant" class="tab-content">
     <section>
@@ -226,7 +230,7 @@
       <input type="text" placeholder="Address" id="defendantAddress">
       <input type="text" placeholder="Contact Number" id="defendantContact">
       <button type="button" class="action" onclick="createDefendant()">Create Defendant</button>
-      <pre id="defendantRes"></pre>
+      <div id="defendantRes"></div>
     </section>
     <section>
       <h2>Manage Defendant</h2>
@@ -240,7 +244,6 @@
       <div id="defendantRes2"></div>
     </section>
   </div>
-
   <!-- Case -->
   <div id="case" class="tab-content">
     <section>
@@ -251,7 +254,7 @@
       <input type="number" placeholder="Court ID" id="caseCourtId">
       <input type="number" placeholder="Judge ID" id="caseJudgeId">
       <button type="button" class="action" onclick="createCase()">Create Case</button>
-      <pre id="caseRes"></pre>
+      <div id="caseRes"></div>
     </section>
     <section>
       <h2>Manage Case</h2>
@@ -267,7 +270,6 @@
       <div id="caseRes2"></div>
     </section>
   </div>
-
   <!-- Party -->
   <div id="party" class="tab-content">
     <section>
@@ -277,7 +279,7 @@
       <input type="number" placeholder="Plaintiff ID" id="partyPlaintiffId">
       <input type="number" placeholder="Defendant ID" id="partyDefendantId">
       <button type="button" class="action" onclick="createParty()">Create Party</button>
-      <pre id="partyRes"></pre>
+      <div id="partyRes"></div>
     </section>
     <section>
       <h2>Manage Party</h2>
@@ -292,7 +294,6 @@
       <div id="partyRes2"></div>
     </section>
   </div>
-
   <!-- Verdict -->
   <div id="verdict" class="tab-content">
     <section>
@@ -301,7 +302,7 @@
       <input type="number" placeholder="Judge ID" id="verdictJudgeId">
       <input type="text" placeholder="Decision" id="verdictDecision">
       <button type="button" class="action" onclick="createVerdict()">Create Verdict</button>
-      <pre id="verdictRes"></pre>
+      <div id="verdictRes"></div>
     </section>
     <section>
       <h2>Manage Verdict</h2>
@@ -315,7 +316,6 @@
       <div id="verdictRes2"></div>
     </section>
   </div>
-
   <!-- Case Lawyer -->
   <div id="caseLawyer" class="tab-content">
     <section>
@@ -324,7 +324,7 @@
       <input type="number" placeholder="Lawyer ID" id="caseLawyerLawyerId">
       <input type="text" placeholder="Role" id="caseLawyerRole">
       <button type="button" class="action" onclick="createCaseLawyer()">Create Case Lawyer</button>
-      <pre id="caseLawyerRes"></pre>
+      <div id="caseLawyerRes"></div>
     </section>
     <section>
       <h2>Manage Case Lawyer</h2>
@@ -343,7 +343,7 @@
 <script>
 const base = 'http://localhost:3000';
 
-// Utility: Tab switching
+// Tab switching
 function openTab(tabName) {
   const tabs = document.querySelectorAll('.tab-content');
   const buttons = document.querySelectorAll('.tab-button');
@@ -353,7 +353,17 @@ function openTab(tabName) {
   event.target.classList.add('active');
 }
 
-// Utility: Render array of objects as a table
+// Render a JSON object as a table
+function renderObjectTable(obj) {
+  let html = '<table><tbody>';
+  for (const [key, value] of Object.entries(obj)) {
+    html += `<tr><th>${key}</th><td>${value}</td></tr>`;
+  }
+  html += '</tbody></table>';
+  return html;
+}
+
+// Render array of objects as a table
 function renderTable(data) {
   if (!Array.isArray(data) || data.length === 0) {
     return '<p>No records found.</p>';
@@ -374,28 +384,28 @@ function renderTable(data) {
   return html;
 }
 
-// Dashboard (Master)
-async function fetchMaster() {
-  const res = await fetch(`${base}/api/master`);
-  const data = await res.json();
-  const tableBody = document.querySelector('#masterTable tbody');
-  tableBody.innerHTML = '';
-  data.forEach(item => {
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${item.master_id}</td>
-      <td>${item.court_id || 'N/A'}</td>
-      <td>${item.judge_id || 'N/A'}</td>
-      <td>${item.lawyer_id || 'N/A'}</td>
-      <td>${item.case_id || 'N/A'}</td>
-      <td>${item.plaintiff_id || 'N/A'}</td>
-      <td>${item.defendant_id || 'N/A'}</td>
-      <td>${item.party_id || 'N/A'}</td>
-      <td>${item.verdict_id || 'N/A'}</td>
-      <td>${item.case_lawyer_id || 'N/A'}</td>
-    `;
-    tableBody.appendChild(row);
-  });
+// Helper: handle response for create/update/delete
+async function handleActionResponse(res, elId) {
+  let html = '';
+  try {
+    const result = await res.json();
+    if (result.message) {
+      html += `<div class="message-success">${result.message}</div>`;
+    }
+    // If the result contains other keys (e.g. record data), show as table
+    const keys = Object.keys(result).filter(k => k !== 'message');
+    if (keys.length > 0) {
+      // If only one object (e.g. court_id, court_name, ...), show as table
+      if (keys.length > 1 || typeof result[keys[0]] !== 'string') {
+        html += renderObjectTable(result);
+      }
+    }
+  } catch (e) {
+    // Not JSON, fallback to plain text
+    const text = await res.text();
+    html = `<div class="message-error">${text}</div>`;
+  }
+  document.getElementById(elId).innerHTML = html;
 }
 
 // COURT
@@ -408,7 +418,7 @@ async function createCourt() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ court_name, location, court_type })
   });
-  document.getElementById('courtRes').textContent = await res.text();
+  await handleActionResponse(res, 'courtRes');
 }
 async function updateCourt() {
   const id = document.getElementById('courtId').value;
@@ -420,12 +430,12 @@ async function updateCourt() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ court_name, location, court_type })
   });
-  document.getElementById('courtRes2').textContent = await res.text();
+  await handleActionResponse(res, 'courtRes2');
 }
 async function deleteCourt() {
   const id = document.getElementById('courtId').value;
   const res = await fetch(`${base}/api/courts/${id}`, { method: 'DELETE' });
-  document.getElementById('courtRes2').textContent = await res.text();
+  await handleActionResponse(res, 'courtRes2');
 }
 async function fetchCourt() {
   const res = await fetch(`${base}/api/courts`);
@@ -448,7 +458,7 @@ async function createJudge() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name, experience_years, court_id })
   });
-  document.getElementById('judgeRes').textContent = await res.text();
+  await handleActionResponse(res, 'judgeRes');
 }
 async function updateJudge() {
   const id = document.getElementById('judgeId').value;
@@ -460,12 +470,12 @@ async function updateJudge() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name, experience_years, court_id })
   });
-  document.getElementById('judgeRes2').textContent = await res.text();
+  await handleActionResponse(res, 'judgeRes2');
 }
 async function deleteJudge() {
   const id = document.getElementById('judgeId').value;
   const res = await fetch(`${base}/api/judges/${id}`, { method: 'DELETE' });
-  document.getElementById('judgeRes2').textContent = await res.text();
+  await handleActionResponse(res, 'judgeRes2');
 }
 async function fetchJudge() {
   const res = await fetch(`${base}/api/judges`);
@@ -488,7 +498,7 @@ async function createLawyer() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name, specialization, experience_years })
   });
-  document.getElementById('lawyerRes').textContent = await res.text();
+  await handleActionResponse(res, 'lawyerRes');
 }
 async function updateLawyer() {
   const id = document.getElementById('lawyerId').value;
@@ -500,12 +510,12 @@ async function updateLawyer() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name, specialization, experience_years })
   });
-  document.getElementById('lawyerRes2').textContent = await res.text();
+  await handleActionResponse(res, 'lawyerRes2');
 }
 async function deleteLawyer() {
   const id = document.getElementById('lawyerId').value;
   const res = await fetch(`${base}/api/lawyers/${id}`, { method: 'DELETE' });
-  document.getElementById('lawyerRes2').textContent = await res.text();
+  await handleActionResponse(res, 'lawyerRes2');
 }
 async function fetchLawyer() {
   const res = await fetch(`${base}/api/lawyers`);
@@ -528,7 +538,7 @@ async function createPlaintiff() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name, address, contact_number })
   });
-  document.getElementById('plaintiffRes').textContent = await res.text();
+  await handleActionResponse(res, 'plaintiffRes');
 }
 async function updatePlaintiff() {
   const id = document.getElementById('plaintiffId').value;
@@ -540,12 +550,12 @@ async function updatePlaintiff() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name, address, contact_number })
   });
-  document.getElementById('plaintiffRes2').textContent = await res.text();
+  await handleActionResponse(res, 'plaintiffRes2');
 }
 async function deletePlaintiff() {
   const id = document.getElementById('plaintiffId').value;
   const res = await fetch(`${base}/api/plaintiffs/${id}`, { method: 'DELETE' });
-  document.getElementById('plaintiffRes2').textContent = await res.text();
+  await handleActionResponse(res, 'plaintiffRes2');
 }
 async function fetchPlaintiff() {
   const res = await fetch(`${base}/api/plaintiffs`);
@@ -568,7 +578,7 @@ async function createDefendant() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name, address, contact_number })
   });
-  document.getElementById('defendantRes').textContent = await res.text();
+  await handleActionResponse(res, 'defendantRes');
 }
 async function updateDefendant() {
   const id = document.getElementById('defendantId').value;
@@ -580,12 +590,12 @@ async function updateDefendant() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name, address, contact_number })
   });
-  document.getElementById('defendantRes2').textContent = await res.text();
+  await handleActionResponse(res, 'defendantRes2');
 }
 async function deleteDefendant() {
   const id = document.getElementById('defendantId').value;
   const res = await fetch(`${base}/api/defendants/${id}`, { method: 'DELETE' });
-  document.getElementById('defendantRes2').textContent = await res.text();
+  await handleActionResponse(res, 'defendantRes2');
 }
 async function fetchDefendant() {
   const res = await fetch(`${base}/api/defendants`);
@@ -610,7 +620,7 @@ async function createCase() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ case_number, case_type, status, court_id, judge_id })
   });
-  document.getElementById('caseRes').textContent = await res.text();
+  await handleActionResponse(res, 'caseRes');
 }
 async function updateCase() {
   const id = document.getElementById('caseId').value;
@@ -624,12 +634,12 @@ async function updateCase() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ case_number, case_type, status, court_id, judge_id })
   });
-  document.getElementById('caseRes2').textContent = await res.text();
+  await handleActionResponse(res, 'caseRes2');
 }
 async function deleteCase() {
   const id = document.getElementById('caseId').value;
   const res = await fetch(`${base}/api/cases/${id}`, { method: 'DELETE' });
-  document.getElementById('caseRes2').textContent = await res.text();
+  await handleActionResponse(res, 'caseRes2');
 }
 async function fetchCase() {
   const res = await fetch(`${base}/api/cases`);
@@ -653,7 +663,7 @@ async function createParty() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ case_id, party_type, plaintiff_id, defendant_id })
   });
-  document.getElementById('partyRes').textContent = await res.text();
+  await handleActionResponse(res, 'partyRes');
 }
 async function updateParty() {
   const id = document.getElementById('partyId').value;
@@ -666,12 +676,12 @@ async function updateParty() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ case_id, party_type, plaintiff_id, defendant_id })
   });
-  document.getElementById('partyRes2').textContent = await res.text();
+  await handleActionResponse(res, 'partyRes2');
 }
 async function deleteParty() {
   const id = document.getElementById('partyId').value;
   const res = await fetch(`${base}/api/parties/${id}`, { method: 'DELETE' });
-  document.getElementById('partyRes2').textContent = await res.text();
+  await handleActionResponse(res, 'partyRes2');
 }
 async function fetchParty() {
   const res = await fetch(`${base}/api/parties`);
@@ -694,7 +704,7 @@ async function createVerdict() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ case_id, judge_id, decision })
   });
-  document.getElementById('verdictRes').textContent = await res.text();
+  await handleActionResponse(res, 'verdictRes');
 }
 async function updateVerdict() {
   const id = document.getElementById('verdictId').value;
@@ -706,12 +716,12 @@ async function updateVerdict() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ case_id, judge_id, decision })
   });
-  document.getElementById('verdictRes2').textContent = await res.text();
+  await handleActionResponse(res, 'verdictRes2');
 }
 async function deleteVerdict() {
   const id = document.getElementById('verdictId').value;
   const res = await fetch(`${base}/api/verdicts/${id}`, { method: 'DELETE' });
-  document.getElementById('verdictRes2').textContent = await res.text();
+  await handleActionResponse(res, 'verdictRes2');
 }
 async function fetchVerdict() {
   const res = await fetch(`${base}/api/verdicts`);
@@ -729,32 +739,32 @@ async function createCaseLawyer() {
   const case_id = document.getElementById('caseLawyerCaseId').value;
   const lawyer_id = document.getElementById('caseLawyerLawyerId').value;
   const role = document.getElementById('caseLawyerRole').value;
-  const res = await fetch(`${base}/api/case-lawyers`, {
+  const res = await fetch(`${base}/api/caselawyers`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ case_id, lawyer_id, role })
   });
-  document.getElementById('caseLawyerRes').textContent = await res.text();
+  await handleActionResponse(res, 'caseLawyerRes');
 }
 async function updateCaseLawyer() {
   const id = document.getElementById('caseLawyerId').value;
   const case_id = document.getElementById('caseLawyerCaseIdUpdate').value;
   const lawyer_id = document.getElementById('caseLawyerLawyerIdUpdate').value;
   const role = document.getElementById('caseLawyerRoleUpdate').value;
-  const res = await fetch(`${base}/api/case-lawyers/${id}`, {
+  const res = await fetch(`${base}/api/caselawyers/${id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ case_id, lawyer_id, role })
   });
-  document.getElementById('caseLawyerRes2').textContent = await res.text();
+  await handleActionResponse(res, 'caseLawyerRes2');
 }
 async function deleteCaseLawyer() {
   const id = document.getElementById('caseLawyerId').value;
-  const res = await fetch(`${base}/api/case-lawyers/${id}`, { method: 'DELETE' });
-  document.getElementById('caseLawyerRes2').textContent = await res.text();
+  const res = await fetch(`${base}/api/caselawyers/${id}`, { method: 'DELETE' });
+  await handleActionResponse(res, 'caseLawyerRes2');
 }
 async function fetchCaseLawyer() {
-  const res = await fetch(`${base}/api/case-lawyers`);
+  const res = await fetch(`${base}/api/caselawyers`);
   let data;
   try {
     data = await res.json();
