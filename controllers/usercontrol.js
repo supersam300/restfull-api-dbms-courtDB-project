@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { pool } from './db.js'; // adjust path based on your project structure
+import pool from '../config/db.js';// adjust path based on your project structure
 
 export const createUser = async (req, res) => {
   const { username, password, role } = req.body;

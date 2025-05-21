@@ -12,7 +12,7 @@ import masterRoutes from './routs/masterRoute.js';
 import verdictRoutes from './routs/verdictRoute.js';
 import caseRoutes from './routs/caseRoute.js'; // Import the case routes
 import caselawerroutes from './routs/caselawerRoute.js'; // Import the case law routes    
-import { pool } from './db.js'; // adjust path based on your project structure
+import  pool  from './config/db.js'; // adjust path based on your project structure
 import bcrypt from 'bcrypt';             
 import { createUser } from './controllers/usercontrol.js'; // adjust path if needed
 const __filename = fileURLToPath(import.meta.url);

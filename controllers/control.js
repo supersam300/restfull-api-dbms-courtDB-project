@@ -142,47 +142,26 @@ export const deleteJudge = async (req, res) => {
 };
 
 // ================== CASE-JUDGE MANY-TO-MANY ==================
-export const assignJudgeToCase = async (req, res) => {
-  try {
-    const { caseId, judgeId } = req.params;
-    await pool.query(
-      'INSERT IGNORE INTO Case_Judge (case_id, judge_id) VALUES (?, ?)',
-      [caseId, judgeId]
-    );
-    res.json({ message: 'Judge assigned to case' });
-  } catch (err) { handleDbError(res, err); }
-};
 
-export const removeJudgeFromCase = async (req, res) => {
-  try {
-    const { caseId, judgeId } = req.params;
-    await pool.query(
-      'DELETE FROM Case_Judge WHERE case_id = ? AND judge_id = ?',
-      [caseId, judgeId]
-    );
-    res.json({ message: 'Judge removed from case' });
-  } catch (err) { handleDbError(res, err); }
-};
-
-export const getJudgesForCase = async (req, res) => {
+export const getJudgesForCourt = async (req, res) => {
   try {
     const [rows] = await pool.query(
-      `SELECT j.* FROM Judge j JOIN Case_Judge cj ON j.judge_id = cj.judge_id WHERE cj.case_id = ?`,
-      [req.params.caseId]
+      `SELECT j.* FROM Judge j JOIN Court c ON j.court_id = c.court_id WHERE c.court_id = ?`,
+      [req.params.courtId]
     );
     res.json(rows);
   } catch (err) { handleDbError(res, err); }
 };
-
-export const getCasesForJudge = async (req, res) => {
+export const getCourtsForJudge = async (req, res) => {
   try {
     const [rows] = await pool.query(
-      `SELECT c.* FROM CaseDetails c JOIN Case_Judge cj ON c.case_id = cj.case_id WHERE cj.judge_id = ?`,
+      `SELECT c.* FROM Court c JOIN Judge j ON c.court_id = j.court_id WHERE j.judge_id = ?`,
       [req.params.judgeId]
     );
     res.json(rows);
   } catch (err) { handleDbError(res, err); }
 };
+
 
 // ================== LAWYER OPERATIONS ==================
 export const createLawyer = async (req, res) => {
