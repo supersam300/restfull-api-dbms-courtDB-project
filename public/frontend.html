@@ -3,776 +3,1131 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Court Management System</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <title>Indian Court Management System</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
   <style>
     body {
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Roboto', Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f4f4f4;
+      background-color: #181f2a;
+      color: #f0f0f0;
+      min-height: 100vh;
+    }
+    header {
+      background: linear-gradient(90deg, #1a2233 0%, #21304a 100%);
+      color: #4ed6ff;
+      padding: 32px 0 16px 0;
+      text-align: center;
+      border-bottom: 4px solid #1ca1c1;
+      position: relative;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      letter-spacing: 1px;
+      font-weight: 700;
+      color: #4ed6ff;
+      text-shadow: 0 2px 8px #111b26;
+    }
+    header p {
+      margin: 8px 0 0 0;
+      font-size: 1.1rem;
+      color: #b0b8c1;
     }
     nav {
-      background-color: #333;
-      color: white;
-      padding: 18px 20px 14px 20px;
-      text-align: center;
-      font-size: 1.6rem;
-      font-weight: 600;
-      letter-spacing: 1px;
-    }
-    .tabs {
+      background-color: #21304a;
       display: flex;
       justify-content: center;
-      margin-top: 20px;
       flex-wrap: wrap;
-      gap: 6px;
+      gap: 2px;
+      padding: 0;
+      border-bottom: 2px solid #2d3748;
     }
     .tab-button {
-      background-color: #555;
-      color: white;
+      background: none;
+      color: #f0f0f0;
       border: none;
-      padding: 10px 20px;
+      padding: 16px 24px;
+      font-size: 1.1rem;
       cursor: pointer;
-      border-radius: 5px 5px 0 0;
-      font-size: 1rem;
-      transition: background 0.2s;
+      font-weight: 500;
+      transition: background 0.2s, color 0.2s;
+      opacity: 1;
+      pointer-events: auto;
+      border-radius: 18px 18px 0 0;
     }
-    .tab-button.active {
-      background-color: #007bff;
-      font-weight: bold;
+    .tab-button.active, .tab-button:hover {
+      background-color: #1ca1c1;
+      color: #fff;
+      border-bottom: 3px solid #4ed6ff;
     }
-    .tab-content {
-      display: none;
-      padding: 20px;
-      background-color: white;
-      border-radius: 0 0 8px 8px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      margin-bottom: 30px;
-      margin-top: 0;
-    }
-    .tab-content.active {
-      display: block;
+    .tab-button.disabled {
+      opacity: 0.5;
+      pointer-events: none;
     }
     .container {
-      max-width: 800px;
-      margin: auto;
+      max-width: 1000px;
+      margin: 32px auto 0 auto;
+      background: #222b3a;
+      border-radius: 12px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.13);
+      padding: 32px 24px 24px 24px;
+      min-height: 400px;
     }
-    input[type="text"], input[type="number"] {
-      width: calc(100% - 22px);
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    h2 {
+      color: #4ed6ff;
+      font-size: 1.4rem;
+      margin-top: 0;
+    }
+    h3 {
+      color: #c9a13b;
+      margin-top: 24px;
+      font-size: 1.18rem;
+    }
+    input[type="text"], input[type="number"], input[type="password"] {
+      width: 100%;
       padding: 10px;
-      margin-bottom: 10px;
-      border: 1px solid #ccc;
-      border-radius: 3px;
+      margin-bottom: 12px;
+      border: 1px solid #2d3748;
+      border-radius: 4px;
       font-size: 1rem;
+      background: #232f41;
+      color: #f0f0f0;
     }
     button.action {
-      background-color: #28a745;
-      color: white;
+      background-color: #1ca1c1;
+      color: #fff;
       border: none;
-      padding: 10px 20px;
-      cursor: pointer;
-      border-radius: 3px;
+      padding: 10px 22px;
+      border-radius: 4px;
       margin-right: 10px;
       margin-bottom: 10px;
       font-size: 1rem;
+      cursor: pointer;
       transition: background 0.2s;
     }
     button.action:hover {
-      background-color: #218838;
+      background-color: #4ed6ff;
+      color: #181f2a;
     }
     table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 20px;
       margin-bottom: 10px;
+      background: #232f41;
+      color: #f0f0f0;
     }
     th, td {
-      border: 1px solid #ddd;
+      border: 1px solid #2d3748;
       padding: 8px;
       text-align: left;
       font-size: 1rem;
     }
     th {
-      background-color: #333;
+      background-color: #1ca1c1;
       color: white;
     }
+    tr:nth-child(even) td {
+      background: #21304a;
+    }
     pre {
-      background: #f6f6f6;
+      background: #232f41;
+      color: #f0f0f0;
       padding: 10px;
       border-radius: 4px;
       overflow-x: auto;
       margin-top: 8px;
     }
     .message-success {
-      color: #28a745;
+      color: #2ecc71;
       font-weight: bold;
       font-size: 1.08rem;
       margin-bottom: 7px;
     }
     .message-error {
-      color: #dc3545;
+      color: #ff5e6c;
       font-weight: bold;
       font-size: 1.08rem;
       margin-bottom: 7px;
     }
+    footer {
+      background: #181f2a;
+      color: #b0b8c1;
+      text-align: center;
+      padding: 16px 0;
+      margin-top: 32px;
+      font-size: 0.95rem;
+      border-top: 2px solid #1ca1c1;
+    }
+    .law-fact {
+      background: #26334a;
+      color: #4ed6ff;
+      border-left: 5px solid #1ca1c1;
+      padding: 14px 20px;
+      margin: 24px 0 12px 0;
+      font-size: 1.08rem;
+      border-radius: 6px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+    }
+    .dashboard-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      margin: 32px 0 18px 0;
+      justify-content: center;
+    }
+    .dashboard-card {
+      background: #232f41;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+      padding: 26px 30px 22px 30px;
+      min-width: 200px;
+      min-height: 98px;
+      flex: 1 1 180px;
+      text-align: center;
+      color: #f0f0f0;
+      border: 1.5px solid #2d3748;
+    }
+    .dashboard-card .card-title {
+      font-size: 1.1rem;
+      color: #4ed6ff;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    .dashboard-card .card-value {
+      font-size: 2.1rem;
+      font-weight: 900;
+      color: #c9a13b;
+      margin-bottom: 2px;
+      text-shadow: 0 2px 8px #181f2a;
+    }
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin: 32px 0 24px 0;
+      justify-content: center;
+    }
+    .cta-btn {
+      background: linear-gradient(90deg, #1ca1c1 0%, #4ed6ff 100%);
+      color: #fff;
+      border: none;
+      border-radius: 18px;
+      font-size: 1.18rem;
+      font-weight: 700;
+      padding: 18px 36px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    }
+    .cta-btn:hover {
+      background: #ff5e6c;
+      color: #fff;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.17);
+    }
+    .quick-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin: 18px 0 18px 0;
+      justify-content: center;
+    }
+    .quick-link {
+      background: #26334a;
+      color: #4ed6ff;
+      padding: 8px 22px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      margin-bottom: 8px;
+      border: 1px solid #1ca1c1;
+      transition: background 0.2s, color 0.2s;
+      display: inline-block;
+    }
+    .quick-link:hover {
+      background: #1ca1c1;
+      color: #fff;
+    }
+    .testimonial-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin: 24px 0 0 0;
+      justify-content: center;
+    }
+    .testimonial {
+      background: #1a2233;
+      color: #b0b8c1;
+      border-radius: 10px;
+      padding: 20px 22px;
+      font-size: 1.02rem;
+      font-style: italic;
+      max-width: 320px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+      border-left: 5px solid #1ca1c1;
+    }
+    .testimonial .author {
+      color: #4ed6ff;
+      font-weight: 700;
+      font-style: normal;
+      margin-top: 10px;
+      display: block;
+    }
+    .login-embed {
+      background: #232f41;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.13);
+      padding: 32px 28px 28px 28px;
+      max-width: 340px;
+      margin: 0 auto 32px auto;
+      text-align: center;
+      border: 1.5px solid #2d3748;
+    }
+    .login-embed h2 {
+      color: #4ed6ff;
+      margin-bottom: 18px;
+      font-weight: 700;
+    }
+    .login-embed input[type="text"], .login-embed input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 16px;
+      border: 1.5px solid #2d3748;
+      border-radius: 6px;
+      font-size: 1rem;
+      background: #1a2233;
+      color: #f0f0f0;
+    }
+    .login-embed button {
+      background: #1ca1c1;
+      color: #fff;
+      border: none;
+      padding: 12px 32px;
+      border-radius: 6px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background 0.2s;
+    }
+    .login-embed button:hover {
+      background: #ff5e6c;
+    }
+    @media (max-width: 700px) {
+      .container { padding: 12px 2vw; }
+      .dashboard-row, .cta-row, .testimonial-row, .quick-links {
+        flex-direction: column;
+        gap: 12px;
+      }
+      .dashboard-card, .testimonial, .login-embed {
+        min-width: unset;
+        width: 100%;
+      }
+      .login-embed { padding: 18px 6vw; }
+    }
   </style>
 </head>
 <body>
-<nav>Court Management System</nav>
-<div class="tabs">
-  <button type="button" class="tab-button" onclick="openTab('court')">Court</button>
-  <button type="button" class="tab-button" onclick="openTab('judge')">Judge</button>
-  <button type="button" class="tab-button" onclick="openTab('lawyer')">Lawyer</button>
-  <button type="button" class="tab-button" onclick="openTab('plaintiff')">Plaintiff</button>
-  <button type="button" class="tab-button" onclick="openTab('defendant')">Defendant</button>
-  <button type="button" class="tab-button" onclick="openTab('case')">Case</button>
-  <button type="button" class="tab-button" onclick="openTab('party')">Party</button>
-  <button type="button" class="tab-button" onclick="openTab('verdict')">Verdict</button>
-  <button type="button" class="tab-button" onclick="openTab('caseLawyer')">Case Lawyer</button>
-</div>
+  <header>
+    <h1>Indian Court Management System</h1>
+    <p>Official Portal for Court Case Management and Administration</p>
+  </header>
+  <nav>
+    <button type="button" class="tab-button active" id="tab-home" onclick="openTab('home', event)">Home</button>
+    <button type="button" class="tab-button" id="tab-court" onclick="openTab('court', event)">Courts</button>
+    <button type="button" class="tab-button" id="tab-judge" onclick="openTab('judge', event)">Judges</button>
+    <button type="button" class="tab-button" id="tab-lawyer" onclick="openTab('lawyer', event)">Lawyers</button>
+    <button type="button" class="tab-button" id="tab-plaintiff" onclick="openTab('plaintiff', event)">Plaintiffs</button>
+    <button type="button" class="tab-button" id="tab-defendant" onclick="openTab('defendant', event)">Defendants</button>
+    <button type="button" class="tab-button" id="tab-case" onclick="openTab('case', event)">Cases</button>
+    <button type="button" class="tab-button" id="tab-party" onclick="openTab('party', event)">Parties</button>
+    <button type="button" class="tab-button" id="tab-verdict" onclick="openTab('verdict', event)">Verdicts</button>
+    <button type="button" class="tab-button" id="tab-caseLawyer" onclick="openTab('caseLawyer', event)">Case Lawyers</button>
+  </nav>
+  <div class="container">
+    <div id="home" class="tab-content active">
+      <div class="dashboard-row">
+        <div class="dashboard-card">
+          <div class="card-title">Total Cases</div>
+          <div class="card-value" id="dash-total-cases">1,234</div>
+        </div>
+        <div class="dashboard-card">
+          <div class="card-title">Pending Cases</div>
+          <div class="card-value" id="dash-pending-cases">432</div>
+        </div>
+        <div class="dashboard-card">
+          <div class="card-title">Disposed Cases</div>
+          <div class="card-value" id="dash-disposed-cases">802</div>
+        </div>
+        <div class="dashboard-card">
+          <div class="card-title">Judges</div>
+          <div class="card-value" id="dash-judges">46</div>
+        </div>
+        <div class="dashboard-card">
+          <div class="card-title">Lawyers</div>
+          <div class="card-value" id="dash-lawyers">310</div>
+        </div>
+      </div>
+      <div class="cta-row">
+        <button class="cta-btn" onclick="openTab('court')">Manage Courts</button>
+        <button class="cta-btn" onclick="openTab('judge')">Manage Judges</button>
+        <button class="cta-btn" onclick="openTab('lawyer')">Manage Lawyers</button>
+        <button class="cta-btn" onclick="openTab('case')">Manage Cases</button>
+        <button class="cta-btn" onclick="openTab('verdict')">View Verdicts</button>
+        <button class="cta-btn" onclick="openTab('party')">All Parties</button>
+      </div>
+      <div class="quick-links">
+        <a href="#" class="quick-link" onclick="openTab('case')">Search Cases</a>
+        <a href="#" class="quick-link" onclick="openTab('verdict')">Recent Judgments</a>
+        <a href="#" class="quick-link" onclick="openTab('court')">Court Directory</a>
+        <a href="#" class="quick-link" onclick="openTab('judge')">Meet the Judges</a>
+        <a href="#" class="quick-link" onclick="openTab('lawyer')">Find a Lawyer</a>
+        <a href="#" class="quick-link" onclick="openTab('party')">Party Lookup</a>
+      </div>
+      <div class="law-fact" id="lawFact"></div>
+      <div class="login-embed" id="loginEmbed">
+        <h2>Sign In</h2>
+        <input type="text" placeholder="Username" id="loginUsername" autocomplete="username">
+        <input type="password" placeholder="Password" id="loginPassword" autocomplete="current-password">
+        <button type="button" onclick="loginUser()">Login</button>
+        <div id="loginRes"></div>
+      </div>
+      <section>
+        <h2>About This Portal</h2>
+        <ul>
+          <li>Digitally manage all aspects of court cases, from filing to verdict.</li>
+          <li>Maintain secure and organized records for courts, judges, lawyers, and all parties involved.</li>
+          <li>Provide transparency and accessibility to the judicial process.</li>
+          <li>Support the vision of Digital India and e-Courts initiatives.</li>
+        </ul>
+        <h3>Key Features</h3>
+        <ul>
+          <li>User-friendly dashboard for court staff and legal professionals.</li>
+          <li>Advanced search and filtering for cases and parties.</li>
+          <li>Role-based access for security and privacy.</li>
+          <li>Integrated case status tracking and verdict management.</li>
+          <li>Support for District, High, and Supreme Courts of India.</li>
+        </ul>
+        <h3>For Indian Judiciary</h3>
+        <p>
+          This platform is tailored for Indian courts, ensuring compliance with local legal requirements and supporting multiple court types (District, High, Supreme). It is intended for use by court staff, legal professionals, and authorized parties.
+        </p>
+        <h3>Contact & Support</h3>
+        <p>
+          For technical support, feedback, or queries, please contact: <b>info@indiancourts.gov.in</b>
+        </p>
+      </section>
+      <section>
+        <h2>What Users Say</h2>
+        <div class="testimonial-row">
+          <div class="testimonial">
+            “This portal has made managing court cases so much faster and more transparent.”
+            <span class="author">— Court Clerk, Mumbai</span>
+          </div>
+          <div class="testimonial">
+            “Finding case status and verdicts online is a huge help for lawyers and parties.”
+            <span class="author">— Advocate R. Sharma</span>
+          </div>
+          <div class="testimonial">
+            “The dashboard and search features are intuitive and save a lot of time.”
+            <span class="author">— District Judge, Delhi</span>
+          </div>
+        </div>
+      </section>
+    </div>
+    <!-- Courts Tab -->
+    <div id="court" class="tab-content">
+      <section>
+        <h2>Create Court</h2>
+        <input type="text" placeholder="Court Name" id="courtName">
+        <input type="text" placeholder="Location" id="courtLocation">
+        <input type="text" placeholder="Type" id="courtType">
+        <button type="button" class="action" onclick="createCourt()">Create Court</button>
+        <div id="courtRes"></div>
+      </section>
+      <section>
+        <h2>Manage Court</h2>
+        <input type="number" placeholder="Court ID" id="courtId">
+        <input type="text" placeholder="Court Name" id="courtNameUpdate">
+        <input type="text" placeholder="Location" id="courtLocationUpdate">
+        <input type="text" placeholder="Type" id="courtTypeUpdate">
+        <button type="button" class="action" onclick="updateCourt()">Update Court</button>
+        <button type="button" class="action" onclick="deleteCourt()">Delete Court</button>
+        <button type="button" class="action" onclick="fetchCourt()">Fetch All Courts</button>
+        <div id="courtRes2"></div>
+      </section>
+    </div>
+    <!-- Judges Tab -->
+    <div id="judge" class="tab-content">
+      <section>
+        <h2>Create Judge</h2>
+        <input type="text" placeholder="Name" id="judgeName">
+        <input type="number" placeholder="Experience (Years)" id="judgeExp">
+        <input type="number" placeholder="Court ID" id="judgeCourtId">
+        <button type="button" class="action" onclick="createJudge()">Create Judge</button>
+        <div id="judgeRes"></div>
+      </section>
+      <section>
+        <h2>Manage Judge</h2>
+        <input type="number" placeholder="Judge ID" id="judgeId">
+        <input type="text" placeholder="Name" id="judgeNameUpdate">
+        <input type="number" placeholder="Experience (Years)" id="judgeExpUpdate">
+        <input type="number" placeholder="Court ID" id="judgeCourtIdUpdate">
+        <button type="button" class="action" onclick="updateJudge()">Update Judge</button>
+        <button type="button" class="action" onclick="deleteJudge()">Delete Judge</button>
+        <button type="button" class="action" onclick="fetchJudge()">Fetch All Judges</button>
+        <div id="judgeRes2"></div>
+      </section>
+    </div>
+    <!-- Lawyers Tab -->
+    <div id="lawyer" class="tab-content">
+      <section>
+        <h2>Create Lawyer</h2>
+        <input type="text" placeholder="Name" id="lawyerName">
+        <input type="text" placeholder="Specialization" id="lawyerSpecialization">
+        <input type="number" placeholder="Experience (Years)" id="lawyerExperience">
+        <button type="button" class="action" onclick="createLawyer()">Create Lawyer</button>
+        <div id="lawyerRes"></div>
+      </section>
+      <section>
+        <h2>Manage Lawyer</h2>
+        <input type="number" placeholder="Lawyer ID" id="lawyerId">
+        <input type="text" placeholder="Name" id="lawyerNameUpdate">
+        <input type="text" placeholder="Specialization" id="lawyerSpecializationUpdate">
+        <input type="number" placeholder="Experience (Years)" id="lawyerExperienceUpdate">
+        <button type="button" class="action" onclick="updateLawyer()">Update Lawyer</button>
+        <button type="button" class="action" onclick="deleteLawyer()">Delete Lawyer</button>
+        <button type="button" class="action" onclick="fetchLawyer()">Fetch All Lawyers</button>
+        <div id="lawyerRes2"></div>
+      </section>
+    </div>
+    <!-- Plaintiffs Tab -->
+    <div id="plaintiff" class="tab-content">
+      <section>
+        <h2>Create Plaintiff</h2>
+        <input type="text" placeholder="Name" id="plaintiffName">
+        <input type="text" placeholder="Address" id="plaintiffAddress">
+        <input type="text" placeholder="Contact Number" id="plaintiffContact">
+        <button type="button" class="action" onclick="createPlaintiff()">Create Plaintiff</button>
+        <div id="plaintiffRes"></div>
+      </section>
+      <section>
+        <h2>Manage Plaintiff</h2>
+        <input type="number" placeholder="Plaintiff ID" id="plaintiffId">
+        <input type="text" placeholder="Name" id="plaintiffNameUpdate">
+        <input type="text" placeholder="Address" id="plaintiffAddressUpdate">
+        <input type="text" placeholder="Contact Number" id="plaintiffContactUpdate">
+        <button type="button" class="action" onclick="updatePlaintiff()">Update Plaintiff</button>
+        <button type="button" class="action" onclick="deletePlaintiff()">Delete Plaintiff</button>
+        <button type="button" class="action" onclick="fetchPlaintiff()">Fetch All Plaintiffs</button>
+        <div id="plaintiffRes2"></div>
+      </section>
+    </div>
+    <!-- Defendants Tab -->
+    <div id="defendant" class="tab-content">
+      <section>
+        <h2>Create Defendant</h2>
+        <input type="text" placeholder="Name" id="defendantName">
+        <input type="text" placeholder="Address" id="defendantAddress">
+        <input type="text" placeholder="Contact Number" id="defendantContact">
+        <button type="button" class="action" onclick="createDefendant()">Create Defendant</button>
+        <div id="defendantRes"></div>
+      </section>
+      <section>
+        <h2>Manage Defendant</h2>
+        <input type="number" placeholder="Defendant ID" id="defendantId">
+        <input type="text" placeholder="Name" id="defendantNameUpdate">
+        <input type="text" placeholder="Address" id="defendantAddressUpdate">
+        <input type="text" placeholder="Contact Number" id="defendantContactUpdate">
+        <button type="button" class="action" onclick="updateDefendant()">Update Defendant</button>
+        <button type="button" class="action" onclick="deleteDefendant()">Delete Defendant</button>
+        <button type="button" class="action" onclick="fetchDefendant()">Fetch All Defendants</button>
+        <div id="defendantRes2"></div>
+      </section>
+    </div>
+    <!-- Cases Tab -->
+    <div id="case" class="tab-content">
+      <section>
+        <h2>Create Case</h2>
+        <input type="text" placeholder="Case Number" id="caseNumber">
+        <input type="text" placeholder="Case Type" id="caseType">
+        <input type="text" placeholder="Status" id="caseStatus">
+        <input type="number" placeholder="Court ID" id="caseCourtId">
+        <input type="number" placeholder="Judge ID" id="caseJudgeId">
+        <button type="button" class="action" onclick="createCase()">Create Case</button>
+        <div id="caseRes"></div>
+      </section>
+      <section>
+        <h2>Manage Case</h2>
+        <input type="number" placeholder="Case ID" id="caseId">
+        <input type="text" placeholder="Case Number" id="caseNumberUpdate">
+        <input type="text" placeholder="Case Type" id="caseTypeUpdate">
+        <input type="text" placeholder="Status" id="caseStatusUpdate">
+        <input type="number" placeholder="Court ID" id="caseCourtIdUpdate">
+        <input type="number" placeholder="Judge ID" id="caseJudgeIdUpdate">
+        <button type="button" class="action" onclick="updateCase()">Update Case</button>
+        <button type="button" class="action" onclick="deleteCase()">Delete Case</button>
+        <button type="button" class="action" onclick="fetchCase()">Fetch All Cases</button>
+        <div id="caseRes2"></div>
+      </section>
+    </div>
+    <!-- Parties Tab -->
+    <div id="party" class="tab-content">
+      <section>
+        <h2>Create Party</h2>
+        <input type="number" placeholder="Case ID" id="partyCaseId">
+        <input type="text" placeholder="Party Type" id="partyType">
+        <input type="number" placeholder="Plaintiff ID" id="partyPlaintiffId">
+        <input type="number" placeholder="Defendant ID" id="partyDefendantId">
+        <button type="button" class="action" onclick="createParty()">Create Party</button>
+        <div id="partyRes"></div>
+      </section>
+      <section>
+        <h2>Manage Party</h2>
+        <input type="number" placeholder="Party ID" id="partyId">
+        <input type="number" placeholder="Case ID" id="partyCaseIdUpdate">
+        <input type="text" placeholder="Party Type" id="partyTypeUpdate">
+        <input type="number" placeholder="Plaintiff ID" id="partyPlaintiffIdUpdate">
+        <input type="number" placeholder="Defendant ID" id="partyDefendantIdUpdate">
+        <button type="button" class="action" onclick="updateParty()">Update Party</button>
+        <button type="button" class="action" onclick="deleteParty()">Delete Party</button>
+        <button type="button" class="action" onclick="fetchParty()">Fetch All Parties</button>
+        <div id="partyRes2"></div>
+      </section>
+    </div>
+    <!-- Verdicts Tab -->
+    <div id="verdict" class="tab-content">
+      <section>
+        <h2>Create Verdict</h2>
+        <input type="number" placeholder="Case ID" id="verdictCaseId">
+        <input type="number" placeholder="Judge ID" id="verdictJudgeId">
+        <input type="text" placeholder="Decision" id="verdictDecision">
+        <button type="button" class="action" onclick="createVerdict()">Create Verdict</button>
+        <div id="verdictRes"></div>
+      </section>
+      <section>
+        <h2>Manage Verdict</h2>
+        <input type="number" placeholder="Verdict ID" id="verdictId">
+        <input type="number" placeholder="Case ID" id="verdictCaseIdUpdate">
+        <input type="number" placeholder="Judge ID" id="verdictJudgeIdUpdate">
+        <input type="text" placeholder="Decision" id="verdictDecisionUpdate">
+        <button type="button" class="action" onclick="updateVerdict()">Update Verdict</button>
+        <button type="button" class="action" onclick="deleteVerdict()">Delete Verdict</button>
+        <button type="button" class="action" onclick="fetchVerdict()">Fetch All Verdicts</button>
+        <div id="verdictRes2"></div>
+      </section>
+    </div>
+    <!-- Case Lawyers Tab -->
+    <div id="caseLawyer" class="tab-content">
+      <section>
+        <h2>Create Case Lawyer</h2>
+        <input type="number" placeholder="Case ID" id="caseLawyerCaseId">
+        <input type="number" placeholder="Lawyer ID" id="caseLawyerLawyerId">
+        <input type="text" placeholder="Role" id="caseLawyerRole">
+        <button type="button" class="action" onclick="createCaseLawyer()">Create Case Lawyer</button>
+        <div id="caseLawyerRes"></div>
+      </section>
+      <section>
+        <h2>Manage Case Lawyer</h2>
+        <input type="number" placeholder="Case Lawyer ID" id="caseLawyerId">
+        <input type="number" placeholder="Case ID" id="caseLawyerCaseIdUpdate">
+        <input type="number" placeholder="Lawyer ID" id="caseLawyerLawyerIdUpdate">
+        <input type="text" placeholder="Role" id="caseLawyerRoleUpdate">
+        <button type="button" class="action" onclick="updateCaseLawyer()">Update Case Lawyer</button>
+        <button type="button" class="action" onclick="deleteCaseLawyer()">Delete Case Lawyer</button>
+        <button type="button" class="action" onclick="fetchCaseLawyer()">Fetch All Case Lawyers</button>
+        <div id="caseLawyerRes2"></div>
+      </section>
+    </div>
+  </div>
+  <footer>
+    &copy; 2025 Indian Court Management System | For support, contact info@indiancourts.gov.in
+  </footer>
+  <script>
+    const base = 'http://localhost:3000';
+    const allTabs = [
+      'home','court','judge','lawyer','plaintiff','defendant','case','party','verdict','caseLawyer'
+    ];
+    const restrictedTabs = [
+      'court','judge','lawyer','plaintiff','defendant','case','party','verdict','caseLawyer'
+    ];
+    const lawFacts = [
+      "The Supreme Court of India was established on January 28, 1950, two days after India became a republic.",
+      "India has one of the world's largest judicial systems, with over 20,000 judges across all courts.",
+      "The Indian Constitution is the longest written constitution of any sovereign country in the world.",
+      "A person is considered innocent until proven guilty in the Indian legal system.",
+      "The Right to Information Act, 2005, empowers citizens to seek information from public authorities.",
+      "The Indian Penal Code (IPC) was drafted in 1860 and is still the backbone of criminal law in India.",
+      "The concept of Public Interest Litigation (PIL) originated in India to allow the public to seek justice for the greater good.",
+      "India follows a common law system based on recorded judicial precedents.",
+      "The first woman judge of the Supreme Court of India was Justice Fathima Beevi, appointed in 1989.",
+      "The motto of the Supreme Court of India is 'Yato Dharmastato Jayah' (Where there is Dharma, there is Victory)."
+    ];
+    let loggedIn = false;
 
-<div class="container">
-
-  <!-- Court -->
-  <div id="court" class="tab-content">
-    <section>
-      <h2>Create Court</h2>
-      <input type="text" placeholder="Court Name" id="courtName">
-      <input type="text" placeholder="Location" id="courtLocation">
-      <input type="text" placeholder="Type" id="courtType">
-      <button type="button" class="action" onclick="createCourt()">Create Court</button>
-      <div id="courtRes"></div>
-    </section>
-    <section>
-      <h2>Manage Court</h2>
-      <input type="number" placeholder="Court ID" id="courtId">
-      <input type="text" placeholder="Court Name" id="courtNameUpdate">
-      <input type="text" placeholder="Location" id="courtLocationUpdate">
-      <input type="text" placeholder="Type" id="courtTypeUpdate">
-      <button type="button" class="action" onclick="updateCourt()">Update Court</button>
-      <button type="button" class="action" onclick="deleteCourt()">Delete Court</button>
-      <button type="button" class="action" onclick="fetchCourt()">Fetch All Courts</button>
-      <div id="courtRes2"></div>
-    </section>
-  </div>
-  <!-- Judge -->
-  <div id="judge" class="tab-content">
-    <section>
-      <h2>Create Judge</h2>
-      <input type="text" placeholder="Name" id="judgeName">
-      <input type="number" placeholder="Experience (Years)" id="judgeExp">
-      <input type="number" placeholder="Court ID" id="judgeCourtId">
-      <button type="button" class="action" onclick="createJudge()">Create Judge</button>
-      <div id="judgeRes"></div>
-    </section>
-    <section>
-      <h2>Manage Judge</h2>
-      <input type="number" placeholder="Judge ID" id="judgeId">
-      <input type="text" placeholder="Name" id="judgeNameUpdate">
-      <input type="number" placeholder="Experience (Years)" id="judgeExpUpdate">
-      <input type="number" placeholder="Court ID" id="judgeCourtIdUpdate">
-      <button type="button" class="action" onclick="updateJudge()">Update Judge</button>
-      <button type="button" class="action" onclick="deleteJudge()">Delete Judge</button>
-      <button type="button" class="action" onclick="fetchJudge()">Fetch All Judges</button>
-      <div id="judgeRes2"></div>
-    </section>
-  </div>
-  <!-- Lawyer -->
-  <div id="lawyer" class="tab-content">
-    <section>
-      <h2>Create Lawyer</h2>
-      <input type="text" placeholder="Name" id="lawyerName">
-      <input type="text" placeholder="Specialization" id="lawyerSpecialization">
-      <input type="number" placeholder="Experience (Years)" id="lawyerExperience">
-      <button type="button" class="action" onclick="createLawyer()">Create Lawyer</button>
-      <div id="lawyerRes"></div>
-    </section>
-    <section>
-      <h2>Manage Lawyer</h2>
-      <input type="number" placeholder="Lawyer ID" id="lawyerId">
-      <input type="text" placeholder="Name" id="lawyerNameUpdate">
-      <input type="text" placeholder="Specialization" id="lawyerSpecializationUpdate">
-      <input type="number" placeholder="Experience (Years)" id="lawyerExperienceUpdate">
-      <button type="button" class="action" onclick="updateLawyer()">Update Lawyer</button>
-      <button type="button" class="action" onclick="deleteLawyer()">Delete Lawyer</button>
-      <button type="button" class="action" onclick="fetchLawyer()">Fetch All Lawyers</button>
-      <div id="lawyerRes2"></div>
-    </section>
-  </div>
-  <!-- Plaintiff -->
-  <div id="plaintiff" class="tab-content">
-    <section>
-      <h2>Create Plaintiff</h2>
-      <input type="text" placeholder="Name" id="plaintiffName">
-      <input type="text" placeholder="Address" id="plaintiffAddress">
-      <input type="text" placeholder="Contact Number" id="plaintiffContact">
-      <button type="button" class="action" onclick="createPlaintiff()">Create Plaintiff</button>
-      <div id="plaintiffRes"></div>
-    </section>
-    <section>
-      <h2>Manage Plaintiff</h2>
-      <input type="number" placeholder="Plaintiff ID" id="plaintiffId">
-      <input type="text" placeholder="Name" id="plaintiffNameUpdate">
-      <input type="text" placeholder="Address" id="plaintiffAddressUpdate">
-      <input type="text" placeholder="Contact Number" id="plaintiffContactUpdate">
-      <button type="button" class="action" onclick="updatePlaintiff()">Update Plaintiff</button>
-      <button type="button" class="action" onclick="deletePlaintiff()">Delete Plaintiff</button>
-      <button type="button" class="action" onclick="fetchPlaintiff()">Fetch All Plaintiffs</button>
-      <div id="plaintiffRes2"></div>
-    </section>
-  </div>
-  <!-- Defendant -->
-  <div id="defendant" class="tab-content">
-    <section>
-      <h2>Create Defendant</h2>
-      <input type="text" placeholder="Name" id="defendantName">
-      <input type="text" placeholder="Address" id="defendantAddress">
-      <input type="text" placeholder="Contact Number" id="defendantContact">
-      <button type="button" class="action" onclick="createDefendant()">Create Defendant</button>
-      <div id="defendantRes"></div>
-    </section>
-    <section>
-      <h2>Manage Defendant</h2>
-      <input type="number" placeholder="Defendant ID" id="defendantId">
-      <input type="text" placeholder="Name" id="defendantNameUpdate">
-      <input type="text" placeholder="Address" id="defendantAddressUpdate">
-      <input type="text" placeholder="Contact Number" id="defendantContactUpdate">
-      <button type="button" class="action" onclick="updateDefendant()">Update Defendant</button>
-      <button type="button" class="action" onclick="deleteDefendant()">Delete Defendant</button>
-      <button type="button" class="action" onclick="fetchDefendant()">Fetch All Defendants</button>
-      <div id="defendantRes2"></div>
-    </section>
-  </div>
-  <!-- Case -->
-  <div id="case" class="tab-content">
-    <section>
-      <h2>Create Case</h2>
-      <input type="text" placeholder="Case Number" id="caseNumber">
-      <input type="text" placeholder="Case Type" id="caseType">
-      <input type="text" placeholder="Status" id="caseStatus">
-      <input type="number" placeholder="Court ID" id="caseCourtId">
-      <input type="number" placeholder="Judge ID" id="caseJudgeId">
-      <button type="button" class="action" onclick="createCase()">Create Case</button>
-      <div id="caseRes"></div>
-    </section>
-    <section>
-      <h2>Manage Case</h2>
-      <input type="number" placeholder="Case ID" id="caseId">
-      <input type="text" placeholder="Case Number" id="caseNumberUpdate">
-      <input type="text" placeholder="Case Type" id="caseTypeUpdate">
-      <input type="text" placeholder="Status" id="caseStatusUpdate">
-      <input type="number" placeholder="Court ID" id="caseCourtIdUpdate">
-      <input type="number" placeholder="Judge ID" id="caseJudgeIdUpdate">
-      <button type="button" class="action" onclick="updateCase()">Update Case</button>
-      <button type="button" class="action" onclick="deleteCase()">Delete Case</button>
-      <button type="button" class="action" onclick="fetchCase()">Fetch All Cases</button>
-      <div id="caseRes2"></div>
-    </section>
-  </div>
-  <!-- Party -->
-  <div id="party" class="tab-content">
-    <section>
-      <h2>Create Party</h2>
-      <input type="number" placeholder="Case ID" id="partyCaseId">
-      <input type="text" placeholder="Party Type" id="partyType">
-      <input type="number" placeholder="Plaintiff ID" id="partyPlaintiffId">
-      <input type="number" placeholder="Defendant ID" id="partyDefendantId">
-      <button type="button" class="action" onclick="createParty()">Create Party</button>
-      <div id="partyRes"></div>
-    </section>
-    <section>
-      <h2>Manage Party</h2>
-      <input type="number" placeholder="Party ID" id="partyId">
-      <input type="number" placeholder="Case ID" id="partyCaseIdUpdate">
-      <input type="text" placeholder="Party Type" id="partyTypeUpdate">
-      <input type="number" placeholder="Plaintiff ID" id="partyPlaintiffIdUpdate">
-      <input type="number" placeholder="Defendant ID" id="partyDefendantIdUpdate">
-      <button type="button" class="action" onclick="updateParty()">Update Party</button>
-      <button type="button" class="action" onclick="deleteParty()">Delete Party</button>
-      <button type="button" class="action" onclick="fetchParty()">Fetch All Parties</button>
-      <div id="partyRes2"></div>
-    </section>
-  </div>
-  <!-- Verdict -->
-  <div id="verdict" class="tab-content">
-    <section>
-      <h2>Create Verdict</h2>
-      <input type="number" placeholder="Case ID" id="verdictCaseId">
-      <input type="number" placeholder="Judge ID" id="verdictJudgeId">
-      <input type="text" placeholder="Decision" id="verdictDecision">
-      <button type="button" class="action" onclick="createVerdict()">Create Verdict</button>
-      <div id="verdictRes"></div>
-    </section>
-    <section>
-      <h2>Manage Verdict</h2>
-      <input type="number" placeholder="Verdict ID" id="verdictId">
-      <input type="number" placeholder="Case ID" id="verdictCaseIdUpdate">
-      <input type="number" placeholder="Judge ID" id="verdictJudgeIdUpdate">
-      <input type="text" placeholder="Decision" id="verdictDecisionUpdate">
-      <button type="button" class="action" onclick="updateVerdict()">Update Verdict</button>
-      <button type="button" class="action" onclick="deleteVerdict()">Delete Verdict</button>
-      <button type="button" class="action" onclick="fetchVerdict()">Fetch All Verdicts</button>
-      <div id="verdictRes2"></div>
-    </section>
-  </div>
-  <!-- Case Lawyer -->
-  <div id="caseLawyer" class="tab-content">
-    <section>
-      <h2>Create Case Lawyer</h2>
-      <input type="number" placeholder="Case ID" id="caseLawyerCaseId">
-      <input type="number" placeholder="Lawyer ID" id="caseLawyerLawyerId">
-      <input type="text" placeholder="Role" id="caseLawyerRole">
-      <button type="button" class="action" onclick="createCaseLawyer()">Create Case Lawyer</button>
-      <div id="caseLawyerRes"></div>
-    </section>
-    <section>
-      <h2>Manage Case Lawyer</h2>
-      <input type="number" placeholder="Case Lawyer ID" id="caseLawyerId">
-      <input type="number" placeholder="Case ID" id="caseLawyerCaseIdUpdate">
-      <input type="number" placeholder="Lawyer ID" id="caseLawyerLawyerIdUpdate">
-      <input type="text" placeholder="Role" id="caseLawyerRoleUpdate">
-      <button type="button" class="action" onclick="updateCaseLawyer()">Update Case Lawyer</button>
-      <button type="button" class="action" onclick="deleteCaseLawyer()">Delete Case Lawyer</button>
-      <button type="button" class="action" onclick="fetchCaseLawyer()">Fetch All Case Lawyers</button>
-      <div id="caseLawyerRes2"></div>
-    </section>
-  </div>
-</div>
-
-<script>
-const base = 'http://localhost:3000';
-
-// Tab switching
-function openTab(tabName) {
-  const tabs = document.querySelectorAll('.tab-content');
-  const buttons = document.querySelectorAll('.tab-button');
-  tabs.forEach(tab => tab.classList.remove('active'));
-  buttons.forEach(button => button.classList.remove('active'));
-  document.getElementById(tabName).classList.add('active');
-  event.target.classList.add('active');
-}
-
-// Render a JSON object as a table
-function renderObjectTable(obj) {
-  let html = '<table><tbody>';
-  for (const [key, value] of Object.entries(obj)) {
-    html += `<tr><th>${key}</th><td>${value}</td></tr>`;
-  }
-  html += '</tbody></table>';
-  return html;
-}
-
-// Render array of objects as a table
-function renderTable(data) {
-  if (!Array.isArray(data) || data.length === 0) {
-    return '<p>No records found.</p>';
-  }
-  let html = '<table><thead><tr>';
-  for (const key of Object.keys(data[0])) {
-    html += `<th>${key}</th>`;
-  }
-  html += '</tr></thead><tbody>';
-  for (const row of data) {
-    html += '<tr>';
-    for (const value of Object.values(row)) {
-      html += `<td>${value}</td>`;
+    function showRandomLawFact() {
+      const fact = lawFacts[Math.floor(Math.random() * lawFacts.length)];
+      const lawFactDiv = document.getElementById('lawFact');
+      if (lawFactDiv) lawFactDiv.textContent = "Random Law Fact: " + fact;
     }
-    html += '</tr>';
-  }
-  html += '</tbody></table>';
-  return html;
-}
 
-// Helper: handle response for create/update/delete
-async function handleActionResponse(res, elId) {
-  let html = '';
-  try {
-    const result = await res.json();
-    if (result.message) {
-      html += `<div class="message-success">${result.message}</div>`;
+    function openTab(tabName, event) {
+      if (!loggedIn && tabName !== 'home') return;
+      allTabs.forEach(id => {
+        const tab = document.getElementById(id);
+        if (tab) tab.classList.remove('active');
+        const btn = document.getElementById('tab-' + id);
+        if (btn) btn.classList.remove('active');
+      });
+      const tab = document.getElementById(tabName);
+      if (tab) tab.classList.add('active');
+      const btn = document.getElementById('tab-' + tabName);
+      if (btn) btn.classList.add('active');
+      if (tabName === 'home') showRandomLawFact();
     }
-    // If the result contains other keys (e.g. record data), show as table
-    const keys = Object.keys(result).filter(k => k !== 'message');
-    if (keys.length > 0) {
-      // If only one object (e.g. court_id, court_name, ...), show as table
-      if (keys.length > 1 || typeof result[keys[0]] !== 'string') {
-        html += renderObjectTable(result);
+
+    function loginUser() {
+      const username = document.getElementById('loginUsername').value;
+      const password = document.getElementById('loginPassword').value;
+      if (username.trim() && password.trim()) {
+        loggedIn = true;
+        updateTabAccess();
+        openTab('home');
+        document.getElementById('loginRes').innerHTML = '<div class="message-success">Login successful. Welcome!</div>';
+        document.getElementById('loginUsername').value = '';
+        document.getElementById('loginPassword').value = '';
+      } else {
+        document.getElementById('loginRes').innerHTML = '<div class="message-error">Please enter both username and password.</div>';
       }
     }
-  } catch (e) {
-    // Not JSON, fallback to plain text
-    const text = await res.text();
-    html = `<div class="message-error">${text}</div>`;
-  }
-  document.getElementById(elId).innerHTML = html;
-}
 
-// COURT
-async function createCourt() {
-  const court_name = document.getElementById('courtName').value;
-  const location = document.getElementById('courtLocation').value;
-  const court_type = document.getElementById('courtType').value;
-  const res = await fetch(`${base}/api/courts`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ court_name, location, court_type })
-  });
-  await handleActionResponse(res, 'courtRes');
-}
-async function updateCourt() {
-  const id = document.getElementById('courtId').value;
-  const court_name = document.getElementById('courtNameUpdate').value;
-  const location = document.getElementById('courtLocationUpdate').value;
-  const court_type = document.getElementById('courtTypeUpdate').value;
-  const res = await fetch(`${base}/api/courts/${id}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ court_name, location, court_type })
-  });
-  await handleActionResponse(res, 'courtRes2');
-}
-async function deleteCourt() {
-  const id = document.getElementById('courtId').value;
-  const res = await fetch(`${base}/api/courts/${id}`, { method: 'DELETE' });
-  await handleActionResponse(res, 'courtRes2');
-}
-async function fetchCourt() {
-  const res = await fetch(`${base}/api/courts`);
-  let data;
-  try {
-    data = await res.json();
-  } catch {
-    data = [];
-  }
-  document.getElementById('courtRes2').innerHTML = renderTable(data);
-}
+    function updateTabAccess() {
+      if (loggedIn) {
+        restrictedTabs.forEach(id => {
+          document.getElementById('tab-' + id).classList.remove('disabled');
+        });
+      } else {
+        restrictedTabs.forEach(id => {
+          document.getElementById('tab-' + id).classList.add('disabled');
+        });
+      }
+    }
 
-// JUDGE
-async function createJudge() {
-  const name = document.getElementById('judgeName').value;
-  const experience_years = document.getElementById('judgeExp').value;
-  const court_id = document.getElementById('judgeCourtId').value;
-  const res = await fetch(`${base}/api/judges`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name, experience_years, court_id })
-  });
-  await handleActionResponse(res, 'judgeRes');
-}
-async function updateJudge() {
-  const id = document.getElementById('judgeId').value;
-  const name = document.getElementById('judgeNameUpdate').value;
-  const experience_years = document.getElementById('judgeExpUpdate').value;
-  const court_id = document.getElementById('judgeCourtIdUpdate').value;
-  const res = await fetch(`${base}/api/judges/${id}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name, experience_years, court_id })
-  });
-  await handleActionResponse(res, 'judgeRes2');
-}
-async function deleteJudge() {
-  const id = document.getElementById('judgeId').value;
-  const res = await fetch(`${base}/api/judges/${id}`, { method: 'DELETE' });
-  await handleActionResponse(res, 'judgeRes2');
-}
-async function fetchJudge() {
-  const res = await fetch(`${base}/api/judges`);
-  let data;
-  try {
-    data = await res.json();
-  } catch {
-    data = [];
-  }
-  document.getElementById('judgeRes2').innerHTML = renderTable(data);
-}
+    window.onload = function() {
+      loggedIn = false;
+      updateTabAccess();
+      openTab('home');
+      showRandomLawFact();
+    };
 
-// LAWYER
-async function createLawyer() {
-  const name = document.getElementById('lawyerName').value;
-  const specialization = document.getElementById('lawyerSpecialization').value;
-  const experience_years = document.getElementById('lawyerExperience').value;
-  const res = await fetch(`${base}/api/lawyers`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name, specialization, experience_years })
-  });
-  await handleActionResponse(res, 'lawyerRes');
-}
-async function updateLawyer() {
-  const id = document.getElementById('lawyerId').value;
-  const name = document.getElementById('lawyerNameUpdate').value;
-  const specialization = document.getElementById('lawyerSpecializationUpdate').value;
-  const experience_years = document.getElementById('lawyerExperienceUpdate').value;
-  const res = await fetch(`${base}/api/lawyers/${id}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name, specialization, experience_years })
-  });
-  await handleActionResponse(res, 'lawyerRes2');
-}
-async function deleteLawyer() {
-  const id = document.getElementById('lawyerId').value;
-  const res = await fetch(`${base}/api/lawyers/${id}`, { method: 'DELETE' });
-  await handleActionResponse(res, 'lawyerRes2');
-}
-async function fetchLawyer() {
-  const res = await fetch(`${base}/api/lawyers`);
-  let data;
-  try {
-    data = await res.json();
-  } catch {
-    data = [];
-  }
-  document.getElementById('lawyerRes2').innerHTML = renderTable(data);
-}
+    // --- All CRUD functions below (unchanged from your previous code) ---
+    function renderObjectTable(obj) {
+      let html = '<table><tbody>';
+      for (const [key, value] of Object.entries(obj)) {
+        html += `<tr><th>${key}</th><td>${value}</td></tr>`;
+      }
+      html += '</tbody></table>';
+      return html;
+    }
+    function renderTable(data) {
+      if (!Array.isArray(data) || data.length === 0) {
+        return '<p>No records found.</p>';
+      }
+      let html = '<table><thead><tr>';
+      for (const key of Object.keys(data[0])) {
+        html += `<th>${key}</th>`;
+      }
+      html += '</tr></thead><tbody>';
+      for (const row of data) {
+        html += '<tr>';
+        for (const value of Object.values(row)) {
+          html += `<td>${value}</td>`;
+        }
+        html += '</tr>';
+      }
+      html += '</tbody></table>';
+      return html;
+    }
+    async function handleActionResponse(res, elId) {
+      let html = '';
+      try {
+        const result = await res.json();
+        if (result.message) {
+          html += `<div class="message-success">${result.message}</div>`;
+        }
+        const keys = Object.keys(result).filter(k => k !== 'message');
+        if (keys.length > 0) {
+          if (keys.length > 1 || typeof result[keys[0]] !== 'string') {
+            html += renderObjectTable(result);
+          }
+        }
+      } catch (e) {
+        const text = await res.text();
+        html = `<div class="message-error">${text}</div>`;
+      }
+      document.getElementById(elId).innerHTML = html;
+    }
+    async function createCourt() {
+      const court_name = document.getElementById('courtName').value;
+      const location = document.getElementById('courtLocation').value;
+      const court_type = document.getElementById('courtType').value;
+      const res = await fetch(`${base}/api/courts`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ court_name, location, court_type })
+      });
+      await handleActionResponse(res, 'courtRes');
+    }
+    async function updateCourt() {
+      const id = document.getElementById('courtId').value;
+      const court_name = document.getElementById('courtNameUpdate').value;
+      const location = document.getElementById('courtLocationUpdate').value;
+      const court_type = document.getElementById('courtTypeUpdate').value;
+      const res = await fetch(`${base}/api/courts/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ court_name, location, court_type })
+      });
+      await handleActionResponse(res, 'courtRes2');
+    }
+    async function deleteCourt() {
+      const id = document.getElementById('courtId').value;
+      const res = await fetch(`${base}/api/courts/${id}`, { method: 'DELETE' });
+      await handleActionResponse(res, 'courtRes2');
+    }
+    async function fetchCourt() {
+      const res = await fetch(`${base}/api/courts`);
+      let data;
+      try { data = await res.json(); } catch { data = []; }
+      document.getElementById('courtRes2').innerHTML = renderTable(data);
+    }
+    async function createJudge() {
+      const name = document.getElementById('judgeName').value;
+      const experience_years = document.getElementById('judgeExp').value;
+      const court_id = document.getElementById('judgeCourtId').value;
+      const res = await fetch(`${base}/api/judges`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, experience_years, court_id })
+      });
+      await handleActionResponse(res, 'judgeRes');
+    }
+    async function updateJudge() {
+      const id = document.getElementById('judgeId').value;
+      const name = document.getElementById('judgeNameUpdate').value;
+      const experience_years = document.getElementById('judgeExpUpdate').value;
+      const court_id = document.getElementById('judgeCourtIdUpdate').value;
+      const res = await fetch(`${base}/api/judges/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, experience_years, court_id })
+      });
+      await handleActionResponse(res, 'judgeRes2');
+    }
+    async function deleteJudge() {
+      const id = document.getElementById('judgeId').value;
+      const res = await fetch(`${base}/api/judges/${id}`, { method: 'DELETE' });
+      await handleActionResponse(res, 'judgeRes2');
+    }
+    async function fetchJudge() {
+      const res = await fetch(`${base}/api/judges`);
+      let data;
+      try { data = await res.json(); } catch { data = []; }
+      document.getElementById('judgeRes2').innerHTML = renderTable(data);
+    }
+    async function createLawyer() {
+      const name = document.getElementById('lawyerName').value;
+      const specialization = document.getElementById('lawyerSpecialization').value;
+      const experience_years = document.getElementById('lawyerExperience').value;
+      const res = await fetch(`${base}/api/lawyers`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, specialization, experience_years })
+      });
+      await handleActionResponse(res, 'lawyerRes');
+    }
+    async function updateLawyer() {
+      const id = document.getElementById('lawyerId').value;
+      const name = document.getElementById('lawyerNameUpdate').value;
+      const specialization = document.getElementById('lawyerSpecializationUpdate').value;
+      const experience_years = document.getElementById('lawyerExperienceUpdate').value;
+      const res = await fetch(`${base}/api/lawyers/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, specialization, experience_years })
+      });
+      await handleActionResponse(res, 'lawyerRes2');
+    }
+    async function deleteLawyer() {
+      const id = document.getElementById('lawyerId').value;
+      const res = await fetch(`${base}/api/lawyers/${id}`, { method: 'DELETE' });
+      await handleActionResponse(res, 'lawyerRes2');
+    }
+    async function fetchLawyer() {
+      const res = await fetch(`${base}/api/lawyers`);
+      let data;
+      try { data = await res.json(); } catch { data = []; }
+      document.getElementById('lawyerRes2').innerHTML = renderTable(data);
+    }
+    async function createPlaintiff() {
+      const name = document.getElementById('plaintiffName').value;
+      const address = document.getElementById('plaintiffAddress').value;
+      const contact_number = document.getElementById('plaintiffContact').value;
+      const res = await fetch(`${base}/api/plaintiffs`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, address, contact_number })
+      });
+      await handleActionResponse(res, 'plaintiffRes');
+    }
+    async function updatePlaintiff() {
+      const id = document.getElementById('plaintiffId').value;
+      const name = document.getElementById('plaintiffNameUpdate').value;
+      const address = document.getElementById('plaintiffAddressUpdate').value;
+      const contact_number = document.getElementById('plaintiffContactUpdate').value;
+      const res = await fetch(`${base}/api/plaintiffs/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, address, contact_number })
+      });
+      await handleActionResponse(res, 'plaintiffRes2');
+    }
+    async function deletePlaintiff() {
+      const id = document.getElementById('plaintiffId').value;
+      const res = await fetch(`${base}/api/plaintiffs/${id}`, { method: 'DELETE' });
+      await handleActionResponse(res, 'plaintiffRes2');
+    }
+    async function fetchPlaintiff() {
+      const res = await fetch(`${base}/api/plaintiffs`);
+      let data;
+      try { data = await res.json(); } catch { data = []; }
+      document.getElementById('plaintiffRes2').innerHTML = renderTable(data);
+    }
+    async function createDefendant() {
+      const name = document.getElementById('defendantName').value;
+      const address = document.getElementById('defendantAddress').value;
+      const contact_number = document.getElementById('defendantContact').value;
+      const res = await fetch(`${base}/api/defendants`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, address, contact_number })
+      });
+      await handleActionResponse(res, 'defendantRes');
+    }
+    async function updateDefendant() {
+      const id = document.getElementById('defendantId').value;
+      const name = document.getElementById('defendantNameUpdate').value;
+      const address = document.getElementById('defendantAddressUpdate').value;
+      const contact_number = document.getElementById('defendantContactUpdate').value;
+      const res = await fetch(`${base}/api/defendants/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, address, contact_number })
+      });
+      await handleActionResponse(res, 'defendantRes2');
+    }
+    async function deleteDefendant() {
+      const id = document.getElementById('defendantId').value;
+      const res = await fetch(`${base}/api/defendants/${id}`, { method: 'DELETE' });
+      await handleActionResponse(res, 'defendantRes2');
+    }
+    async function fetchDefendant() {
+      const res = await fetch(`${base}/api/defendants`);
+      let data;
+      try { data = await res.json(); } catch { data = []; }
+      document.getElementById('defendantRes2').innerHTML = renderTable(data);
+    }
+    async function createCase() {
+      const case_number = document.getElementById('caseNumber').value;
+      const case_type = document.getElementById('caseType').value;
+      const status = document.getElementById('caseStatus').value;
+      const court_id = document.getElementById('caseCourtId').value;
+      const judge_id = document.getElementById('caseJudgeId').value;
+      const res = await fetch(`${base}/api/cases`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ case_number, case_type, status, court_id, judge_id })
+      });
+      await handleActionResponse(res, 'caseRes');
+    }
+    async function updateCase() {
+      const id = document.getElementById('caseId').value;
+      const case_number = document.getElementById('caseNumberUpdate').value;
+      const case_type = document.getElementById('caseTypeUpdate').value;
+      const status = document.getElementById('caseStatusUpdate').value;
+      const court_id = document.getElementById('caseCourtIdUpdate').value;
+      const judge_id = document.getElementById('caseJudgeIdUpdate').value;
+      const res = await fetch(`${base}/api/cases/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ case_number, case_type, status, court_id, judge_id })
+      });
+      await handleActionResponse(res, 'caseRes2');
+    }
+    async function deleteCase() {
+      const id = document.getElementById('caseId').value;
+      const res = await fetch(`${base}/api/cases/${id}`, { method: 'DELETE' });
+      await handleActionResponse(res, 'caseRes2');
+    }
+    async function fetchCase() {
+      const res = await fetch(`${base}/api/cases`);
+      let data;
+      try { data = await res.json(); } catch { data = []; }
+      document.getElementById('caseRes2').innerHTML = renderTable(data);
+    }
+    async function createParty() {
+      const case_id = document.getElementById('partyCaseId').value;
+      const party_type = document.getElementById('partyType').value;
+      const plaintiff_id = document.getElementById('partyPlaintiffId').value;
+      const defendant_id = document.getElementById('partyDefendantId').value;
+      const res = await fetch(`${base}/api/parties`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ case_id, party_type, plaintiff_id, defendant_id })
+      });
+      await handleActionResponse(res, 'partyRes');
+    }
+    async function updateParty() {
+      const id = document.getElementById('partyId').value;
+      const case_id = document.getElementById('partyCaseIdUpdate').value;
+      const party_type = document.getElementById('partyTypeUpdate').value;
+      const plaintiff_id = document.getElementById('partyPlaintiffIdUpdate').value;
+      const defendant_id = document.getElementById('partyDefendantIdUpdate').value;
+      const res = await fetch(`${base}/api/parties/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ case_id, party_type, plaintiff_id, defendant_id })
+      });
+      await handleActionResponse(res, 'partyRes2');
+    }
+    async function deleteParty() {
+      const id = document.getElementById('partyId').value;
+      const res = await fetch(`${base}/api/parties/${id}`, { method: 'DELETE' });
+      await handleActionResponse(res, 'partyRes2');
+    }
+    async function fetchParty() {
+      const res = await fetch(`${base}/api/parties`);
+      let data;
+      try { data = await res.json(); } catch { data = []; }
+      document.getElementById('partyRes2').innerHTML = renderTable(data);
+    }
+    async function createVerdict() {
+      const case_id = document.getElementById('verdictCaseId').value;
+      const judge_id = document.getElementById('verdictJudgeId').value;
+      const decision = document.getElementById('verdictDecision').value;
+      const res = await fetch(`${base}/api/verdicts`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ case_id, judge_id, decision })
+      });
+      await handleActionResponse(res, 'verdictRes');
+    }
+    async function updateVerdict() {
+      const id = document.getElementById('verdictId').value;
+      const case_id = document.getElementById('verdictCaseIdUpdate').value;
+      const judge_id = document.getElementById('verdictJudgeIdUpdate').value;
+      const decision = document.getElementById('verdictDecisionUpdate').value;
+      const res = await fetch(`${base}/api/verdicts/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ case_id, judge_id, decision })
+      });
+      await handleActionResponse(res, 'verdictRes2');
+    }
+    async function deleteVerdict() {
+      const id = document.getElementById('verdictId').value;
+      const res = await fetch(`${base}/api/verdicts/${id}`, { method: 'DELETE' });
+      await handleActionResponse(res, 'verdictRes2');
+    }
+    async function fetchVerdict() {
+      const res = await fetch(`${base}/api/verdicts`);
+      let data;
+      try { data = await res.json(); } catch { data = []; }
+      document.getElementById('verdictRes2').innerHTML = renderTable(data);
+    }
+    async function createCaseLawyer() {
+      const case_id = document.getElementById('caseLawyerCaseId').value;
+      const lawyer_id = document.getElementById('caseLawyerLawyerId').value;
+      const role = document.getElementById('caseLawyerRole').value;
+      const res = await fetch(`${base}/api/caselawyers`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ case_id, lawyer_id, role })
+      });
+      await handleActionResponse(res, 'caseLawyerRes');
+    }
+    async function updateCaseLawyer() {
+      const id = document.getElementById('caseLawyerId').value;
+      const case_id = document.getElementById('caseLawyerCaseIdUpdate').value;
+      const lawyer_id = document.getElementById('caseLawyerLawyerIdUpdate').value;
+      const role = document.getElementById('caseLawyerRoleUpdate').value;
+      const res = await fetch(`${base}/api/caselawyers/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ case_id, lawyer_id, role })
+      });
+      await handleActionResponse(res, 'caseLawyerRes2');
+    }
+    async function deleteCaseLawyer() {
+      const id = document.getElementById('caseLawyerId').value;
+      const res = await fetch(`${base}/api/caselawyers/${id}`, { method: 'DELETE' });
+      await handleActionResponse(res, 'caseLawyerRes2');
+    }
+    async function fetchCaseLawyer() {
+      const res = await fetch(`${base}/api/caselawyers`);
+      let data;
+      try { data = await res.json(); } catch { data = []; }
+      document.getElementById('caseLawyerRes2').innerHTML = renderTable(data);
+    }
 
-// PLAINTIFF
-async function createPlaintiff() {
-  const name = document.getElementById('plaintiffName').value;
-  const address = document.getElementById('plaintiffAddress').value;
-  const contact_number = document.getElementById('plaintiffContact').value;
-  const res = await fetch(`${base}/api/plaintiffs`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name, address, contact_number })
-  });
-  await handleActionResponse(res, 'plaintiffRes');
-}
-async function updatePlaintiff() {
-  const id = document.getElementById('plaintiffId').value;
-  const name = document.getElementById('plaintiffNameUpdate').value;
-  const address = document.getElementById('plaintiffAddressUpdate').value;
-  const contact_number = document.getElementById('plaintiffContactUpdate').value;
-  const res = await fetch(`${base}/api/plaintiffs/${id}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name, address, contact_number })
-  });
-  await handleActionResponse(res, 'plaintiffRes2');
-}
-async function deletePlaintiff() {
-  const id = document.getElementById('plaintiffId').value;
-  const res = await fetch(`${base}/api/plaintiffs/${id}`, { method: 'DELETE' });
-  await handleActionResponse(res, 'plaintiffRes2');
-}
-async function fetchPlaintiff() {
-  const res = await fetch(`${base}/api/plaintiffs`);
-  let data;
-  try {
-    data = await res.json();
-  } catch {
-    data = [];
-  }
-  document.getElementById('plaintiffRes2').innerHTML = renderTable(data);
-}
+    
+      async function fetchDashboardStats() {
+    try {
+      // Fetch all counts in parallel
+      const [casesRes, verdictsRes, judgesRes, lawyersRes] = await Promise.all([
+        fetch(`${base}/api/cases/count`),
+        fetch(`${base}/api/verdicts/count`),
+        fetch(`${base}/api/judges/count`),
+        fetch(`${base}/api/lawyers/count`)
+      ]);
+      const [casesData, verdictsData, judgesData, lawyersData] = await Promise.all([
+        casesRes.json(),
+        verdictsRes.json(),
+        judgesRes.json(),
+        lawyersRes.json()
+      ]);
 
-// DEFENDANT
-async function createDefendant() {
-  const name = document.getElementById('defendantName').value;
-  const address = document.getElementById('defendantAddress').value;
-  const contact_number = document.getElementById('defendantContact').value;
-  const res = await fetch(`${base}/api/defendants`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name, address, contact_number })
-  });
-  await handleActionResponse(res, 'defendantRes');
-}
-async function updateDefendant() {
-  const id = document.getElementById('defendantId').value;
-  const name = document.getElementById('defendantNameUpdate').value;
-  const address = document.getElementById('defendantAddressUpdate').value;
-  const contact_number = document.getElementById('defendantContactUpdate').value;
-  const res = await fetch(`${base}/api/defendants/${id}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name, address, contact_number })
-  });
-  await handleActionResponse(res, 'defendantRes2');
-}
-async function deleteDefendant() {
-  const id = document.getElementById('defendantId').value;
-  const res = await fetch(`${base}/api/defendants/${id}`, { method: 'DELETE' });
-  await handleActionResponse(res, 'defendantRes2');
-}
-async function fetchDefendant() {
-  const res = await fetch(`${base}/api/defendants`);
-  let data;
-  try {
-    data = await res.json();
-  } catch {
-    data = [];
-  }
-  document.getElementById('defendantRes2').innerHTML = renderTable(data);
-}
+      const totalCases = casesData.count || 0;
+      const solvedCases = verdictsData.count || 0;
+      const pendingCases = totalCases - solvedCases;
+      const judges = judgesData.count || 0;
+      const lawyers = lawyersData.count || 0;
 
-// CASE
-async function createCase() {
-  const case_number = document.getElementById('caseNumber').value;
-  const case_type = document.getElementById('caseType').value;
-  const status = document.getElementById('caseStatus').value;
-  const court_id = document.getElementById('caseCourtId').value;
-  const judge_id = document.getElementById('caseJudgeId').value;
-  const res = await fetch(`${base}/api/cases`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ case_number, case_type, status, court_id, judge_id })
-  });
-  await handleActionResponse(res, 'caseRes');
-}
-async function updateCase() {
-  const id = document.getElementById('caseId').value;
-  const case_number = document.getElementById('caseNumberUpdate').value;
-  const case_type = document.getElementById('caseTypeUpdate').value;
-  const status = document.getElementById('caseStatusUpdate').value;
-  const court_id = document.getElementById('caseCourtIdUpdate').value;
-  const judge_id = document.getElementById('caseJudgeIdUpdate').value;
-  const res = await fetch(`${base}/api/cases/${id}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ case_number, case_type, status, court_id, judge_id })
-  });
-  await handleActionResponse(res, 'caseRes2');
-}
-async function deleteCase() {
-  const id = document.getElementById('caseId').value;
-  const res = await fetch(`${base}/api/cases/${id}`, { method: 'DELETE' });
-  await handleActionResponse(res, 'caseRes2');
-}
-async function fetchCase() {
-  const res = await fetch(`${base}/api/cases`);
-  let data;
-  try {
-    data = await res.json();
-  } catch {
-    data = [];
+      document.getElementById('dash-total-cases').textContent = totalCases;
+      document.getElementById('dash-pending-cases').textContent = pendingCases >= 0 ? pendingCases : 0;
+      document.getElementById('dash-disposed-cases').textContent = solvedCases;
+      document.getElementById('dash-judges').textContent = judges;
+      document.getElementById('dash-lawyers').textContent = lawyers;
+    } catch (err) {
+      // Optionally, show error or fallback
+      document.getElementById('dash-total-cases').textContent = '-';
+      document.getElementById('dash-pending-cases').textContent = '-';
+      document.getElementById('dash-disposed-cases').textContent = '-';
+      document.getElementById('dash-judges').textContent = '-';
+      document.getElementById('dash-lawyers').textContent = '-';
+    }
   }
-  document.getElementById('caseRes2').innerHTML = renderTable(data);
-}
 
-// PARTY
-async function createParty() {
-  const case_id = document.getElementById('partyCaseId').value;
-  const party_type = document.getElementById('partyType').value;
-  const plaintiff_id = document.getElementById('partyPlaintiffId').value;
-  const defendant_id = document.getElementById('partyDefendantId').value;
-  const res = await fetch(`${base}/api/parties`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ case_id, party_type, plaintiff_id, defendant_id })
-  });
-  await handleActionResponse(res, 'partyRes');
-}
-async function updateParty() {
-  const id = document.getElementById('partyId').value;
-  const case_id = document.getElementById('partyCaseIdUpdate').value;
-  const party_type = document.getElementById('partyTypeUpdate').value;
-  const plaintiff_id = document.getElementById('partyPlaintiffIdUpdate').value;
-  const defendant_id = document.getElementById('partyDefendantIdUpdate').value;
-  const res = await fetch(`${base}/api/parties/${id}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ case_id, party_type, plaintiff_id, defendant_id })
-  });
-  await handleActionResponse(res, 'partyRes2');
-}
-async function deleteParty() {
-  const id = document.getElementById('partyId').value;
-  const res = await fetch(`${base}/api/parties/${id}`, { method: 'DELETE' });
-  await handleActionResponse(res, 'partyRes2');
-}
-async function fetchParty() {
-  const res = await fetch(`${base}/api/parties`);
-  let data;
-  try {
-    data = await res.json();
-  } catch {
-    data = [];
-  }
-  document.getElementById('partyRes2').innerHTML = renderTable(data);
-}
+  // Poll every 10 seconds for live updates (adjust as needed)
+  setInterval(fetchDashboardStats, 10000);
 
-// VERDICT
-async function createVerdict() {
-  const case_id = document.getElementById('verdictCaseId').value;
-  const judge_id = document.getElementById('verdictJudgeId').value;
-  const decision = document.getElementById('verdictDecision').value;
-  const res = await fetch(`${base}/api/verdicts`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ case_id, judge_id, decision })
-  });
-  await handleActionResponse(res, 'verdictRes');
-}
-async function updateVerdict() {
-  const id = document.getElementById('verdictId').value;
-  const case_id = document.getElementById('verdictCaseIdUpdate').value;
-  const judge_id = document.getElementById('verdictJudgeIdUpdate').value;
-  const decision = document.getElementById('verdictDecisionUpdate').value;
-  const res = await fetch(`${base}/api/verdicts/${id}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ case_id, judge_id, decision })
-  });
-  await handleActionResponse(res, 'verdictRes2');
-}
-async function deleteVerdict() {
-  const id = document.getElementById('verdictId').value;
-  const res = await fetch(`${base}/api/verdicts/${id}`, { method: 'DELETE' });
-  await handleActionResponse(res, 'verdictRes2');
-}
-async function fetchVerdict() {
-  const res = await fetch(`${base}/api/verdicts`);
-  let data;
-  try {
-    data = await res.json();
-  } catch {
-    data = [];
-  }
-  document.getElementById('verdictRes2').innerHTML = renderTable(data);
-}
-
-// CASE LAWYER
-async function createCaseLawyer() {
-  const case_id = document.getElementById('caseLawyerCaseId').value;
-  const lawyer_id = document.getElementById('caseLawyerLawyerId').value;
-  const role = document.getElementById('caseLawyerRole').value;
-  const res = await fetch(`${base}/api/caselawyers`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ case_id, lawyer_id, role })
-  });
-  await handleActionResponse(res, 'caseLawyerRes');
-}
-async function updateCaseLawyer() {
-  const id = document.getElementById('caseLawyerId').value;
-  const case_id = document.getElementById('caseLawyerCaseIdUpdate').value;
-  const lawyer_id = document.getElementById('caseLawyerLawyerIdUpdate').value;
-  const role = document.getElementById('caseLawyerRoleUpdate').value;
-  const res = await fetch(`${base}/api/caselawyers/${id}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ case_id, lawyer_id, role })
-  });
-  await handleActionResponse(res, 'caseLawyerRes2');
-}
-async function deleteCaseLawyer() {
-  const id = document.getElementById('caseLawyerId').value;
-  const res = await fetch(`${base}/api/caselawyers/${id}`, { method: 'DELETE' });
-  await handleActionResponse(res, 'caseLawyerRes2');
-}
-async function fetchCaseLawyer() {
-  const res = await fetch(`${base}/api/caselawyers`);
-  let data;
-  try {
-    data = await res.json();
-  } catch {
-    data = [];
-  }
-  document.getElementById('caseLawyerRes2').innerHTML = renderTable(data);
-}
-</script>
+  // Fetch stats when page loads
+  window.addEventListener('DOMContentLoaded', fetchDashboardStats);
+  </script>
 </body>
 </html>

@@ -1,18 +1,19 @@
-import express from 'express'; // express is nothing but our database
+import express from 'express';
 import {
   createCourt,
   getCourts,
   getCourtById,
   updateCourt,
-  deleteCourt
-} from '../controllers/control.js'; //calling the operations from our controller
-
+  deleteCourt,
+  countCourts
+} from '../controllers/control.js';
 
 const router = express.Router();
 
 router.post('/', createCourt);
 router.get('/', getCourts);
-router.get('/:id', getCourtById); //btw the /:id means its a dynamic value, do not get too confused :)
+router.get('/count', countCourts);
+router.get('/:id', getCourtById);
 router.put('/:id', updateCourt);
 router.delete('/:id', deleteCourt);
 
