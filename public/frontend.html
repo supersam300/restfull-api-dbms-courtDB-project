@@ -10,82 +10,95 @@
       font-family: 'Roboto', Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f8f9fa;
-      color: #222;
+      background-color: #181f2a;
+      color: #f0f0f0;
+      min-height: 100vh;
     }
     header {
-      background-color: #0a2240;
-      color: #fff;
+      background: linear-gradient(90deg, #1a2233 0%, #21304a 100%);
+      color: #4ed6ff;
       padding: 32px 0 16px 0;
       text-align: center;
-      border-bottom: 4px solid #e2e6ea;
+      border-bottom: 4px solid #1ca1c1;
+      position: relative;
     }
     header h1 {
       margin: 0;
       font-size: 2.5rem;
       letter-spacing: 1px;
       font-weight: 700;
+      color: #4ed6ff;
+      text-shadow: 0 2px 8px #111b26;
     }
     header p {
       margin: 8px 0 0 0;
       font-size: 1.1rem;
-      color: #d9e2ef;
+      color: #b0b8c1;
     }
     nav {
-      background-color: #16335b;
+      background-color: #21304a;
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
       gap: 2px;
       padding: 0;
-      border-bottom: 2px solid #e2e6ea;
+      border-bottom: 2px solid #2d3748;
     }
     .tab-button {
       background: none;
-      color: #fff;
+      color: #f0f0f0;
       border: none;
       padding: 16px 24px;
       font-size: 1.1rem;
       cursor: pointer;
       font-weight: 500;
       transition: background 0.2s, color 0.2s;
+      opacity: 1;
+      pointer-events: auto;
+      border-radius: 18px 18px 0 0;
     }
     .tab-button.active, .tab-button:hover {
-      background-color: #e2e6ea;
-      color: #0a2240;
-      border-bottom: 3px solid #0a2240;
+      background-color: #1ca1c1;
+      color: #fff;
+      border-bottom: 3px solid #4ed6ff;
+    }
+    .tab-button.disabled {
+      opacity: 0.5;
+      pointer-events: none;
     }
     .container {
-      max-width: 900px;
+      max-width: 1000px;
       margin: 32px auto 0 auto;
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+      background: #222b3a;
+      border-radius: 12px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.13);
       padding: 32px 24px 24px 24px;
       min-height: 400px;
     }
-    .tab-content {
-      display: none;
-    }
-    .tab-content.active {
-      display: block;
-    }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
     h2 {
-      color: #16335b;
+      color: #4ed6ff;
       font-size: 1.4rem;
       margin-top: 0;
     }
-    input[type="text"], input[type="number"] {
+    h3 {
+      color: #c9a13b;
+      margin-top: 24px;
+      font-size: 1.18rem;
+    }
+    input[type="text"], input[type="number"], input[type="password"] {
       width: 100%;
       padding: 10px;
       margin-bottom: 12px;
-      border: 1px solid #b0b8c1;
+      border: 1px solid #2d3748;
       border-radius: 4px;
       font-size: 1rem;
-      background: #f4f6f8;
+      background: #232f41;
+      color: #f0f0f0;
     }
     button.action {
-      background-color: #0a2240;
+      background-color: #1ca1c1;
       color: #fff;
       border: none;
       padding: 10px 22px;
@@ -97,50 +110,225 @@
       transition: background 0.2s;
     }
     button.action:hover {
-      background-color: #16335b;
+      background-color: #4ed6ff;
+      color: #181f2a;
     }
     table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 20px;
       margin-bottom: 10px;
+      background: #232f41;
+      color: #f0f0f0;
     }
     th, td {
-      border: 1px solid #e2e6ea;
+      border: 1px solid #2d3748;
       padding: 8px;
       text-align: left;
       font-size: 1rem;
     }
     th {
-      background-color: #16335b;
+      background-color: #1ca1c1;
       color: white;
     }
+    tr:nth-child(even) td {
+      background: #21304a;
+    }
     pre {
-      background: #f6f6f6;
+      background: #232f41;
+      color: #f0f0f0;
       padding: 10px;
       border-radius: 4px;
       overflow-x: auto;
       margin-top: 8px;
     }
     .message-success {
-      color: #28a745;
+      color: #2ecc71;
       font-weight: bold;
       font-size: 1.08rem;
       margin-bottom: 7px;
     }
     .message-error {
-      color: #dc3545;
+      color: #ff5e6c;
       font-weight: bold;
       font-size: 1.08rem;
       margin-bottom: 7px;
     }
     footer {
-      background: #0a2240;
-      color: #fff;
+      background: #181f2a;
+      color: #b0b8c1;
       text-align: center;
       padding: 16px 0;
       margin-top: 32px;
       font-size: 0.95rem;
+      border-top: 2px solid #1ca1c1;
+    }
+    .law-fact {
+      background: #26334a;
+      color: #4ed6ff;
+      border-left: 5px solid #1ca1c1;
+      padding: 14px 20px;
+      margin: 24px 0 12px 0;
+      font-size: 1.08rem;
+      border-radius: 6px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+    }
+    .dashboard-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      margin: 32px 0 18px 0;
+      justify-content: center;
+    }
+    .dashboard-card {
+      background: #232f41;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+      padding: 26px 30px 22px 30px;
+      min-width: 200px;
+      min-height: 98px;
+      flex: 1 1 180px;
+      text-align: center;
+      color: #f0f0f0;
+      border: 1.5px solid #2d3748;
+    }
+    .dashboard-card .card-title {
+      font-size: 1.1rem;
+      color: #4ed6ff;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    .dashboard-card .card-value {
+      font-size: 2.1rem;
+      font-weight: 900;
+      color: #c9a13b;
+      margin-bottom: 2px;
+      text-shadow: 0 2px 8px #181f2a;
+    }
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin: 32px 0 24px 0;
+      justify-content: center;
+    }
+    .cta-btn {
+      background: linear-gradient(90deg, #1ca1c1 0%, #4ed6ff 100%);
+      color: #fff;
+      border: none;
+      border-radius: 18px;
+      font-size: 1.18rem;
+      font-weight: 700;
+      padding: 18px 36px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    }
+    .cta-btn:hover {
+      background: #ff5e6c;
+      color: #fff;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.17);
+    }
+    .quick-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin: 18px 0 18px 0;
+      justify-content: center;
+    }
+    .quick-link {
+      background: #26334a;
+      color: #4ed6ff;
+      padding: 8px 22px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      margin-bottom: 8px;
+      border: 1px solid #1ca1c1;
+      transition: background 0.2s, color 0.2s;
+      display: inline-block;
+    }
+    .quick-link:hover {
+      background: #1ca1c1;
+      color: #fff;
+    }
+    .testimonial-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin: 24px 0 0 0;
+      justify-content: center;
+    }
+    .testimonial {
+      background: #1a2233;
+      color: #b0b8c1;
+      border-radius: 10px;
+      padding: 20px 22px;
+      font-size: 1.02rem;
+      font-style: italic;
+      max-width: 320px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+      border-left: 5px solid #1ca1c1;
+    }
+    .testimonial .author {
+      color: #4ed6ff;
+      font-weight: 700;
+      font-style: normal;
+      margin-top: 10px;
+      display: block;
+    }
+    .login-embed {
+      background: #232f41;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.13);
+      padding: 32px 28px 28px 28px;
+      max-width: 340px;
+      margin: 0 auto 32px auto;
+      text-align: center;
+      border: 1.5px solid #2d3748;
+    }
+    .login-embed h2 {
+      color: #4ed6ff;
+      margin-bottom: 18px;
+      font-weight: 700;
+    }
+    .login-embed input[type="text"], .login-embed input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 16px;
+      border: 1.5px solid #2d3748;
+      border-radius: 6px;
+      font-size: 1rem;
+      background: #1a2233;
+      color: #f0f0f0;
+    }
+    .login-embed button {
+      background: #1ca1c1;
+      color: #fff;
+      border: none;
+      padding: 12px 32px;
+      border-radius: 6px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background 0.2s;
+    }
+    .login-embed button:hover {
+      background: #ff5e6c;
+    }
+    @media (max-width: 700px) {
+      .container { padding: 12px 2vw; }
+      .dashboard-row, .cta-row, .testimonial-row, .quick-links {
+        flex-direction: column;
+        gap: 12px;
+      }
+      .dashboard-card, .testimonial, .login-embed {
+        min-width: unset;
+        width: 100%;
+      }
+      .login-embed { padding: 18px 6vw; }
     }
   </style>
 </head>
@@ -150,39 +338,109 @@
     <p>Official Portal for Court Case Management and Administration</p>
   </header>
   <nav>
-    <button type="button" class="tab-button active" onclick="openTab('home', event)">Home</button>
-    <button type="button" class="tab-button" onclick="openTab('court', event)">Courts</button>
-    <button type="button" class="tab-button" onclick="openTab('judge', event)">Judges</button>
-    <button type="button" class="tab-button" onclick="openTab('lawyer', event)">Lawyers</button>
-    <button type="button" class="tab-button" onclick="openTab('plaintiff', event)">Plaintiffs</button>
-    <button type="button" class="tab-button" onclick="openTab('defendant', event)">Defendants</button>
-    <button type="button" class="tab-button" onclick="openTab('case', event)">Cases</button>
-    <button type="button" class="tab-button" onclick="openTab('party', event)">Parties</button>
-    <button type="button" class="tab-button" onclick="openTab('verdict', event)">Verdicts</button>
-    <button type="button" class="tab-button" onclick="openTab('caseLawyer', event)">Case Lawyers</button>
+    <button type="button" class="tab-button active" id="tab-home" onclick="openTab('home', event)">Home</button>
+    <button type="button" class="tab-button" id="tab-court" onclick="openTab('court', event)">Courts</button>
+    <button type="button" class="tab-button" id="tab-judge" onclick="openTab('judge', event)">Judges</button>
+    <button type="button" class="tab-button" id="tab-lawyer" onclick="openTab('lawyer', event)">Lawyers</button>
+    <button type="button" class="tab-button" id="tab-plaintiff" onclick="openTab('plaintiff', event)">Plaintiffs</button>
+    <button type="button" class="tab-button" id="tab-defendant" onclick="openTab('defendant', event)">Defendants</button>
+    <button type="button" class="tab-button" id="tab-case" onclick="openTab('case', event)">Cases</button>
+    <button type="button" class="tab-button" id="tab-party" onclick="openTab('party', event)">Parties</button>
+    <button type="button" class="tab-button" id="tab-verdict" onclick="openTab('verdict', event)">Verdicts</button>
+    <button type="button" class="tab-button" id="tab-caseLawyer" onclick="openTab('caseLawyer', event)">Case Lawyers</button>
   </nav>
   <div class="container">
-    <!-- Home -->
     <div id="home" class="tab-content active">
+      <div class="dashboard-row">
+        <div class="dashboard-card">
+          <div class="card-title">Total Cases</div>
+          <div class="card-value" id="dash-total-cases">1,234</div>
+        </div>
+        <div class="dashboard-card">
+          <div class="card-title">Pending Cases</div>
+          <div class="card-value" id="dash-pending-cases">432</div>
+        </div>
+        <div class="dashboard-card">
+          <div class="card-title">Disposed Cases</div>
+          <div class="card-value" id="dash-disposed-cases">802</div>
+        </div>
+        <div class="dashboard-card">
+          <div class="card-title">Judges</div>
+          <div class="card-value" id="dash-judges">46</div>
+        </div>
+        <div class="dashboard-card">
+          <div class="card-title">Lawyers</div>
+          <div class="card-value" id="dash-lawyers">310</div>
+        </div>
+      </div>
+      <div class="cta-row">
+        <button class="cta-btn" onclick="openTab('court')">Manage Courts</button>
+        <button class="cta-btn" onclick="openTab('judge')">Manage Judges</button>
+        <button class="cta-btn" onclick="openTab('lawyer')">Manage Lawyers</button>
+        <button class="cta-btn" onclick="openTab('case')">Manage Cases</button>
+        <button class="cta-btn" onclick="openTab('verdict')">View Verdicts</button>
+        <button class="cta-btn" onclick="openTab('party')">All Parties</button>
+      </div>
+      <div class="quick-links">
+        <a href="#" class="quick-link" onclick="openTab('case')">Search Cases</a>
+        <a href="#" class="quick-link" onclick="openTab('verdict')">Recent Judgments</a>
+        <a href="#" class="quick-link" onclick="openTab('court')">Court Directory</a>
+        <a href="#" class="quick-link" onclick="openTab('judge')">Meet the Judges</a>
+        <a href="#" class="quick-link" onclick="openTab('lawyer')">Find a Lawyer</a>
+        <a href="#" class="quick-link" onclick="openTab('party')">Party Lookup</a>
+      </div>
+      <div class="law-fact" id="lawFact"></div>
+      <div class="login-embed" id="loginEmbed">
+        <h2>Sign In</h2>
+        <input type="text" placeholder="Username" id="loginUsername" autocomplete="username">
+        <input type="password" placeholder="Password" id="loginPassword" autocomplete="current-password">
+        <button type="button" onclick="loginUser()">Login</button>
+        <div id="loginRes"></div>
+      </div>
       <section>
-        <h2>Welcome to the Indian Court Management System</h2>
-        <p>
-          The Indian Court Management System is a comprehensive digital platform designed to streamline and modernize the administration of justice in India. Inspired by the best practices of US and international court websites, this portal enables efficient management of courts, cases, judges, lawyers, plaintiffs, defendants, and verdicts.
-        </p>
-        <h3>About This Portal</h3>
+        <h2>About This Portal</h2>
         <ul>
           <li>Digitally manage all aspects of court cases, from filing to verdict.</li>
           <li>Maintain secure and organized records for courts, judges, lawyers, and all parties involved.</li>
           <li>Provide transparency and accessibility to the judicial process.</li>
           <li>Support the vision of Digital India and e-Courts initiatives.</li>
         </ul>
+        <h3>Key Features</h3>
+        <ul>
+          <li>User-friendly dashboard for court staff and legal professionals.</li>
+          <li>Advanced search and filtering for cases and parties.</li>
+          <li>Role-based access for security and privacy.</li>
+          <li>Integrated case status tracking and verdict management.</li>
+          <li>Support for District, High, and Supreme Courts of India.</li>
+        </ul>
         <h3>For Indian Judiciary</h3>
         <p>
           This platform is tailored for Indian courts, ensuring compliance with local legal requirements and supporting multiple court types (District, High, Supreme). It is intended for use by court staff, legal professionals, and authorized parties.
         </p>
+        <h3>Contact & Support</h3>
+        <p>
+          For technical support, feedback, or queries, please contact: <b>info@indiancourts.gov.in</b>
+        </p>
+      </section>
+      <section>
+        <h2>What Users Say</h2>
+        <div class="testimonial-row">
+          <div class="testimonial">
+            “This portal has made managing court cases so much faster and more transparent.”
+            <span class="author">— Court Clerk, Mumbai</span>
+          </div>
+          <div class="testimonial">
+            “Finding case status and verdicts online is a huge help for lawyers and parties.”
+            <span class="author">— Advocate R. Sharma</span>
+          </div>
+          <div class="testimonial">
+            “The dashboard and search features are intuitive and save a lot of time.”
+            <span class="author">— District Judge, Delhi</span>
+          </div>
+        </div>
       </section>
     </div>
-    <!-- Court -->
+    <!-- Courts Tab -->
     <div id="court" class="tab-content">
       <section>
         <h2>Create Court</h2>
@@ -204,7 +462,7 @@
         <div id="courtRes2"></div>
       </section>
     </div>
-    <!-- Judge -->
+    <!-- Judges Tab -->
     <div id="judge" class="tab-content">
       <section>
         <h2>Create Judge</h2>
@@ -226,7 +484,7 @@
         <div id="judgeRes2"></div>
       </section>
     </div>
-    <!-- Lawyer -->
+    <!-- Lawyers Tab -->
     <div id="lawyer" class="tab-content">
       <section>
         <h2>Create Lawyer</h2>
@@ -248,7 +506,7 @@
         <div id="lawyerRes2"></div>
       </section>
     </div>
-    <!-- Plaintiff -->
+    <!-- Plaintiffs Tab -->
     <div id="plaintiff" class="tab-content">
       <section>
         <h2>Create Plaintiff</h2>
@@ -270,7 +528,7 @@
         <div id="plaintiffRes2"></div>
       </section>
     </div>
-    <!-- Defendant -->
+    <!-- Defendants Tab -->
     <div id="defendant" class="tab-content">
       <section>
         <h2>Create Defendant</h2>
@@ -292,7 +550,7 @@
         <div id="defendantRes2"></div>
       </section>
     </div>
-    <!-- Case -->
+    <!-- Cases Tab -->
     <div id="case" class="tab-content">
       <section>
         <h2>Create Case</h2>
@@ -318,7 +576,7 @@
         <div id="caseRes2"></div>
       </section>
     </div>
-    <!-- Party -->
+    <!-- Parties Tab -->
     <div id="party" class="tab-content">
       <section>
         <h2>Create Party</h2>
@@ -342,7 +600,7 @@
         <div id="partyRes2"></div>
       </section>
     </div>
-    <!-- Verdict -->
+    <!-- Verdicts Tab -->
     <div id="verdict" class="tab-content">
       <section>
         <h2>Create Verdict</h2>
@@ -364,7 +622,7 @@
         <div id="verdictRes2"></div>
       </section>
     </div>
-    <!-- Case Lawyer -->
+    <!-- Case Lawyers Tab -->
     <div id="caseLawyer" class="tab-content">
       <section>
         <h2>Create Case Lawyer</h2>
@@ -392,18 +650,82 @@
   </footer>
   <script>
     const base = 'http://localhost:3000';
+    const allTabs = [
+      'home','court','judge','lawyer','plaintiff','defendant','case','party','verdict','caseLawyer'
+    ];
+    const restrictedTabs = [
+      'court','judge','lawyer','plaintiff','defendant','case','party','verdict','caseLawyer'
+    ];
+    const lawFacts = [
+      "The Supreme Court of India was established on January 28, 1950, two days after India became a republic.",
+      "India has one of the world's largest judicial systems, with over 20,000 judges across all courts.",
+      "The Indian Constitution is the longest written constitution of any sovereign country in the world.",
+      "A person is considered innocent until proven guilty in the Indian legal system.",
+      "The Right to Information Act, 2005, empowers citizens to seek information from public authorities.",
+      "The Indian Penal Code (IPC) was drafted in 1860 and is still the backbone of criminal law in India.",
+      "The concept of Public Interest Litigation (PIL) originated in India to allow the public to seek justice for the greater good.",
+      "India follows a common law system based on recorded judicial precedents.",
+      "The first woman judge of the Supreme Court of India was Justice Fathima Beevi, appointed in 1989.",
+      "The motto of the Supreme Court of India is 'Yato Dharmastato Jayah' (Where there is Dharma, there is Victory)."
+    ];
+    let loggedIn = false;
 
-    // Tab switching logic
-    function openTab(tabName, event) {
-      const tabs = document.querySelectorAll('.tab-content');
-      const buttons = document.querySelectorAll('.tab-button');
-      tabs.forEach(tab => tab.classList.remove('active'));
-      buttons.forEach(button => button.classList.remove('active'));
-      document.getElementById(tabName).classList.add('active');
-      if (event) event.target.classList.add('active');
+    function showRandomLawFact() {
+      const fact = lawFacts[Math.floor(Math.random() * lawFacts.length)];
+      const lawFactDiv = document.getElementById('lawFact');
+      if (lawFactDiv) lawFactDiv.textContent = "Random Law Fact: " + fact;
     }
 
-    // Render a JSON object as a table
+    function openTab(tabName, event) {
+      if (!loggedIn && tabName !== 'home') return;
+      allTabs.forEach(id => {
+        const tab = document.getElementById(id);
+        if (tab) tab.classList.remove('active');
+        const btn = document.getElementById('tab-' + id);
+        if (btn) btn.classList.remove('active');
+      });
+      const tab = document.getElementById(tabName);
+      if (tab) tab.classList.add('active');
+      const btn = document.getElementById('tab-' + tabName);
+      if (btn) btn.classList.add('active');
+      if (tabName === 'home') showRandomLawFact();
+    }
+
+    function loginUser() {
+      const username = document.getElementById('loginUsername').value;
+      const password = document.getElementById('loginPassword').value;
+      if (username.trim() && password.trim()) {
+        loggedIn = true;
+        updateTabAccess();
+        openTab('home');
+        document.getElementById('loginRes').innerHTML = '<div class="message-success">Login successful. Welcome!</div>';
+        document.getElementById('loginUsername').value = '';
+        document.getElementById('loginPassword').value = '';
+      } else {
+        document.getElementById('loginRes').innerHTML = '<div class="message-error">Please enter both username and password.</div>';
+      }
+    }
+
+    function updateTabAccess() {
+      if (loggedIn) {
+        restrictedTabs.forEach(id => {
+          document.getElementById('tab-' + id).classList.remove('disabled');
+        });
+      } else {
+        restrictedTabs.forEach(id => {
+          document.getElementById('tab-' + id).classList.add('disabled');
+        });
+      }
+    }
+
+    window.onload = function() {
+      loggedIn = false;
+      updateTabAccess();
+      openTab('home');
+      showRandomLawFact();
+    };
+
+    // --- All CRUD functions below (unchanged from your previous code) ---
     function renderObjectTable(obj) {
       let html = '<table><tbody>';
       for (const [key, value] of Object.entries(obj)) {
@@ -412,8 +734,6 @@
       html += '</tbody></table>';
       return html;
     }
-
-    // Render array of objects as a table
     function renderTable(data) {
       if (!Array.isArray(data) || data.length === 0) {
         return '<p>No records found.</p>';
@@ -433,8 +753,6 @@
       html += '</tbody></table>';
       return html;
     }
-
-    // Helper: handle response for create/update/delete
     async function handleActionResponse(res, elId) {
       let html = '';
       try {
@@ -442,7 +760,6 @@
         if (result.message) {
           html += `<div class="message-success">${result.message}</div>`;
         }
-        // If the result contains other keys (e.g. record data), show as table
         const keys = Object.keys(result).filter(k => k !== 'message');
         if (keys.length > 0) {
           if (keys.length > 1 || typeof result[keys[0]] !== 'string') {
@@ -450,14 +767,11 @@
           }
         }
       } catch (e) {
-        // Not JSON, fallback to plain text
         const text = await res.text();
         html = `<div class="message-error">${text}</div>`;
       }
       document.getElementById(elId).innerHTML = html;
     }
-
-    // COURT
     async function createCourt() {
       const court_name = document.getElementById('courtName').value;
       const location = document.getElementById('courtLocation').value;
@@ -489,15 +803,9 @@
     async function fetchCourt() {
       const res = await fetch(`${base}/api/courts`);
       let data;
-      try {
-        data = await res.json();
-      } catch {
-        data = [];
-      }
+      try { data = await res.json(); } catch { data = []; }
       document.getElementById('courtRes2').innerHTML = renderTable(data);
     }
-
-    // JUDGE
     async function createJudge() {
       const name = document.getElementById('judgeName').value;
       const experience_years = document.getElementById('judgeExp').value;
@@ -529,15 +837,9 @@
     async function fetchJudge() {
       const res = await fetch(`${base}/api/judges`);
       let data;
-      try {
-        data = await res.json();
-      } catch {
-        data = [];
-      }
+      try { data = await res.json(); } catch { data = []; }
       document.getElementById('judgeRes2').innerHTML = renderTable(data);
     }
-
-    // LAWYER
     async function createLawyer() {
       const name = document.getElementById('lawyerName').value;
       const specialization = document.getElementById('lawyerSpecialization').value;
@@ -569,15 +871,9 @@
     async function fetchLawyer() {
       const res = await fetch(`${base}/api/lawyers`);
       let data;
-      try {
-        data = await res.json();
-      } catch {
-        data = [];
-      }
+      try { data = await res.json(); } catch { data = []; }
       document.getElementById('lawyerRes2').innerHTML = renderTable(data);
     }
-
-    // PLAINTIFF
     async function createPlaintiff() {
       const name = document.getElementById('plaintiffName').value;
       const address = document.getElementById('plaintiffAddress').value;
@@ -609,15 +905,9 @@
     async function fetchPlaintiff() {
       const res = await fetch(`${base}/api/plaintiffs`);
       let data;
-      try {
-        data = await res.json();
-      } catch {
-        data = [];
-      }
+      try { data = await res.json(); } catch { data = []; }
       document.getElementById('plaintiffRes2').innerHTML = renderTable(data);
     }
-
-    // DEFENDANT
     async function createDefendant() {
       const name = document.getElementById('defendantName').value;
       const address = document.getElementById('defendantAddress').value;
@@ -649,15 +939,9 @@
     async function fetchDefendant() {
       const res = await fetch(`${base}/api/defendants`);
       let data;
-      try {
-        data = await res.json();
-      } catch {
-        data = [];
-      }
+      try { data = await res.json(); } catch { data = []; }
       document.getElementById('defendantRes2').innerHTML = renderTable(data);
     }
-
-    // CASE
     async function createCase() {
       const case_number = document.getElementById('caseNumber').value;
       const case_type = document.getElementById('caseType').value;
@@ -693,15 +977,9 @@
     async function fetchCase() {
       const res = await fetch(`${base}/api/cases`);
       let data;
-      try {
-        data = await res.json();
-      } catch {
-        data = [];
-      }
+      try { data = await res.json(); } catch { data = []; }
       document.getElementById('caseRes2').innerHTML = renderTable(data);
     }
-
-    // PARTY
     async function createParty() {
       const case_id = document.getElementById('partyCaseId').value;
       const party_type = document.getElementById('partyType').value;
@@ -735,15 +1013,9 @@
     async function fetchParty() {
       const res = await fetch(`${base}/api/parties`);
       let data;
-      try {
-        data = await res.json();
-      } catch {
-        data = [];
-      }
+      try { data = await res.json(); } catch { data = []; }
       document.getElementById('partyRes2').innerHTML = renderTable(data);
     }
-
-    // VERDICT
     async function createVerdict() {
       const case_id = document.getElementById('verdictCaseId').value;
       const judge_id = document.getElementById('verdictJudgeId').value;
@@ -775,15 +1047,9 @@
     async function fetchVerdict() {
       const res = await fetch(`${base}/api/verdicts`);
       let data;
-      try {
-        data = await res.json();
-      } catch {
-        data = [];
-      }
+      try { data = await res.json(); } catch { data = []; }
       document.getElementById('verdictRes2').innerHTML = renderTable(data);
     }
-
-    // CASE LAWYER
     async function createCaseLawyer() {
       const case_id = document.getElementById('caseLawyerCaseId').value;
       const lawyer_id = document.getElementById('caseLawyerLawyerId').value;
@@ -815,13 +1081,53 @@
     async function fetchCaseLawyer() {
       const res = await fetch(`${base}/api/caselawyers`);
       let data;
-      try {
-        data = await res.json();
-      } catch {
-        data = [];
-      }
+      try { data = await res.json(); } catch { data = []; }
       document.getElementById('caseLawyerRes2').innerHTML = renderTable(data);
     }
+
+    
+      async function fetchDashboardStats() {
+    try {
+      // Fetch all counts in parallel
+      const [casesRes, verdictsRes, judgesRes, lawyersRes] = await Promise.all([
+        fetch(`${base}/api/cases/count`),
+        fetch(`${base}/api/verdicts/count`),
+        fetch(`${base}/api/judges/count`),
+        fetch(`${base}/api/lawyers/count`)
+      ]);
+      const [casesData, verdictsData, judgesData, lawyersData] = await Promise.all([
+        casesRes.json(),
+        verdictsRes.json(),
+        judgesRes.json(),
+        lawyersRes.json()
+      ]);
+
+      const totalCases = casesData.count || 0;
+      const solvedCases = verdictsData.count || 0;
+      const pendingCases = totalCases - solvedCases;
+      const judges = judgesData.count || 0;
+      const lawyers = lawyersData.count || 0;
+
+      document.getElementById('dash-total-cases').textContent = totalCases;
+      document.getElementById('dash-pending-cases').textContent = pendingCases >= 0 ? pendingCases : 0;
+      document.getElementById('dash-disposed-cases').textContent = solvedCases;
+      document.getElementById('dash-judges').textContent = judges;
+      document.getElementById('dash-lawyers').textContent = lawyers;
+    } catch (err) {
+      // Optionally, show error or fallback
+      document.getElementById('dash-total-cases').textContent = '-';
+      document.getElementById('dash-pending-cases').textContent = '-';
+      document.getElementById('dash-disposed-cases').textContent = '-';
+      document.getElementById('dash-judges').textContent = '-';
+      document.getElementById('dash-lawyers').textContent = '-';
+    }
+  }
+
+  // Poll every 10 seconds for live updates (adjust as needed)
+  setInterval(fetchDashboardStats, 10000);
+
+  // Fetch stats when page loads
+  window.addEventListener('DOMContentLoaded', fetchDashboardStats);
   </script>
 </body>
 </html>
