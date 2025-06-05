@@ -17,19 +17,13 @@ import bcrypt from 'bcrypt';
 import { createUser } from './controllers/usercontrol.js'; // adjust path if needed
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
 const app = express();
 const PORT = 3000; //set the port you wanna use here
-
 app.use(cors({
-  origin: '*', 
-}));
-
+  origin: '*', }));
 app.use(express.json());
-
 // Serve static files (e.g., HTML files) from the public folder
 app.use(express.static(path.join(__dirname, 'public')));
-
 // Routes
 app.use('/api/courts', courtRoutes);
 app.use('/api/judges', judgeRoutes);
@@ -45,7 +39,6 @@ app.use('/api/users', createUser); // Add the user creation route
 app.get('/', (req, res) => {
   res.send('Court System Backend Running on Port 3000');
 });
-
 app.listen(PORT, () => {
   console.log(` UwU Server running at http://localhost:${PORT} <3`);
 });
