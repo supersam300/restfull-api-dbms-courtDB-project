@@ -310,59 +310,6 @@ footer {
   margin-top: 10px;
   display: block;
 }
-.login-embed {
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.13);
-  padding: 32px 28px 28px 28px;
-  max-width: 340px;
-  margin: 0 auto 32px auto;
-  text-align: center;
-  border: 1.5px solid var(--blue-accent);
-}
-.login-embed h2 {
-  color: var(--blue-main);
-  margin-bottom: 18px;
-  font-weight: 700;
-}
-.login-embed input[type="text"], .login-embed input[type="password"] {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 16px;
-  border: 1.5px solid var(--blue-accent);
-  border-radius: 6px;
-  font-size: 1rem;
-  background: #fafafa;
-  color: var(--blue-dark);
-}
-.login-embed button {
-  background: var(--blue-main);
-  color: #fff;
-  border: none;
-  padding: 12px 32px;
-  border-radius: 6px;
-  font-size: 1.1rem;
-  font-weight: 700;
-  cursor: pointer;
-  margin-top: 10px;
-  transition: background 0.2s;
-}
-.login-embed button:hover {
-  background: var(--blue-accent);
-  color: #fffde7;
-}
-@media (max-width: 700px) {
-  .container { padding: 12px 2vw; }
-  .dashboard-row, .cta-row, .testimonial-row, .quick-links {
-    flex-direction: column;
-    gap: 12px;
-  }
-  .dashboard-card, .testimonial, .login-embed {
-    min-width: unset;
-    width: 100%;
-  }
-  .login-embed { padding: 18px 6vw; }
-}
 
   </style>
 </head>
@@ -431,13 +378,6 @@ footer {
         <a href="#" class="quick-link" onclick="openTab('party')" data-i18n="partyLookup">Party Lookup</a>
       </div>
       <div class="law-fact" id="lawFact"></div>
-      <div class="login-embed" id="loginEmbed">
-        <h2 data-i18n="signIn">Sign In</h2>
-        <input type="text" placeholder="Username" id="loginUsername" autocomplete="username" data-i18n-placeholder="username">
-        <input type="password" placeholder="Password" id="loginPassword" autocomplete="current-password" data-i18n-placeholder="password">
-        <button type="button" onclick="loginUser()" data-i18n="login">Login</button>
-        <div id="loginRes"></div>
-      </div>
       <section>
         <h2 data-i18n="aboutPortal">About This Portal</h2>
         <ul>
@@ -1130,57 +1070,44 @@ function showRandomLawFact() {
   const lawFactDiv = document.getElementById('lawFact');
   if (lawFactDiv) lawFactDiv.textContent = "Random Law Fact: " + fact;
 }
-
-function openTab(tabName, event) {
-  if (!loggedIn && tabName !== 'home') return;
-  allTabs.forEach(id => {
-    const tab = document.getElementById(id);
-    if (tab) tab.classList.remove('active');
-    const btn = document.getElementById('tab-' + id);
-    if (btn) btn.classList.remove('active');
+function openTab(tabName, evt) {
+  // Hide all tab contents
+  document.querySelectorAll('.tab-content').forEach(function(tab) {
+    tab.classList.remove('active');
   });
-  const tab = document.getElementById(tabName);
+
+  // Remove 'active' from all nav tab buttons
+  document.querySelectorAll('.tab-button').forEach(function(btn) {
+    btn.classList.remove('active');
+  });
+
+  // Show the selected tab
+  var tab = document.getElementById(tabName);
   if (tab) tab.classList.add('active');
-  const btn = document.getElementById('tab-' + tabName);
-  if (btn) btn.classList.add('active');
-  if (tabName === 'home') showRandomLawFact();
-}
 
-function loginUser() {
-  const username = document.getElementById('loginUsername').value;
-  const password = document.getElementById('loginPassword').value;
-  if (username.trim() && password.trim()) {
-    loggedIn = true;
-    updateTabAccess();
-    openTab('home');
-    document.getElementById('loginRes').innerHTML = '<div class="message-success">Login successful. Welcome!</div>';
-    document.getElementById('loginUsername').value = '';
-    document.getElementById('loginPassword').value = '';
+  // If event is from a nav tab button, set it active
+  if (evt && evt.target && evt.target.classList.contains('tab-button')) {
+    evt.target.classList.add('active');
   } else {
-    document.getElementById('loginRes').innerHTML = '<div class="message-error">Please enter both username and password.</div>';
+    // If triggered by CTA/quick-link, set nav button active
+    var navBtn = document.getElementById('tab-' + tabName);
+    if (navBtn) navBtn.classList.add('active');
   }
 }
 
-function updateTabAccess() {
-  if (loggedIn) {
-    restrictedTabs.forEach(id => {
-      document.getElementById('tab-' + id).classList.remove('disabled');
-    });
-  } else {
-    restrictedTabs.forEach(id => {
-      document.getElementById('tab-' + id).classList.add('disabled');
-    });
-  }
-}
-
-window.onload = function() {
-  loggedIn = false;
-  updateTabAccess();
-  openTab('home');
-  showRandomLawFact();
-  updateTexts();
-};
-
+// Optional: Make sure only the first tab is active on load
+document.addEventListener('DOMContentLoaded', function() {
+  // Hide all tab-contents except the first
+  var tabs = document.querySelectorAll('.tab-content');
+  tabs.forEach(function(tab, idx) {
+    tab.classList.toggle('active', idx === 0);
+  });
+  // Set only the first tab-button active
+  var buttons = document.querySelectorAll('.tab-button');
+  buttons.forEach(function(btn, idx) {
+    btn.classList.toggle('active', idx === 0);
+  });
+});
 function renderObjectTable(obj) {
   let html = '<table><tbody>';
   for (const [key, value] of Object.entries(obj)) {
