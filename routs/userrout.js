@@ -4,11 +4,14 @@ import {
   getUsers,
   getUserById,
   updateUser,
-  deleteUser
+  deleteUser,
+  loginUser
 } from '../controllers/usercontrol.js';
 
 const router = express.Router();
 
+// Place /login before /:id to avoid route conflicts
+router.post('/login', loginUser);
 router.post('/', createUser);
 router.get('/', getUsers);
 router.get('/:id', getUserById);

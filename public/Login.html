@@ -2,214 +2,135 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>User Management</title>
+  <title>Login & Register</title>
   <style>
     :root {
-      --blue-dark: #0d1b3e;
-      --blue-main: #123ba7;
-      --blue-accent: #1976d2;
-      --blue-cream: #e3eafc;
+      --primary-color: #005f99;
+      --light-blue: #e6f0fa;
+      --border-color: #b3d7f5;
+      --button-color: #007acc;
+      --button-hover: #005a99;
     }
+
     body {
-      font-family: 'Roboto', Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: var(--blue-cream);
-      color: var(--blue-dark);
-      min-height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--light-blue);
+      padding: 2rem;
+      max-width: 600px;
+      margin: auto;
+      color: #333;
     }
-    header {
-      background: var(--blue-main);
-      color: #fff;
-      padding: 32px 0 16px 0;
+
+    h1, h2 {
+      color: var(--primary-color);
       text-align: center;
-      border-bottom: 4px solid var(--blue-accent);
     }
-    header h1 {
-      margin: 0;
-      font-size: 2.5rem;
-      font-weight: 700;
-      text-shadow: 0 2px 6px var(--blue-dark);
+
+    form {
+      margin-bottom: 2rem;
+      padding: 1.5rem;
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 95, 153, 0.1);
     }
-    header p {
-      margin: 8px 0 0 0;
-      font-size: 1.1rem;
-      color: #bfd3f6;
-    }
-    nav {
-      background-color: var(--blue-main);
-      display: flex;
-      justify-content: center;
-      padding: 0;
-      border-bottom: 2px solid var(--blue-dark);
-    }
-    .tab-button {
-      background: none;
-      color: #fff;
-      border: none;
-      padding: 16px 24px;
-      font-size: 1.1rem;
-      cursor: pointer;
-      font-weight: 500;
-      border-radius: 18px 18px 0 0;
-    }
-    .tab-button.active, .tab-button:hover {
-      background-color: var(--blue-accent);
-      color: #fffde7;
-      border-bottom: 3px solid var(--blue-main);
-    }
-    .container {
-      max-width: 800px;
-      margin: 32px auto;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 2px 16px rgba(0,0,0,0.13);
-      padding: 32px 24px;
-    }
-    h2 {
-      color: var(--blue-dark);
-    }
+
     label {
-      font-weight: bold;
       display: block;
-      margin-top: 12px;
+      margin-top: 10px;
+      font-weight: 600;
     }
-    input[type="text"],
-    input[type="number"],
-    input[type="password"],
-    select {
+
+    input, select {
       width: 100%;
       padding: 10px;
-      margin-top: 6px;
-      margin-bottom: 12px;
-      border: 1px solid var(--blue-accent);
-      border-radius: 4px;
-      font-size: 1rem;
-      background: #fefefe;
-      color: var(--blue-dark);
+      margin-top: 4px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
     }
-    button.action {
-      background-color: var(--blue-main);
-      color: #fff;
-      border: none;
-      padding: 10px 22px;
-      border-radius: 4px;
-      margin-top: 12px;
-      font-size: 1rem;
-      cursor: pointer;
-    }
-    button.action:hover {
-      background-color: var(--blue-accent);
-      color: #fffde7;
-    }
-    .message-success {
-      color: #388e3c;
-      font-weight: bold;
-      font-size: 1.08rem;
-      margin-top: 12px;
-    }
-    .message-error {
-      color: #c62828;
-      font-weight: bold;
-      font-size: 1.08rem;
-      margin-top: 12px;
-    }
-    footer {
-      background: var(--blue-cream);
-      color: var(--blue-main);
-      text-align: center;
-      padding: 16px 0;
-      margin-top: 32px;
-      font-size: 0.95rem;
-      border-top: 2px solid var(--blue-accent);
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
+
+    button {
       margin-top: 16px;
-      display: none;
+      background-color: var(--button-color);
+      color: white;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
     }
-    th, td {
-      border: 1px solid var(--blue-dark);
-      padding: 10px;
-      text-align: left;
+
+    button:hover {
+      background-color: var(--button-hover);
     }
-    th {
-      background-color: var(--blue-main);
-      color: #fff;
+
+    .message-success {
+      color: green;
+      margin-top: 10px;
+      font-weight: bold;
     }
-    tr:nth-child(even) {
-      background-color: #f7fafd;
+
+    .message-error {
+      color: red;
+      margin-top: 10px;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>User Management</h1>
-    <p>Manage users in the system</p>
-  </header>
+  <h1>Welcome to Court Management</h1>
 
-  <nav>
-    <button class="tab-button active">User Tab</button>
-  </nav>
+  <!-- Register Form -->
+  <form id="registerForm">
+    <h2>Register</h2>
+    <label for="reg-username">Username:</label>
+    <input type="text" id="reg-username" required>
 
-  <div class="container">
-    <h2>Create User</h2>
-    <form id="userForm">
-      <label>Username:</label>
-      <input type="text" id="username" required>
+    <label for="reg-password">Password:</label>
+    <input type="password" id="reg-password" required>
 
-      <label>Password:</label>
-      <input type="password" id="password" required>
+    <label for="reg-role">Role:</label>
+    <select id="reg-role" required>
+      <option value="admin">admin</option>
+      <option value="judge">judge</option>
+      <option value="lawyer">lawyer</option>
+      <option value="clerk">clerk</option>
+    </select>
 
-      <label>Role:</label>
-      <select id="role" required>
-        <option value="admin">admin</option>
-        <option value="judge">judge</option>
-        <option value="lawyer">lawyer</option>
-        <option value="clerk">clerk</option>
-      </select>
+    <button type="submit">Register</button>
+  </form>
 
-      <button type="submit" class="action">Create User</button>
-    </form>
+  <!-- Login Form -->
+  <form id="loginForm">
+    <h2>Login</h2>
+    <label for="login-username">Username:</label>
+    <input type="text" id="login-username" required>
 
-    <div id="message" style="display:none;"></div>
+    <label for="login-password">Password:</label>
+    <input type="password" id="login-password" required>
 
-    <h2>All Users</h2>
-    <button onclick="getUsers()" class="action">Fetch Users</button>
+    <button type="submit">Login</button>
+  </form>
 
-    <table id="userTable">
-      <thead>
-        <tr>
-          <th>User ID</th>
-          <th>Username</th>
-          <th>Role</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  </div>
-
-  <footer>
-    &copy; 2025 Court Management System 
-  </footer>
+  <div id="message" style="display:none;"></div>
 
   <script>
-    const base = 'http://localhost:3000/api/users';
+    const userUrl = 'http://localhost:3000/api/users';
+    const loginUrl = 'http://localhost:3000/api/users/login';
     const messageBox = document.getElementById('message');
-    const userTable = document.getElementById('userTable');
-    const userTableBody = userTable.querySelector('tbody');
 
-    document.getElementById('userForm').addEventListener('submit', async (e) => {
+    // Register
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const data = {
-        username: document.getElementById('username').value,
-        password: document.getElementById('password').value,
-        role: document.getElementById('role').value
+        username: document.getElementById('reg-username').value,
+        password: document.getElementById('reg-password').value,
+        role: document.getElementById('reg-role').value
       };
 
       try {
-        const res = await fetch(base, {
+        const res = await fetch(userUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data)
@@ -217,40 +138,58 @@
 
         const result = await res.json();
         messageBox.style.display = 'block';
-        messageBox.textContent = 'User created successfully!';
-        messageBox.className = 'message-success';
-        document.getElementById('userForm').reset();
-        getUsers();
+
+        if (res.ok) {
+          messageBox.textContent = 'User registered successfully.';
+          messageBox.className = 'message-success';
+          document.getElementById('registerForm').reset();
+        } else {
+          messageBox.textContent = result.error || 'Registration failed.';
+          messageBox.className = 'message-error';
+        }
       } catch (err) {
-        messageBox.style.display = 'block';
-        messageBox.textContent = 'Error creating user.';
+        messageBox.textContent = 'Error during registration.';
         messageBox.className = 'message-error';
+        messageBox.style.display = 'block';
         console.error(err);
       }
     });
 
-    async function getUsers() {
-      try {
-        const res = await fetch(base);
-        const users = await res.json();
-        userTableBody.innerHTML = '';
+    // Login
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = {
+        username: document.getElementById('login-username').value,
+        password: document.getElementById('login-password').value
+      };
 
-        users.forEach(user => {
-          const row = document.createElement('tr');
-          row.innerHTML = `
-            <td>${user.user_id}</td>
-            <td>${user.username}</td>
-            <td>${user.role}</td>
-          `;
-          userTableBody.appendChild(row);
+      try {
+        const res = await fetch(loginUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
         });
 
-        userTable.style.display = users.length > 0 ? 'table' : 'none';
+        const result = await res.json();
+        messageBox.style.display = 'block';
+
+        if (res.ok) {
+          messageBox.textContent = 'Login successful. Redirecting...';
+          messageBox.className = 'message-success';
+          setTimeout(() => {
+            window.location.href = 'frontend.html';
+          }, 1000);
+        } else {
+          messageBox.textContent = result.error || 'Invalid credentials';
+          messageBox.className = 'message-error';
+        }
       } catch (err) {
-        alert('Error fetching users');
+        messageBox.textContent = 'Login error.';
+        messageBox.className = 'message-error';
+        messageBox.style.display = 'block';
         console.error(err);
       }
-    }
+    });
   </script>
 </body>
 </html>
