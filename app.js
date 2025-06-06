@@ -13,7 +13,8 @@ import verdictRoutes from './routs/verdictRoute.js';
 import caseRoutes from './routs/caseRoute.js'; // Import the case routes
 import caselawerroutes from './routs/caselawerRoute.js'; // Import the case law routes    
 import  pool  from './config/db.js'; // adjust path based on your project structure
-import bcrypt from 'bcrypt';             
+import bcrypt from 'bcrypt'; 
+import userRoutes from './routs/userrout.js'; // Import the user routes     
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express();
@@ -34,6 +35,7 @@ app.use('/api/mastertable', masterRoutes);
 app.use('/api/verdicts', verdictRoutes); 
 app.use('/api/cases', caseRoutes); // Add the case routes
 app.use('/api/caselawyers', caselawerroutes); // Add the case law routes  
+app.use('/api/users', userRoutes);  
 app.get('/', (req, res) => {
   res.send('Court System Backend Running on Port 3000');
 });

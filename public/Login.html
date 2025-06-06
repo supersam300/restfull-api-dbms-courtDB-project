@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>User Management</title>
+</head>
+<body>
+  <h2>Create User</h2>
+  <form id="userForm">
+    Username: <input type="text" id="username" required><br>
+    Password: <input type="password" id="password" required><br>
+    Role:
+    <select id="role" required>
+      <option value="admin">admin</option>
+      <option value="judge">judge</option>
+      <option value="lawyer">lawyer</option>
+      <option value="clerk">clerk</option>
+    </select><br>
+    <button type="submit">Create User</button>
+  </form>
+
+  <h2>All Users</h2>
+  <button onclick="getUsers()">Fetch Users</button>
+  <pre id="userList"></pre>
+
+  <script>
+    const base = 'http://localhost:3000/api/users';
+
+    document.getElementById('userForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = {
+        username: document.getElementById('username').value,
+        password: document.getElementById('password').value,
+        role: document.getElementById('role').value
+      };
+
+      try {
+        const res = await fetch(base, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        const result = await res.json();
+        alert(JSON.stringify(result, null, 2));
+      } catch (err) {
+        alert('Error creating user');
+        console.error(err);
+      }
+    });
+
+    async function getUsers() {
+      try {
+        const res = await fetch(base);
+        const users = await res.json();
+        document.getElementById('userList').textContent = JSON.stringify(users, null, 2);
+      } catch (err) {
+        alert('Error fetching users');
+        console.error(err);
+      }
+    }
+  </script>
+</body>
+</html>

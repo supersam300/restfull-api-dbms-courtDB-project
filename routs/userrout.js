@@ -1,9 +1,18 @@
 import express from 'express';
-import { createUser } from './controllers/usercontrol.js'; // adjust path if needed
+import {
+  createUser,
+  getUsers,
+  getUserById,
+  updateUser,
+  deleteUser
+} from '../controllers/usercontrol.js';
 
 const router = express.Router();
 
-// POST /api/users - Create a new user
-router.post('/users', createUser);
+router.post('/', createUser);
+router.get('/', getUsers);
+router.get('/:id', getUserById);
+router.put('/:id', updateUser);
+router.delete('/:id', deleteUser);
 
 export default router;
