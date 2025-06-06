@@ -3,28 +3,202 @@
 <head>
   <meta charset="UTF-8" />
   <title>User Management</title>
+  <style>
+    :root {
+      --blue-dark: #0d1b3e;
+      --blue-main: #123ba7;
+      --blue-accent: #1976d2;
+      --blue-cream: #e3eafc;
+    }
+    body {
+      font-family: 'Roboto', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--blue-cream);
+      color: var(--blue-dark);
+      min-height: 100vh;
+    }
+    header {
+      background: var(--blue-main);
+      color: #fff;
+      padding: 32px 0 16px 0;
+      text-align: center;
+      border-bottom: 4px solid var(--blue-accent);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      font-weight: 700;
+      text-shadow: 0 2px 6px var(--blue-dark);
+    }
+    header p {
+      margin: 8px 0 0 0;
+      font-size: 1.1rem;
+      color: #bfd3f6;
+    }
+    nav {
+      background-color: var(--blue-main);
+      display: flex;
+      justify-content: center;
+      padding: 0;
+      border-bottom: 2px solid var(--blue-dark);
+    }
+    .tab-button {
+      background: none;
+      color: #fff;
+      border: none;
+      padding: 16px 24px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      font-weight: 500;
+      border-radius: 18px 18px 0 0;
+    }
+    .tab-button.active, .tab-button:hover {
+      background-color: var(--blue-accent);
+      color: #fffde7;
+      border-bottom: 3px solid var(--blue-main);
+    }
+    .container {
+      max-width: 800px;
+      margin: 32px auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.13);
+      padding: 32px 24px;
+    }
+    h2 {
+      color: var(--blue-dark);
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 12px;
+    }
+    input[type="text"],
+    input[type="number"],
+    input[type="password"],
+    select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      margin-bottom: 12px;
+      border: 1px solid var(--blue-accent);
+      border-radius: 4px;
+      font-size: 1rem;
+      background: #fefefe;
+      color: var(--blue-dark);
+    }
+    button.action {
+      background-color: var(--blue-main);
+      color: #fff;
+      border: none;
+      padding: 10px 22px;
+      border-radius: 4px;
+      margin-top: 12px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    button.action:hover {
+      background-color: var(--blue-accent);
+      color: #fffde7;
+    }
+    .message-success {
+      color: #388e3c;
+      font-weight: bold;
+      font-size: 1.08rem;
+      margin-top: 12px;
+    }
+    .message-error {
+      color: #c62828;
+      font-weight: bold;
+      font-size: 1.08rem;
+      margin-top: 12px;
+    }
+    footer {
+      background: var(--blue-cream);
+      color: var(--blue-main);
+      text-align: center;
+      padding: 16px 0;
+      margin-top: 32px;
+      font-size: 0.95rem;
+      border-top: 2px solid var(--blue-accent);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+      display: none;
+    }
+    th, td {
+      border: 1px solid var(--blue-dark);
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background-color: var(--blue-main);
+      color: #fff;
+    }
+    tr:nth-child(even) {
+      background-color: #f7fafd;
+    }
+  </style>
 </head>
 <body>
-  <h2>Create User</h2>
-  <form id="userForm">
-    Username: <input type="text" id="username" required><br>
-    Password: <input type="password" id="password" required><br>
-    Role:
-    <select id="role" required>
-      <option value="admin">admin</option>
-      <option value="judge">judge</option>
-      <option value="lawyer">lawyer</option>
-      <option value="clerk">clerk</option>
-    </select><br>
-    <button type="submit">Create User</button>
-  </form>
+  <header>
+    <h1>User Management</h1>
+    <p>Manage users in the system</p>
+  </header>
 
-  <h2>All Users</h2>
-  <button onclick="getUsers()">Fetch Users</button>
-  <pre id="userList"></pre>
+  <nav>
+    <button class="tab-button active">User Tab</button>
+  </nav>
+
+  <div class="container">
+    <h2>Create User</h2>
+    <form id="userForm">
+      <label>Username:</label>
+      <input type="text" id="username" required>
+
+      <label>Password:</label>
+      <input type="password" id="password" required>
+
+      <label>Role:</label>
+      <select id="role" required>
+        <option value="admin">admin</option>
+        <option value="judge">judge</option>
+        <option value="lawyer">lawyer</option>
+        <option value="clerk">clerk</option>
+      </select>
+
+      <button type="submit" class="action">Create User</button>
+    </form>
+
+    <div id="message" style="display:none;"></div>
+
+    <h2>All Users</h2>
+    <button onclick="getUsers()" class="action">Fetch Users</button>
+
+    <table id="userTable">
+      <thead>
+        <tr>
+          <th>User ID</th>
+          <th>Username</th>
+          <th>Role</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <footer>
+    &copy; 2025 Court Management System 
+  </footer>
 
   <script>
     const base = 'http://localhost:3000/api/users';
+    const messageBox = document.getElementById('message');
+    const userTable = document.getElementById('userTable');
+    const userTableBody = userTable.querySelector('tbody');
 
     document.getElementById('userForm').addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -42,9 +216,15 @@
         });
 
         const result = await res.json();
-        alert(JSON.stringify(result, null, 2));
+        messageBox.style.display = 'block';
+        messageBox.textContent = 'User created successfully!';
+        messageBox.className = 'message-success';
+        document.getElementById('userForm').reset();
+        getUsers();
       } catch (err) {
-        alert('Error creating user');
+        messageBox.style.display = 'block';
+        messageBox.textContent = 'Error creating user.';
+        messageBox.className = 'message-error';
         console.error(err);
       }
     });
@@ -53,7 +233,19 @@
       try {
         const res = await fetch(base);
         const users = await res.json();
-        document.getElementById('userList').textContent = JSON.stringify(users, null, 2);
+        userTableBody.innerHTML = '';
+
+        users.forEach(user => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${user.user_id}</td>
+            <td>${user.username}</td>
+            <td>${user.role}</td>
+          `;
+          userTableBody.appendChild(row);
+        });
+
+        userTable.style.display = users.length > 0 ? 'table' : 'none';
       } catch (err) {
         alert('Error fetching users');
         console.error(err);
